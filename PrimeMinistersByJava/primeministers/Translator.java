@@ -1,33 +1,41 @@
 package primeministers;
 
 import javax.swing.JOptionPane;
-
 /**
  * トランスレータ：総理大臣のCSVファイルをHTMLページへと変換するプログラム。
+ *
+ * スタブ作成
+ * @author 10/23 橋坂侑汰
  */
-public class Translator extends Object
-{
-	/**
-	 * トランスレータのコンストラクタ。
-	 */
-	public Translator()
-	{
-		super();
-		return;
-	}
+public class Translator extends Object{
 
-	/**
-	 * 総理大臣のCSVファイルをHTMLページへ変換する。
-	 */
-	public void perform()
-	{
-		/**
-		 * ここを作成してください。
-		 * まず、次のページを参照しながら、スケルトン（スタブ）を作ることから始めましょう。
-		 * http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinistersJavaDoc/index.html
-		 */
-		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
-		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
-		return;
-	}
+    private Table inputTable;
+
+    private Table outputTable;
+
+    public Translator() {
+        super();
+        return;
+    }
+
+    public String computeNumberOfDays(String periodString) {
+        return null;
+    }
+
+    public String computeStringOfImage(String aString, Tuple aTuple, int no) {
+        return null;
+    }
+
+    /* 総理大臣のCSVファイルをHTMLページへ変換する */
+    public void perform() {
+        String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
+        JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
+        return;
+
+    }
+
+    public Table table(Table aTable) {
+        return null;
+    }
+
 }
