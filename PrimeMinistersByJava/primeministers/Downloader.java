@@ -1,4 +1,14 @@
 package primeministers;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
  *
@@ -23,13 +33,35 @@ public class Downloader extends IO {
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルをダウンロードする。
-	 * @author 10/26 橋坂侑汰
+	 * @author 10/26 和田祥吾
 	 * 
 	 */
 	public void downloadCSV() {
-		//http://d.hatena.ne.jp/nacookan/20071113/1194918002が参考になるかと
-		//DL先はsuperクラスIO、directoryOfPagesが使えるかなと
-		
+
+		try{
+			URL url = new URL(this.url());
+			URLConnection conn = url.openConnection();
+			InputStream in = conn.getInputStream();
+
+			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
+			FileOutputStream out = new FileOutputStream(aFile,false);
+
+			int b;
+			while((b = in.read()) != -1){
+				out.write(b);
+			}
+
+			out.close();
+			in.close();
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
 	}
 
 	/**
@@ -69,28 +101,28 @@ public class Downloader extends IO {
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答する。
 	 * @return
-	 * @author 10/26 橋坂侑汰
+	 * @author 10/26 和田祥吾
 	 */
 	public String url() {
-		return null;
+		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
 	}
 
 	/**
 	 * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
 	 * @return
-	 * @author 10/26 橋坂侑汰
+	 * @author 10/26 和田祥吾
 	 */
-	public String urlString() {
+	public static String urlString() {
 		return null;
 	}
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
 	 * @return
-	 * @author 10/26 橋坂侑汰
+	 * @author 10/26 和田祥吾
 	 */
-	public String urlStringOfCSV() {
-		return null;
+	public static String urlStringOfCSV() {
+		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
 	}
 
 }
