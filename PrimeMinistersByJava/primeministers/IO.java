@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * スタブ作成
  * @author 10/23 橋坂侑汰
  */
-public class IO {
+public abstract class IO extends Object{
 
 	/**
 	 * テーブル（表：スプレッドシート）を記憶するフィールド。
@@ -39,7 +39,7 @@ public class IO {
 	 * @param aFile
 	 */
 	public static void deleteFileOrDirectory(File aFile) {
-
+		if(aFile.exists())aFile.delete();
 	}
 
 	/**
@@ -47,7 +47,10 @@ public class IO {
 	 * @return
 	 */
 	public static File directoryOfPages() {
-		return null;
+		File file = new File("PrimeMinisters");
+		if(file.exists());
+		else file.mkdir();
+		return file;
 	}
 
 	/**

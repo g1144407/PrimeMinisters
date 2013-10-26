@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Writer extends IO {
 
-	private void Writer() {
+	private  Writer() {
 
 	}
 
