@@ -21,6 +21,13 @@ class Downloader(io.IO):
 
 	def download_csv(self):
 		"""総理大臣の情報を記したCSVファイルをダウンロードする。"""
+		if__name__=="__main__":
+		url = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv"
+		dirpath = "PrimeMinisters"
+		if not os.path.isdir(dirpath):
+			os.makedirs(dirpath)
+		path = "PrimeMinisters/PrimeMinisters.csv"
+		urllib.urlretrieve(url,path)
 		return None
 
 	def download_images(self, image_filenames):
