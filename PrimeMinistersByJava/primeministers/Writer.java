@@ -11,42 +11,92 @@ import java.util.ArrayList;
  */
 public class Writer extends IO {
 
-	private  Writer() {
+	/**
+	 * ライタのコンストラクタ。
+	 * @author 10/29 和田祥吾
+	 */
+	public Writer() {
 
 	}
 
-	private Attributes attributes() {
+	/**
+	 * 属性リストを応答する。
+	 * @return Attributes
+	 * @author 10/29 和田祥吾
+	 */
+	public Attributes attributes() {
 		return null;
 	}
 
-	private File filnameOfHTML() {
+	/**
+	 * ローカルなHTMLのインデックスファイル(index.html)を応答するクラスメソッド。
+	 * @return File
+	 * @author 10/29 和田祥吾
+	 */
+	public static File filnameOfHTML() {
 		return null;
 	}
 
-	private Table table(Table aTable) {
+	/**
+	 * HTMLページを基にするテーブルを受け取って、インデックスファイル(index.html)に書き出す。
+	 * @param aTable
+	 * @return 
+	 * @author 10/29 和田祥吾
+	 */
+	public Table table(Table aTable) {
 		return null;
 	}
 
-	private ArrayList<Tuple> tuples() {
+	/**
+	 * タプル群を応答する。
+	 * @return ArrayList<Tuple>
+	 * @author 10/29 和田祥吾
+	 */
+	public ArrayList<Tuple> tuples() {
 		return null;
 	}
 
+	/**
+	 * 属性リストを書き出す。
+	 * @param outputWriter
+	 * @author 10/29 和田祥吾
+	 */
 	public void writeAttributesOn(BufferedWriter outputWriter) {
 
 	}
 
+	/**
+	 * フッタを書き出す。
+	 * @param outputWriter
+	 * @author 10/29 和田祥吾
+	 */
 	public void writeFooterOn(BufferedWriter outputWriter) {
 
 	}
 
+	/**
+	 * ヘッダを書き出す。
+	 * @param outputWriter
+	 * @author 10/19 和田祥吾
+	 */
 	public void writeHeaderOn(BufferedWriter outputWriter) {
 
 	}
 
+	/**
+	 * ボディを書き出す。
+	 * @param outputWriter
+	 * @author 10/29 和田祥吾
+	 */
 	public void writeTableBodyOn(BufferedWriter outputWriter) {
 
 	}
 
+	/**
+	 * タプル群を書き出す。
+	 * @param outputWriter
+	 * @author 10/29 和田祥吾
+	 */
 	public void writeTuplesOn(BufferedWriter outputWriter) {
 
 	}

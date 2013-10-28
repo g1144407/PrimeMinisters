@@ -44,7 +44,7 @@ public abstract class IO extends Object{
 
 	/**
 	 * 総理大臣ページのためのディレクトリ（存在しなければ作成して）を応答するクラスメソッド。
-	 * @return
+	 * @return file
 	 */
 	public static File directoryOfPages() {
 		File file = new File("PrimeMinisters");
@@ -64,7 +64,7 @@ public abstract class IO extends Object{
 	 * 10月25日 和田祥吾
 	 * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 * @param aFile
-	 * @return
+	 * @return aCollection
 	 */
 	public static ArrayList<String> readTextFromFile(File aFile) {
 		ArrayList<String> aCollection = new ArrayList<String>();
@@ -93,7 +93,7 @@ public abstract class IO extends Object{
 	 * 10月25日 和田祥吾
 	 * 指定されたファイル文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 * @param fileString
-	 * @return
+	 * @return aCollection
 	 */
 	public static ArrayList<String> readTextFromFile(String fileString) {
 		File aFile = new File(fileString);
@@ -105,7 +105,7 @@ public abstract class IO extends Object{
 	 * 10月25日 和田祥吾
 	 * 指定されたURL文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 * @param urlString
-	 * @return
+	 * @return aCollection
 	 */
 	public static ArrayList<String> readTextFromURL(String urlString) {
 		URL aURL = null;
@@ -119,7 +119,7 @@ public abstract class IO extends Object{
 	 * 10月25日 和田祥吾
 	 * 指定されたURLからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
 	 * @param aURL
-	 * @return
+	 * @return aCollection
 	 */
 	public static ArrayList<String> readTextFromURL(URL aURL) {
 		ArrayList<String> aCollection = new ArrayList<String>();
@@ -148,7 +148,7 @@ public abstract class IO extends Object{
 	 * 文字列をセパレータで分割したトークン列を応答するクラスメソッド。
 	 * @param string
 	 * @param separators
-	 * @return
+	 * @return result
 	 */
 	public static ArrayList<String> splitString(String string, String separators) {
 		ArrayList<Integer> indexes;
