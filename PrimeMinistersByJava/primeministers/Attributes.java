@@ -27,7 +27,6 @@ public class Attributes extends Object
 			//System.out.println("int > " + i + " 	String >" + split[i]);
 		}
 	}
-	Attributes(){}
 	/*スタブ作成　10月22日　北川裕基
 	 * 指定されたインデックスに対応する名前を応答する。名前が無いときはキーを応答する。
 	 * */
@@ -105,7 +104,7 @@ public class Attributes extends Object
 	 * 画像のインデックスを応答する。
 	 * */
 	public int indexOfThumbnail(){
-		return 0;
+		return indexOf("縮小画像");
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 指定されたインデックスに対応するキーを応答する。
@@ -135,12 +134,13 @@ public class Attributes extends Object
 	 * 名前群を設定する。
 	 * */
 	public void names(ArrayList<String> aCollection){
+		names.addAll(aCollection);
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 属性リストの長さを応答する。
 	 * */
 	public int size(){
-		return 0;
+		return keys.size();
 	}
 	@Override
 	public String toString() {
