@@ -1,5 +1,6 @@
 package primeministers;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,6 +9,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import javax.imageio.ImageIO;
 
 /**
  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
@@ -39,12 +42,15 @@ public class Downloader extends IO {
 	public void downloadCSV() {
 
 		try{
-			URL url = new URL(this.url());
-			URLConnection conn = url.openConnection();
+			url = urlStringOfCSV();
+			URL aURL = new URL(url);
+	
+			URLConnection conn = aURL.openConnection();
 			InputStream in = conn.getInputStream();
 
 			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
 			FileOutputStream out = new FileOutputStream(aFile,false);
+			
 
 			int b;
 			while((b = in.read()) != -1){
@@ -70,6 +76,21 @@ public class Downloader extends IO {
 	 */
 	public void downloadImages() {
 		//画像群はcsvファイルを変換後に行うかな
+		String aString = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/images/";
+		BufferedImage anImage=null;
+		try
+		{	
+			URL url = new URL(aString);	   
+			anImage = ImageIO.read(url);
+		}
+		catch(MalformedURLException e)
+		{
+			e.printStackTrace() ;
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace() ;	
+		}
 	}
 
 	/**
@@ -78,7 +99,9 @@ public class Downloader extends IO {
 	 * @author 10/26 橋坂侑汰
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		//privateだから上記Imagesで何度も呼ぶ感じかな
+		//privateだから上記Imagesで何度も呼ぶ感じかな	
+		this.downloadImages();
+		this.downloadThumbnails();
 	}
 
 	/**
@@ -95,22 +118,26 @@ public class Downloader extends IO {
 	 */
 	public Table table() {
 		//IOのテーブルを使い回す？オーバーライドなので要検証
+		this.downloadCSV();
+		this.downloadPictures(indexOfPicture);
 		return null;
 	}
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答する。
-	 * @return
+	 * @return url
+	 * CSVの在処
 	 * @author 10/26 和田祥吾
 	 */
 	public String url() {
-		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
+		return url;
 	}
 
 	/**
 	 * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
 	 * @return
 	 * @author 10/26 和田祥吾
+	 * 何をするかが謎？？？
 	 */
 	public static String urlString() {
 		return null;
