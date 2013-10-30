@@ -77,7 +77,7 @@ public class Writer extends IO {
 	/**
 	 * ヘッダを書き出す。
 	 * @param outputWriter
-	 * @author 10/19 和田祥吾
+	 * @author 10/29 和田祥吾
 	 */
 	public void writeHeaderOn(BufferedWriter outputWriter) {
 
