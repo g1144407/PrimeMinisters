@@ -94,11 +94,13 @@ public class Downloader extends IO {
 
 			if(url == "images/"){
 				picturesDir = new File("PrimeMinisters/images");
-				picturesDir.mkdirs();
+				if(picturesDir.exists());
+				else picturesDir.mkdirs();
 			}
 			else if(url == "thumbnails/"){
 				picturesDir = new File("PrimeMinisters/thumbnails");
-				picturesDir.mkdirs();
+				if(picturesDir.exists());
+				else picturesDir.mkdirs();
 			}
 			File aFile = new File(picturesDir,"0"+indexOfPicture+".jpg");
 			FileOutputStream out = new FileOutputStream(aFile,false);
@@ -136,6 +138,13 @@ public class Downloader extends IO {
 	 * @author 10/30 和田祥吾
 	 */
 	public Table table() {
+		/*
+		 *恐らくここではダウンロードした画像群をTableのimages,thumbnailsに追加して、画像群が記憶されたtableを応答する
+		 *でもtableクラスにaddimages的なメソッドがない
+		 *どうやって追加する？
+		 */
+		Table tempTable = super.table();
+		if(tempTable == null){tempTable = new Table();}
 		this.downloadCSV();
 		this.downloadImages();
 		this.downloadThumbnails();
