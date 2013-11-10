@@ -1,5 +1,3 @@
-package primeministers;
-
 import java.util.ArrayList;
 
 
@@ -20,23 +18,24 @@ public class Tuple extends Object
 	/*スタブ作成　10月22日　北川裕基
 	 * 属性リストと値リストからタプルを作るコンストラクタ。
 	 * */
-	Tuple(Attributes instanceOfAttributes, ArrayList<String> valueCollection){}
+	Tuple(Attributes instanceOfAttributes, ArrayList<String> valueCollection){
+		this.attributes = instanceOfAttributes;
+		this.value = valueCollection;
+	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 属性リストを応答する。
 	 * */
 	public Attributes attributes(){
-		return null;
+		return attributes;
 	}
-	/*スタブ作成　10月22日　北川裕基
-	 * 自分自身を文字列にして、それを応答する。
-	 * */
-	public String toString(){
-		return "";
+	@Override
+	public String toString() {
+		return "Tuple [attributes=" + attributes + ", value=" + value + "]";
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 値リストを応答する。
 	 * */
 	public ArrayList<String> values(){
-		return null;
+		return value;
 	}
 }

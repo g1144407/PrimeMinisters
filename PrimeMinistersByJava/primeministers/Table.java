@@ -1,5 +1,3 @@
-package primeministers;
-
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -29,23 +27,25 @@ public class Table extends Object
 	 *　タプルを追加する。
 	 * */
 	public void add(Tuple tuple){
+		tuples.add(tuple);
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 属性リストを応答する。
 	 * */
 	public Attributes attributes(){
-		return null;
-	}
+		return attribures;
+	}	
 	/*スタブ作成　10月22日　北川裕基
 	 * 属性リストを設定する。
 	 * */
 	public void attributes(Attributes instanceOfAttributes){
+		this.attribures = instanceOfAttributes;
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 画像群を応答する。
 	 * */
 	ArrayList<BufferedImage> images(){
-		return null;
+		return images;
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 画像またはサムネイル画像の文字列を受け取って当該画像を応答する。
@@ -57,7 +57,7 @@ public class Table extends Object
 	 * サムネイル画像群を応答する。
 	 * */
 	public ArrayList<BufferedImage> thumbnails(){
-		return null;
+		return thumbnails;
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * 自分自身を文字列にして、それを応答する。
@@ -69,6 +69,6 @@ public class Table extends Object
 	 * タプル群を応答する。
 	 * */
 	public ArrayList<Tuple> tuples(){
-		return null;
+		return tuples;
 	}
 }
