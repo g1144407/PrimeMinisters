@@ -1,6 +1,8 @@
 package primeministers;
 
+import java.io.File;
 import java.util.Calendar;
+
 import javax.swing.JOptionPane;
 /**
  * トランスレータ：総理大臣のCSVファイルをHTMLページへと変換するプログラム。
@@ -102,10 +104,15 @@ public class Translator extends Object{
 	 * @author 10/27 橋坂侑汰
      */
     public void perform() {
+    	Downloader aDownloader = new Downloader();
+    	Table aTable = aDownloader.table();
+    	Reader aReader = new Reader(new File(aDownloader.url()));
+    	aReader.table(aTable);
+    	//↑これでCSVからのTableが完成する
+    	
         String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
         JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
         return;
-
     }
 
     /**

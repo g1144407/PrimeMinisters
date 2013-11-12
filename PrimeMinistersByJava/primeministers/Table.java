@@ -1,3 +1,4 @@
+package primeministers;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -12,17 +13,21 @@ public class Table extends Object
 	 * http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinistersJavaDoc/index.html
 	 */
 	//属性リストを記憶するフィールド。
-	private Attributes attribures = new Attributes();
+	private Attributes attribures;
 	//画像群を記憶するフィールド。
-	private ArrayList<BufferedImage> images = new ArrayList<>();
+	private ArrayList<BufferedImage> images;
 	//サムネイルが画像群を記憶するフィールド。
-	private ArrayList<BufferedImage> thumbnails = new ArrayList<>();
+	private ArrayList<BufferedImage> thumbnails;
 	//タプル群を記憶するフィールド。
-	private ArrayList<Tuple> tuples = new ArrayList<>();
+	private ArrayList<Tuple> tuples;
 	/*スタブ作成　10月22日　北川裕基
 	 * テーブルのコンストラクタ
 	 * */
-	Table(){}
+	Table(){
+		images = new ArrayList<>();
+		thumbnails = new ArrayList<>();
+		tuples = new ArrayList<>();
+	}
 	/*スタブ作成　10月22日　北川裕基
 	 *　タプルを追加する。
 	 * */
@@ -59,11 +64,10 @@ public class Table extends Object
 	public ArrayList<BufferedImage> thumbnails(){
 		return thumbnails;
 	}
-	/*スタブ作成　10月22日　北川裕基
-	 * 自分自身を文字列にして、それを応答する。
-	 * */
-	public String toString(){
-		return "";
+	
+	public String toString() {
+		return "Table [attribures=" + attribures + ", images=" + images
+				+ ", thumbnails=" + thumbnails + ", tuples=" + tuples + "]";
 	}
 	/*スタブ作成　10月22日　北川裕基
 	 * タプル群を応答する。

@@ -18,7 +18,7 @@ import java.net.URLConnection;
 public class Downloader extends IO {
 
 	/**
-	 * 総理大臣の情報を記したCSVファイルの在処(URL文字列)を記憶するフィールド。
+	 * 総理大臣の情報を記したCSVファイルの在処(相対パス)を記憶するフィールド。
 	 */
 	private String url;
 
@@ -63,6 +63,7 @@ public class Downloader extends IO {
 		} catch (Exception e) {
 			e.printStackTrace();		
 		}
+		url = "./"+IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
 
 	/**
@@ -145,14 +146,14 @@ public class Downloader extends IO {
 		 */
 		Table tempTable = super.table();
 		if(tempTable == null){tempTable = new Table();}
-		this.downloadCSV();
 		this.downloadImages();
 		this.downloadThumbnails();
+		this.downloadCSV();
 		return null;
 	}
 
 	/**
-	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答する。
+	 * 総理大臣の情報を記したCSVファイルの在処(相対パス)を文字列で応答する。
 	 * @return url
 	 * CSVの在処
 	 * @author 10/26 和田祥吾

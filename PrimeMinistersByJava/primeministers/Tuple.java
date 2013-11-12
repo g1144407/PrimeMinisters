@@ -1,3 +1,4 @@
+package primeministers;
 import java.util.ArrayList;
 
 
@@ -12,7 +13,7 @@ public class Tuple extends Object
 	 * http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinistersJavaDoc/index.html
 	 */
 	//属性リストを記憶するフィールド。
-	private Attributes attributes = new Attributes();
+	private Attributes attributes;
 	//値リストを記憶するフィールド。
 	private ArrayList<String> value;
 	/*スタブ作成　10月22日　北川裕基
