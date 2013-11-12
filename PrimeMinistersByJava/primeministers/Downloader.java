@@ -18,7 +18,7 @@ import java.net.URLConnection;
 public class Downloader extends IO {
 
 	/**
-	 * 総理大臣の情報を記したCSVファイルの在処(相対パス)を記憶するフィールド。
+	 * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
 	 */
 	private String url;
 
@@ -63,7 +63,6 @@ public class Downloader extends IO {
 		} catch (Exception e) {
 			e.printStackTrace();		
 		}
-		url = "./"+IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
 
 	/**
@@ -71,7 +70,6 @@ public class Downloader extends IO {
 	 * @author 10/30 和田祥吾
 	 */
 	public void downloadImages() {
-		//画像群はcsvファイルを変換後に行うかな
 		url = "images/";
 		for(int i=39;i<=62;i++){
 			this.downloadPictures(i);
@@ -85,10 +83,9 @@ public class Downloader extends IO {
 	 * @author 10/30 和田祥吾
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		//privateだから上記Imagesで何度も呼ぶ感じかな	
 		try{
 			File picturesDir = null;
-			URL aURL = new URL(Downloader.urlString()+url+"0"+indexOfPicture+".jpg");
+			URL aURL = new URL("http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/"+url+"0"+indexOfPicture+".jpg");
 
 			URLConnection conn = aURL.openConnection();
 			InputStream in = conn.getInputStream();
@@ -146,10 +143,10 @@ public class Downloader extends IO {
 		 */
 		Table tempTable = super.table();
 		if(tempTable == null){tempTable = new Table();}
+		this.downloadCSV();
 		this.downloadImages();
 		this.downloadThumbnails();
-		this.downloadCSV();
-		return null;
+		return tempTable;
 	}
 
 	/**
@@ -166,10 +163,9 @@ public class Downloader extends IO {
 	 * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
 	 * @return
 	 * @author 10/30 和田祥吾
-	 * 何をするかが謎？？？
 	 */
 	public static String urlString() {
-		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/";
+		return "./"+IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
 
 	/**
@@ -180,5 +176,4 @@ public class Downloader extends IO {
 	public static String urlStringOfCSV() {
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
 	}
-
 }

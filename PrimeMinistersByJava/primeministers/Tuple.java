@@ -16,16 +16,18 @@ public class Tuple extends Object
 	private Attributes attributes;
 	//値リストを記憶するフィールド。
 	private ArrayList<String> value;
-	/*スタブ作成　10月22日　北川裕基
+	/**
+	 * スタブ作成　10月22日　北川裕基
 	 * 属性リストと値リストからタプルを作るコンストラクタ。
-	 * */
+	 */
 	Tuple(Attributes instanceOfAttributes, ArrayList<String> valueCollection){
 		this.attributes = instanceOfAttributes;
 		this.value = valueCollection;
 	}
-	/*スタブ作成　10月22日　北川裕基
+	/**
+	 * スタブ作成　10月22日　北川裕基
 	 * 属性リストを応答する。
-	 * */
+	 */
 	public Attributes attributes(){
 		return attributes;
 	}
@@ -33,9 +35,10 @@ public class Tuple extends Object
 	public String toString() {
 		return "Tuple [attributes=" + attributes + ", value=" + value + "]";
 	}
-	/*スタブ作成　10月22日　北川裕基
+	/**
+	 * スタブ作成　10月22日　北川裕基
 	 * 値リストを応答する。
-	 * */
+	 */
 	public ArrayList<String> values(){
 		return value;
 	}
