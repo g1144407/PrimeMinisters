@@ -77,7 +77,7 @@ public class Downloader extends IO {
 			this.downloadPictures(i);
 		}
 	}
-
+	
 	/**
 	 * 総理大臣の画像をダウンロードする。
 	 * @param indexOfPicture

@@ -86,7 +86,6 @@ public abstract class IO extends Object{
 		catch (FileNotFoundException anException) { anException.printStackTrace(); }
 		catch (UnsupportedEncodingException anException) { anException.printStackTrace(); }
 		catch (IOException anException) { anException.printStackTrace(); }
-		System.out.println(aCollection);
 		return aCollection;
 	}
 	/**
