@@ -119,7 +119,8 @@ public class Translator extends Object{
 		inputTable = aReader.table(aTable);
 		//↑これでCSVからのTableが完成する
 		outputTable = this.table(inputTable);
-		System.out.println(outputTable.toString());
+		Writer aWriter = new Writer();
+		aWriter.table(outputTable);
 		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
 		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
 		return;
