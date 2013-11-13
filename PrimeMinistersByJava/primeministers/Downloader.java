@@ -141,12 +141,12 @@ public class Downloader extends IO {
 		 *でもtableクラスにaddimages的なメソッドがない
 		 *どうやって追加する？
 		 */
-		Table tempTable = super.table();
-		if(tempTable == null){tempTable = new Table();}
 		this.downloadCSV();
+		Reader aReader = new Reader(new File(Downloader.urlString()));
+		super.table = aReader.table();
 		this.downloadImages();
 		this.downloadThumbnails();
-		return tempTable;
+		return super.table();
 	}
 
 	/**

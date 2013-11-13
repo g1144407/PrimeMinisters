@@ -25,7 +25,7 @@ public abstract class IO extends Object{
 	/**
 	 * テーブル（表：スプレッドシート）を記憶するフィールド。
 	 */
-	private Table table;
+	protected Table table;
 
 	/**
 	 * 入出力のコンストラクタ。
@@ -188,7 +188,7 @@ public abstract class IO extends Object{
 	 * @return
 	 */
 	public Table table() {
-		return null;
+		return this.table;
 	}
 
 	/**

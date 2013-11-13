@@ -15,14 +15,14 @@ import java.util.Iterator;
  */
 public class Writer extends IO {
 
-	private Table table;
+	//private Table table;
 
 	/**
 	 * ライタのコンストラクタ。
 	 * @author 10/29 和田祥吾
 	 */
 	public Writer() {
-		table = null;
+		//table = null;
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class Writer extends IO {
 	 * @author 10/29 和田祥吾
 	 */
 	public Attributes attributes() {
-		return table.attributes();
+		return super.table.attributes();
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Writer extends IO {
 	 * @author 10/29 和田祥吾
 	 */
 	public Table table(Table aTable) {
-		this.table = aTable;
+		super.table = aTable;
 		try {
 			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Writer.filnameOfHTML()));
 			writeHeaderOn(outputWriter);
@@ -60,7 +60,7 @@ public class Writer extends IO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return this.table;
+		return super.table;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Writer extends IO {
 	 * @author 10/29 和田祥吾
 	 */
 	public ArrayList<Tuple> tuples() {
-		return this.table.tuples();
+		return super.table.tuples();
 	}
 
 	/**

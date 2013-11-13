@@ -24,7 +24,7 @@ public class Table extends Object
 	 * スタブ作成　10月22日　北川裕基
 	 * テーブルのコンストラクタ
 	 */
-	Table(){
+	public Table(){
 		images = new ArrayList<>();
 		thumbnails = new ArrayList<>();
 		tuples = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Table extends Object
 	 * スタブ作成　10月22日　北川裕基
 	 * 画像群を応答する。
 	 */
-	ArrayList<BufferedImage> images(){
+	public ArrayList<BufferedImage> images(){
 		return images;
 	}
 	/**

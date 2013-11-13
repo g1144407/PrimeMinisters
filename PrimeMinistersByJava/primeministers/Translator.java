@@ -114,9 +114,8 @@ public class Translator extends Object{
 	 */
 	public void perform() {
 		Downloader aDownloader = new Downloader();
-		Table aTable = aDownloader.table();
-		Reader aReader = new Reader(new File(Downloader.urlString()));
-		inputTable = aReader.table(aTable);
+		//Reader aReader = new Reader(new File(Downloader.urlString()));
+		inputTable = aDownloader.table();
 		//↑これでCSVからのTableが完成する
 		outputTable = this.table(inputTable);
 		Writer aWriter = new Writer();

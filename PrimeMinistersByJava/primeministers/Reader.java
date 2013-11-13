@@ -67,10 +67,10 @@ public class Reader extends IO {
 	//*未完成*IOのTableメソッドをオーバーライドしているので...?
 	//DownloadにもTableメソッドがあるので複数のTableが作成されてしまう？
 	//IOのprivate Tableフィールドを使い回すのかなぁ
-	public Table table(Table aTable) {
+	public Table table() {
 		boolean first = true;
-		Table tempTable = aTable;
-		if(tempTable==null)tempTable = new Table();
+		Table tempTable = new Table();
+		//if(tempTable==null)tempTable = new Table();
 		Iterator<String> ite = super.readTextFromFile(filename).iterator();
 		//String型にTuple一行が詰まっている > カンマやダブルクウォーツで分割してArrayList型へと変換 > Tuple(Attributes ArrayList)作成
 		while (ite.hasNext()) {
