@@ -91,12 +91,12 @@ public class Downloader extends IO {
 			InputStream in = conn.getInputStream();
 
 			if(url == "images/"){
-				picturesDir = new File("PrimeMinisters/images");
+				picturesDir = new File(IO.directoryOfPages(),"images");
 				if(picturesDir.exists());
 				else picturesDir.mkdirs();
 			}
 			else if(url == "thumbnails/"){
-				picturesDir = new File("PrimeMinisters/thumbnails");
+				picturesDir = new File(IO.directoryOfPages(),"thumbnails");
 				if(picturesDir.exists());
 				else picturesDir.mkdirs();
 			}
@@ -146,7 +146,7 @@ public class Downloader extends IO {
 		super.table = aReader.table();
 		this.downloadImages();
 		this.downloadThumbnails();
-		return super.table();
+		return super.table;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class Downloader extends IO {
 	 * @author 10/30 和田祥吾
 	 */
 	public static String urlString() {
-		return "./"+IO.directoryOfPages()+"/PrimeMinisters.csv";
+		return IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
 
 	/**

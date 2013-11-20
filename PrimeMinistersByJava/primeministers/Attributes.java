@@ -8,17 +8,16 @@ import java.util.List;
 public class Attributes extends Object
 {
 	/**
-	 * ここを作成してください。
-	 * まず、次のページを参照しながら、スケルトン（スタブ）を作ることから始めましょう。
-	 * http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinistersJavaDoc/index.html
+	 * 属性リストのキー群を記憶するフィールド。
 	 */
-	//属性リストのキー群を記憶するフィールド。
 	private ArrayList<Integer> keys = new ArrayList<>();
-	//属性リストの名前群を記憶するフィールド。
+	/**
+	 * 属性リストの名前群を記憶するフィールド。
+	 */
 	private ArrayList<String> names = new ArrayList<>();
 	/** スタブ作成　10月22日　北川裕基
 	 * 入力用("input")または出力用("output")で属性リストを作成するコンストラクタ。
-	 * */
+	 **/
 	Attributes(String aString){
 		String[] split = aString.split(",");
 		for(int i = 0; i< split.length; i++){

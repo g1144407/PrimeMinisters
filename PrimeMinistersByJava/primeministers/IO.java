@@ -47,7 +47,7 @@ public abstract class IO extends Object{
 	 * @return file
 	 */
 	public static File directoryOfPages() {
-		File file = new File("PrimeMinisters");
+		File file = new File(System.getProperty("user.home")+"/Desktop","PrimeMinisters");
 		if(file.exists());
 		else file.mkdir();
 		return file;

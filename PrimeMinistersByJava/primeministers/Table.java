@@ -8,17 +8,20 @@ import java.util.ArrayList;
 public class Table extends Object
 {
 	/**
-	 * ここを作成してください。
-	 * まず、次のページを参照しながら、スケルトン（スタブ）を作ることから始めましょう。
-	 * http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinistersJavaDoc/index.html
+	 * 属性リストを記憶するフィールド。
 	 */
-	//属性リストを記憶するフィールド。
 	private Attributes attribures;
-	//画像群を記憶するフィールド。
+	/**
+	 * 画像群を記憶するフィールド。
+	 */
 	private ArrayList<BufferedImage> images;
-	//サムネイルが画像群を記憶するフィールド。
+	/**
+	 * サムネイルが画像群を記憶するフィールド。
+	 */
 	private ArrayList<BufferedImage> thumbnails;
-	//タプル群を記憶するフィールド。
+	/**
+	 * タプル群を記憶するフィールド。
+	 */
 	private ArrayList<Tuple> tuples;
 	/**
 	 * スタブ作成　10月22日　北川裕基
