@@ -1,6 +1,8 @@
 package primeministers;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -113,13 +115,22 @@ public class Translator extends Object{
 	 * @author 10/27 橋坂侑汰
 	 */
 	public void perform() {
-		Downloader aDownloader = new Downloader();
-		//Reader aReader = new Reader(new File(Downloader.urlString()));
-		inputTable = aDownloader.table();
-		//↑これでCSVからのTableが完成する
-		outputTable = this.table(inputTable);
-		Writer aWriter = new Writer();
-		aWriter.table(outputTable);
+		try{
+
+			Downloader aDownloader = new Downloader();
+			//Reader aReader = new Reader(new File(Downloader.urlString()));
+			inputTable = aDownloader.table();
+			//↑これでCSVからのTableが完成する
+			outputTable = this.table(inputTable);
+			Writer aWriter = new Writer();
+			aWriter.table(outputTable);
+
+			Desktop desktop = Desktop.getDesktop();
+			desktop.open(Writer.filnameOfHTML());
+
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
 		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
 		return;

@@ -48,9 +48,10 @@ public class Downloader extends IO {
 			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
 			FileOutputStream out = new FileOutputStream(aFile,false);
 			
+			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read()) != -1){
-				out.write(b);
+			while((b = in.read(bytes)) != -1){
+				out.write(bytes,0,b);
 			}
 			out.close();
 			in.close();
@@ -103,9 +104,10 @@ public class Downloader extends IO {
 			File aFile = new File(picturesDir,"0"+indexOfPicture+".jpg");
 			FileOutputStream out = new FileOutputStream(aFile,false);
 
+			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read()) != -1){
-				out.write(b);
+			while((b = in.read(bytes)) != -1){
+				out.write(bytes,0,b);
 			}
 			out.close();
 			in.close();
