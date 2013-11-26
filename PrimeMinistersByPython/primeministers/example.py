@@ -8,12 +8,13 @@ import downloader
 import translator
 import writer
 
+
 class Example(object):
 	"""例題プログラム：総理大臣のCSVファイルをHTMLページへと変換する。"""
 
 	def main(self):
 		"""総理大臣のCSVファイルをHTMLページへと変換するメインプログラム。"""
-
+		
 		# ホームディレクトリの直下のデスクトップのディレクトリに、
 		# SouriDaijinというディレクトリを作成する。
 		# すでに存在すれば、当該ディレクトリを消して、新たに作り、

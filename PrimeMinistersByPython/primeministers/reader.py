@@ -15,4 +15,9 @@ class Reader(io.IO):
 
 	def table(self):
 		"""ダウンロードしたCSVファイルを読み込んでテーブルを応答する。"""
-		return None
+		csv_file = self.read_csv(self._csv_filename)
+		csv_table = table.Table(csv_file[0])
+		csv_file.pop(0)
+		for row in csv_file:
+			csv_table.add(tuple.Tuple(csv_table.attributes(), row))
+		return csv_table

@@ -14,16 +14,15 @@ class Downloader(io.IO):
 	def __init__(self, base_directory):
 		"""ダウンローダのコンストラクタ。"""
 		self._base_directory = base_directory
-		self.download_all()
 		return
 
 	def download_all(self):
 		"""すべて（総理大臣の情報を記したCSVファイル・画像ファイル群・縮小画像ファイル群）をダウンロードし、テーブルを応答する。"""
 		self.download_csv()
-		reader.Reader(self._base_directory+"PrimeMinisters.csv")
+		a_reader = reader.Reader(self._base_directory+"PrimeMinisters.csv")
 		for i in range(39, 63):
 			self.download_images(i)
-		return reader.table
+		return a_reader.table()
 
 	def download_csv(self):
 		"""総理大臣の情報を記したCSVファイルをダウンロードする。"""
