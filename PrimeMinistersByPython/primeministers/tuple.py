@@ -7,12 +7,17 @@ class Tuple(object):
 	def __init__(self, attributes, values):
 		"""属性リストと値リストからタプルを作るコンストラクタ。"""
 		self._attributes = attributes
-		self._values = values
+		self._values = self.set_values(values)
 		return
 
 	def __str__(self):
 		"""自分自身を文字列にして、それを応答する。"""
-		return None
+		res = self.__class__.__name__
+		res += " = "
+		res += "\nvalues - "
+		for var in self.values():
+			res += var+", "
+		return res
 
 	def attributes(self):
 		"""属性リストを応答する。"""
@@ -24,5 +29,8 @@ class Tuple(object):
 
 	def set_values(self, values):
 		"""値リストを設定する。"""
-		self._values.append(values)
-		return
+		a_list = values.split(",")
+		value_list = []
+		for var in a_list:
+			value_list.append(var)
+		return value_list

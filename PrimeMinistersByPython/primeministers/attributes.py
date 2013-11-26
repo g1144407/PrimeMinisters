@@ -6,15 +6,23 @@ class Attributes(object):
 
 	def __init__(self, kind_string):
 		"""入力用("input")または出力用("output")で属性リストを作成するコンストラクタ。"""
-		self._kind_string = kind_string.split(', ')
-		for i in range(len(self._kind_string)):
+		a_list = kind_string.split(', ')
+		for i in range(len(a_list)):
 			self._keys.append(i)
-			self._names.append(self._kind_string[i])
+			self._names.append(a_list[i])
 		return
 
 	def __str__(self):
 		"""自分自身を文字列にして、それを応答する。"""
-		return None
+		res = self.__class__.__name__
+		res += " = "
+		res += "\nkeys - "
+		for var in self.keys():
+			res += str(var)+", "
+		res += "\nnames - "
+		for var in self.names():
+			res += var+", "
+		return res
 
 	def keys(self):
 		"""キー群を応答する。"""
