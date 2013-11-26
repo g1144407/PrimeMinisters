@@ -28,8 +28,9 @@ class Downloader(io.IO):
 		"""総理大臣の情報を記したCSVファイルをダウンロードする。"""
 		url = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv"
 		
-		if not os.path.isdir(self._base_directory):
-			os.makedirs(self._base_directory)
+		if os.path.isdir(self._base_directory):
+			shutil.rmtree(self._base_directory)
+		os.makedirs(self._base_directory)
 		
 		path = self._base_directory+"PrimeMinisters.csv"
 		print path

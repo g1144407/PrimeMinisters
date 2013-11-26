@@ -8,6 +8,7 @@ class Table(object):
 
 	def __init__(self, kind_string):
 		"""テーブルのコンストラクタ。"""
+		self._attributes = attributes.Attributes(kind_string)
 		return
 
 	def __str__(self):
@@ -20,7 +21,7 @@ class Table(object):
 
 	def attributes(self):
 		"""属性リストを応答する。"""
-		return None
+		return self._attributes
 
 	def image_filenames(self):
 		"""画像ファイル群をリストにして応答する。"""

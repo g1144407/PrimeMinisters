@@ -6,6 +6,10 @@ class Attributes(object):
 
 	def __init__(self, kind_string):
 		"""入力用("input")または出力用("output")で属性リストを作成するコンストラクタ。"""
+		self._kind_string = kind_string.split(', ')
+		for i in range(len(self._kind_string)):
+			self._keys.append(i)
+			self._names.append(self._kind_string[i])
 		return
 
 	def __str__(self):
@@ -14,12 +18,13 @@ class Attributes(object):
 
 	def keys(self):
 		"""キー群を応答する。"""
-		return None
+		return self._keys
 
 	def names(self):
 		"""名前群を応答する。"""
-		return None
+		return self._names
 
 	def set_names(self, names):
 		"""名前群を設定する。"""
+		self._names.extend(names)
 		return
