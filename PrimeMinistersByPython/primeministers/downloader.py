@@ -33,7 +33,6 @@ class Downloader(io.IO):
 		os.makedirs(self._base_directory)
 		
 		path = self._base_directory+"PrimeMinisters.csv"
-		print path
 		urllib.urlretrieve(url,path)
 		return None
 

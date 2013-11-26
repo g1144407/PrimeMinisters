@@ -28,21 +28,22 @@ class Example(object):
 		# 入力となるテーブルを獲得する。
 		a_downloader = downloader.Downloader(base_directory)
 		a_table = a_downloader.download_all()
-		print "\n*** csv_table ***"
-		print a_table
+#		print "\n*** csv_table ***"
+#		print a_table
 
 		# トランスレータに入力となるテーブルを渡して変換してもらい、
 		# 出力となるテーブルを獲得する。
 		a_translator = translator.Translator(a_table)
 		a_table = a_translator.table()
-		print "\n*** html_table ***"
-		print a_table
+#		print "\n*** html_table ***"
+#		print a_table
 
 		# ライタに出力となるテーブルを渡して、
 		# Webページを作成してもらう。
 		a_writer = writer.Writer(base_directory, a_table)
 		a_writer.write()
 
+		print "変換が完了、htmlファイルを出力しました..."
 		return 0
 
 if __name__ == '__main__':

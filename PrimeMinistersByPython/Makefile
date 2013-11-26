@@ -13,7 +13,7 @@ clean:
 
 test:
 	python ${TARGET}
-	@open ~/Desktop/SouriDaijin/index.html
+	@open ~/Desktop/PrimeMinisters/index.html
 
 install:
 	if [ ! -e $(INSTDIR) ] ; then mkdir $(INSTDIR) ; fi
