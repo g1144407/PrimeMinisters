@@ -40,4 +40,4 @@ class Table(object):
 	
 	def tuples(self):
 		"""タプル群を応答する。"""
-		return None
+		return self._tuples

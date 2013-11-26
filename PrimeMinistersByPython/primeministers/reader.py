@@ -19,5 +19,6 @@ class Reader(io.IO):
 		csv_table = table.Table(csv_file[0])
 		csv_file.pop(0)
 		for row in csv_file:
-			csv_table.add(tuple.Tuple(csv_table.attributes(), row))
+			a_list = row.split(",")
+			csv_table.add(tuple.Tuple(csv_table.attributes(), a_list))
 		return csv_table
