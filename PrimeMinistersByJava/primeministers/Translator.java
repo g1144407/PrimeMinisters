@@ -1,7 +1,6 @@
 package primeministers;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,7 +13,8 @@ import javax.swing.JOptionPane;
  * スタブ作成
  * @author 10/23 橋坂侑汰
  */
-public class Translator extends Object{
+public class Translator extends Object
+{
 
 	/**
 	 * CSVに由来するテーブルを記憶するフィールド。
@@ -32,7 +32,8 @@ public class Translator extends Object{
 	 * トランスレータのコンストラクタ。
 	 * @author 10/27 橋坂侑汰
 	 */
-	public Translator() {
+	public Translator() 
+	{
 		super();
 		return;
 	}
@@ -45,7 +46,8 @@ public class Translator extends Object{
 	 * 在位日数、(3桁目にピリオドが入る)
 	 * @author 10/27 橋坂侑汰
 	 */
-	public String computeNumberOfDays(String periodString) {
+	public String computeNumberOfDays(String periodString) 
+	{
 		String[] period = periodString.split("〜");
 		int begin, end;
 		begin = period[0].indexOf("年");
@@ -57,7 +59,8 @@ public class Translator extends Object{
 		int dayFrom = Integer.valueOf(period[0].substring(begin+1, end));
 
 		int yearTo=0,monthTo=0,dayTo=0;
-		try{
+		try
+		{
 			begin = period[1].indexOf("年");
 			yearTo = Integer.valueOf(period[1].substring(0,begin));
 			end = period[1].indexOf("月");
@@ -65,7 +68,9 @@ public class Translator extends Object{
 			begin=end;
 			end = period[1].indexOf("日");
 			dayTo = Integer.valueOf(period[1].substring(begin+1, end));
-		} catch (ArrayIndexOutOfBoundsException e){
+		} 
+		catch (ArrayIndexOutOfBoundsException e)
+		{
 			//在位期間は2012年12月26日〜,となっている、現在の日時を補間
 			Calendar now = Calendar.getInstance();  //(1)オブジェクトの生成
 			yearTo = now.get(Calendar.YEAR);        //(2)現在の年を取得
@@ -79,7 +84,8 @@ public class Translator extends Object{
 		String days = Long.toString(( cal1.getTimeInMillis() - cal2.getTimeInMillis() ) / (24 * 60 * 60 * 1000 ) + 1);
 
 		int length;
-		if((length=days.length()) >3){
+		if((length=days.length()) >3)
+		{
 			String before = days.substring(0, length-3);
 			String after = days.substring(length-3);
 			days = before+","+after;
@@ -102,7 +108,8 @@ public class Translator extends Object{
 	 * <a href="images/***.jpg"><img src="thumbnails/***.jpg"></a></td>
 	 * @author 10/27 橋坂侑汰
 	 */
-	public String computeStringOfImage(String aString, Tuple aTuple, int no) {
+	public String computeStringOfImage(String aString, Tuple aTuple, int no) 
+	{
 		String imgTag=null;
 		if(aString!=null);
 		else if(aTuple!=null)imgTag = "<a name=\""+aTuple.values().get(aTuple.attributes().indexOfNo())+"\" href=\""+aTuple.values().get(aTuple.attributes().indexImage())+"\"><img class=\"borderless\" src=\""+aTuple.values().get(aTuple.attributes().indexOfThumbnail())+"\" width=\"25\" height=\"32\" alt=\"0"+aTuple.values().get(aTuple.attributes().indexOfNo())+".jpg\"></a>";
@@ -114,23 +121,20 @@ public class Translator extends Object{
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
 	 * @author 10/27 橋坂侑汰
 	 */
-	public void perform() {
-		try{
-
+	public void perform()
+	{
+		try
+		{
 			Downloader aDownloader = new Downloader();
-			//Reader aReader = new Reader(new File(Downloader.urlString()));
 			inputTable = aDownloader.table();
-			//↑これでCSVからのTableが完成する
 			outputTable = this.table(inputTable);
 			Writer aWriter = new Writer();
 			aWriter.table(outputTable);
 
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(Writer.filnameOfHTML());
-
-		}catch (IOException e) {
-			e.printStackTrace();
 		}
+		catch (IOException e) {e.printStackTrace();}
 		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
 		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
 		return;
@@ -144,12 +148,14 @@ public class Translator extends Object{
 	 * HTMLファイル向けに作成されたテーブル
 	 * @author 10/27 橋坂侑汰
 	 */
-	public Table table(Table csvTable) {
+	public Table table(Table csvTable) 
+	{
 		Table htmlTable = new Table();
 		Attributes htmlAttributes = new Attributes("人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像");
 		htmlTable.attributes(htmlAttributes);
 		Iterator<Tuple> ite = inputTable.tuples().iterator();
-		while (ite.hasNext()) {
+		while (ite.hasNext())
+		{
 			Tuple csvTuple = ite.next();
 			ArrayList<String> values = new ArrayList<String>();
 			values.add(csvTuple.values().get(csvTuple.attributes().indexOfNo()));//人目
@@ -167,5 +173,4 @@ public class Translator extends Object{
 		}
 		return htmlTable;
 	}
-
 }

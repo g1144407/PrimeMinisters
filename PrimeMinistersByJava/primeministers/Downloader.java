@@ -15,7 +15,8 @@ import java.net.URLConnection;
  * スタブ作成
  * @author 10/23 橋坂侑汰
  */
-public class Downloader extends IO {
+public class Downloader extends IO 
+{
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
@@ -26,9 +27,10 @@ public class Downloader extends IO {
 	 * ダウンローダのコンストラクタ。
 	 * @author 10/26 橋坂侑汰
 	 */
-	public Downloader() {
+	public Downloader() 
+	{
 		super();
-		url=null;
+		url = null;
 	}
 
 	/**
@@ -36,9 +38,11 @@ public class Downloader extends IO {
 	 * @author 10/26 和田祥吾
 	 * 
 	 */
-	public void downloadCSV() {
+	public void downloadCSV()
+	{
 
-		try{
+		try
+		{
 			url = Downloader.urlStringOfCSV();
 			URL aURL = new URL(url);
 
@@ -47,56 +51,58 @@ public class Downloader extends IO {
 
 			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
 			FileOutputStream out = new FileOutputStream(aFile,false);
-			
+
 			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read(bytes)) != -1){
+			while((b = in.read(bytes)) != -1)
+			{
 				out.write(bytes,0,b);
 			}
 			out.close();
 			in.close();
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();		
 		}
+		catch (FileNotFoundException e) {e.printStackTrace();} 
+		catch (MalformedURLException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();} 
+		catch (Exception e) {e.printStackTrace();}
 	}
 
 	/**
 	 * 総理大臣の画像群をダウンロードする。
 	 * @author 10/30 和田祥吾
 	 */
-	public void downloadImages() {
+	public void downloadImages() 
+	{
 		url = "images/";
-		for(int i=39;i<=62;i++){
+		for(int i=39;i<=62;i++)
+		{
 			this.downloadPictures(i);
 		}
 	}
-	
+
 	/**
 	 * 総理大臣の画像をダウンロードする。
-	 * @param indexOfPicture
-	 * 画像の番号
+	 * @param indexOfPicture　画像の番号
 	 * @author 10/30 和田祥吾
 	 */
-	private void downloadPictures(int indexOfPicture) {
-		try{
+	private void downloadPictures(int indexOfPicture) 
+	{
+		try
+		{
 			File picturesDir = null;
 			URL aURL = new URL("http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/"+url+"0"+indexOfPicture+".jpg");
 
 			URLConnection conn = aURL.openConnection();
 			InputStream in = conn.getInputStream();
 
-			if(url == "images/"){
+			if(url == "images/")
+			{
 				picturesDir = new File(IO.directoryOfPages(),"images");
 				if(picturesDir.exists());
 				else picturesDir.mkdirs();
 			}
-			else if(url == "thumbnails/"){
+			else if(url == "thumbnails/")
+			{
 				picturesDir = new File(IO.directoryOfPages(),"thumbnails");
 				if(picturesDir.exists());
 				else picturesDir.mkdirs();
@@ -106,43 +112,39 @@ public class Downloader extends IO {
 
 			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read(bytes)) != -1){
+			while((b = in.read(bytes)) != -1)
+			{
 				out.write(bytes,0,b);
 			}
 			out.close();
 			in.close();
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();		
 		}
+		catch (FileNotFoundException e) {e.printStackTrace();} 
+		catch (MalformedURLException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();} 
+		catch (Exception e) {e.printStackTrace();}
 	}
 
 	/**
 	 * 総理大臣のサムネイルをダウンロードする。
 	 * @author 10/30 和田祥吾
 	 */
-	public void downloadThumbnails() {
+	public void downloadThumbnails() 
+	{
 		url = "thumbnails/";
-		for(int i=39;i<=62;i++){
+		for(int i=39;i<=62;i++)
+		{
 			this.downloadPictures(i);
 		}
 	}
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群をダウロードし、テーブルで応答する。
+	 * @return table 総理大臣の情報をダウンロードしたテーブル
 	 * @author 10/30 和田祥吾
 	 */
-	public Table table() {
-		/*
-		 *恐らくここではダウンロードした画像群をTableのimages,thumbnailsに追加して、画像群が記憶されたtableを応答する
-		 *でもtableクラスにaddimages的なメソッドがない
-		 *どうやって追加する？
-		 */
+	public Table table() 
+	{
 		this.downloadCSV();
 		Reader aReader = new Reader(new File(Downloader.urlString()));
 		super.table = aReader.table();
@@ -153,29 +155,31 @@ public class Downloader extends IO {
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(相対パス)を文字列で応答する。
-	 * @return url
-	 * CSVの在処
+	 * @return url CSVの在処
 	 * @author 10/26 和田祥吾
 	 */
-	public String url() {
+	public String url() 
+	{
 		return url;
 	}
 
 	/**
 	 * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
-	 * @return
+	 * @return url 総理大臣の情報の在処
 	 * @author 10/30 和田祥吾
 	 */
-	public static String urlString() {
+	public static String urlString() 
+	{
 		return IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
-	 * @return
+	 * @return url CSVのファイルの在処
 	 * @author 10/26 和田祥吾
 	 */
-	public static String urlStringOfCSV() {
+	public static String urlStringOfCSV() 
+	{
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
 	}
 }

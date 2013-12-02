@@ -20,7 +20,8 @@ import java.util.ArrayList;
  * スタブ作成
  * @author 10/23 橋坂侑汰
  */
-public abstract class IO extends Object{
+public abstract class IO extends Object
+{
 
 	/**
 	 * テーブル（表：スプレッドシート）を記憶するフィールド。
@@ -30,15 +31,17 @@ public abstract class IO extends Object{
 	/**
 	 * 入出力のコンストラクタ。
 	 */
-	public void IO() {
-
+	public IO() 
+	{
+		this.table = null;
 	}
 
 	/**
 	 * ファイルやディレクトリを削除するクラスメソッド。
 	 * @param aFile
 	 */
-	public static void deleteFileOrDirectory(File aFile) {
+	public static void deleteFileOrDirectory(File aFile) 
+	{
 		if(aFile.exists())aFile.delete();
 	}
 
@@ -46,7 +49,8 @@ public abstract class IO extends Object{
 	 * 総理大臣ページのためのディレクトリ（存在しなければ作成して）を応答するクラスメソッド。
 	 * @return file
 	 */
-	public static File directoryOfPages() {
+	public static File directoryOfPages() 
+	{
 		File file = new File(System.getProperty("user.home")+"/Desktop","PrimeMinisters");
 		if(file.exists());
 		else file.mkdir();
@@ -55,9 +59,10 @@ public abstract class IO extends Object{
 
 	/**
 	 * 入出力する際の文字コードを応答するクラスメソッド。
-	 * @return
+	 * @return 文字コード
 	 */
-	public static String encodingSymbol() {
+	public static String encodingSymbol() 
+	{
 		return "UTF-8";
 	}
 	/**
@@ -66,7 +71,8 @@ public abstract class IO extends Object{
 	 * @param aFile
 	 * @return aCollection
 	 */
-	public static ArrayList<String> readTextFromFile(File aFile) {
+	public static ArrayList<String> readTextFromFile(File aFile) 
+	{
 		ArrayList<String> aCollection = new ArrayList<String>();
 
 		try
@@ -94,7 +100,8 @@ public abstract class IO extends Object{
 	 * @param fileString
 	 * @return aCollection
 	 */
-	public static ArrayList<String> readTextFromFile(String fileString) {
+	public static ArrayList<String> readTextFromFile(String fileString) 
+	{
 		File aFile = new File(fileString);
 		ArrayList<String> aCollection = IO.readTextFromFile(aFile);
 		return aCollection;
@@ -106,7 +113,8 @@ public abstract class IO extends Object{
 	 * @param urlString
 	 * @return aCollection
 	 */
-	public static ArrayList<String> readTextFromURL(String urlString) {
+	public static ArrayList<String> readTextFromURL(String urlString) 
+	{
 		URL aURL = null;
 		try { aURL = new URL(urlString); }
 		catch (MalformedURLException anException) { anException.printStackTrace(); }
@@ -120,7 +128,8 @@ public abstract class IO extends Object{
 	 * @param aURL
 	 * @return aCollection
 	 */
-	public static ArrayList<String> readTextFromURL(URL aURL) {
+	public static ArrayList<String> readTextFromURL(URL aURL) 
+	{
 		ArrayList<String> aCollection = new ArrayList<String>();
 
 		try
@@ -149,7 +158,8 @@ public abstract class IO extends Object{
 	 * @param separators
 	 * @return result
 	 */
-	public static ArrayList<String> splitString(String string, String separators) {
+	public static ArrayList<String> splitString(String string, String separators) 
+	{
 		ArrayList<Integer> indexes;
 		int stop;
 		int index;
@@ -187,7 +197,8 @@ public abstract class IO extends Object{
 	 * テーブルを応答する。
 	 * @return
 	 */
-	public Table table() {
+	public Table table() 
+	{
 		return this.table;
 	}
 
@@ -197,7 +208,8 @@ public abstract class IO extends Object{
 	 * @param aCollection
 	 * @param aFile
 	 */
-	public static void writeText(ArrayList<String> aCollection, File aFile) {
+	public static void writeText(ArrayList<String> aCollection, File aFile) 
+	{
 		try
 		{
 			FileOutputStream outputStream = new FileOutputStream(aFile);
@@ -221,10 +233,10 @@ public abstract class IO extends Object{
 	 * @param aCollection
 	 * @param fileString
 	 */
-	public static void writeText(ArrayList<String> aCollection, String fileString) {
+	public static void writeText(ArrayList<String> aCollection, String fileString)
+	{
 		File aFile = new File(fileString);
 		IO.writeText(aCollection, aFile);
 		return;
 	}
-
 }

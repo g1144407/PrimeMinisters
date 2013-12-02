@@ -8,7 +8,8 @@ import java.util.Iterator;
  * スタブ作成
  * @author 10/23 橋坂侑汰
  */
-public class Reader extends IO {
+public class Reader extends IO 
+{
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルを記憶するフィールド
@@ -21,11 +22,12 @@ public class Reader extends IO {
 	 * filenameを初期化する
 	 * @author 10/26 橋坂侑汰
 	 */
-	public Reader() {
+	public Reader() 
+	{
 		super();
 		filename = null;
 	}
-	
+
 	/**
 	 * コンストラクタ
 	 * filenameを初期化する
@@ -33,7 +35,8 @@ public class Reader extends IO {
 	 * 与えられたcsvファイル
 	 * @author 10/26 橋坂侑汰
 	 */
-	public Reader(File csvfile) {
+	public Reader(File csvfile) 
+	{
 		super();
 		filename = csvfile;
 	}
@@ -44,7 +47,8 @@ public class Reader extends IO {
 	 * File型のローカルなCSVファイル
 	 * @author 10/26 橋坂侑汰
 	 */
-	public File filenameOfCSV() {
+	public File filenameOfCSV() 
+	{
 		return filename.getAbsoluteFile();
 	}
 
@@ -54,7 +58,8 @@ public class Reader extends IO {
 	 * File型のCSVファイル
 	 * @author 10/26 橋坂侑汰
 	 */
-	public File filename() {
+	public File filename() 
+	{
 		return filename;
 	}
 
@@ -64,27 +69,25 @@ public class Reader extends IO {
 	 * CSVファイルをTupleへと変換した変換物群を格納したTable
 	 * @author 10/26 橋坂侑汰
 	 */
-	//*未完成*IOのTableメソッドをオーバーライドしているので...?
-	//DownloadにもTableメソッドがあるので複数のTableが作成されてしまう？
-	//IOのprivate Tableフィールドを使い回すのかなぁ
-	public Table table() {
+	public Table table()
+	{
 		boolean first = true;
 		Table tempTable = new Table();
-		//if(tempTable==null)tempTable = new Table();
 		Iterator<String> ite = super.readTextFromFile(filename).iterator();
-		//String型にTuple一行が詰まっている > カンマやダブルクウォーツで分割してArrayList型へと変換 > Tuple(Attributes ArrayList)作成
-		while (ite.hasNext()) {
-			if(first){
+		while (ite.hasNext())
+		{
+			if(first)
+			{
 				Attributes tempAttributes = new Attributes(ite.next());
 				tempTable.attributes(tempAttributes);
 				first=false;
 			}
-			else{
+			else
+			{
 				Tuple tempTuple = new Tuple(tempTable.attributes(), super.splitString(ite.next(), ","));
 				tempTable.add(tempTuple);
 			}
 		}
 		return tempTable;
 	}
-
 }
