@@ -13,7 +13,7 @@ import java.net.URLConnection;
  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
  *
  * スタブ作成
- * @author 10/23 橋坂侑汰
+ * 10/23 橋坂侑汰
  */
 public class Downloader extends IO 
 {
@@ -25,7 +25,7 @@ public class Downloader extends IO
 
 	/**
 	 * ダウンローダのコンストラクタ。
-	 * @author 10/26 橋坂侑汰
+	 *  10/26 橋坂侑汰
 	 */
 	public Downloader() 
 	{
@@ -35,7 +35,7 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルをダウンロードする。
-	 * @author 10/26 和田祥吾
+	 *  10/26 和田祥吾
 	 * 
 	 */
 	public void downloadCSV()
@@ -69,7 +69,7 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の画像群をダウンロードする。
-	 * @author 10/30 和田祥吾
+	 *  10/30 和田祥吾
 	 */
 	public void downloadImages() 
 	{
@@ -82,8 +82,8 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の画像をダウンロードする。
+	 * 10/30 和田祥吾
 	 * @param indexOfPicture　画像の番号
-	 * @author 10/30 和田祥吾
 	 */
 	private void downloadPictures(int indexOfPicture) 
 	{
@@ -127,7 +127,7 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣のサムネイルをダウンロードする。
-	 * @author 10/30 和田祥吾
+	 *  10/30 和田祥吾
 	 */
 	public void downloadThumbnails() 
 	{
@@ -140,8 +140,8 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群をダウロードし、テーブルで応答する。
+	 *  10/30 和田祥吾
 	 * @return table 総理大臣の情報をダウンロードしたテーブル
-	 * @author 10/30 和田祥吾
 	 */
 	public Table table() 
 	{
@@ -155,8 +155,8 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(相対パス)を文字列で応答する。
+	 * 10/26 和田祥吾
 	 * @return url CSVの在処
-	 * @author 10/26 和田祥吾
 	 */
 	public String url() 
 	{
@@ -165,8 +165,8 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
+	 * 10/30 和田祥吾
 	 * @return url 総理大臣の情報の在処
-	 * @author 10/30 和田祥吾
 	 */
 	public static String urlString() 
 	{
@@ -175,8 +175,8 @@ public class Downloader extends IO
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
+	 * 10/26 和田祥吾
 	 * @return url CSVのファイルの在処
-	 * @author 10/26 和田祥吾
 	 */
 	public static String urlStringOfCSV() 
 	{

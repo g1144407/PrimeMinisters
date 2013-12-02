@@ -11,21 +11,21 @@ import java.util.Iterator;
  * ライタ：総理大臣の情報のテーブルをHTMLページとして書き出す。
  *
  * スタブ作成
- * @author 10/23 橋坂侑汰
+ *  10/23 橋坂侑汰
  */
 public class Writer extends IO 
 {
 
 	/**
 	 * ライタのコンストラクタ。
-	 * @author 10/29 和田祥吾
+	 *  10/29 和田祥吾
 	 */
 	public Writer() {}
 
 	/**
 	 * 属性リストを応答する。
-	 * @return Attributes
-	 * @author 10/29 和田祥吾
+	 *  10/29 和田祥吾
+	 * @return Attributes 属性リスト
 	 */
 	public Attributes attributes() 
 	{
@@ -34,8 +34,8 @@ public class Writer extends IO
 
 	/**
 	 * ローカルなHTMLのインデックスファイル(index.html)を応答するクラスメソッド。
-	 * @return File
-	 * @author 10/29 和田祥吾
+	 * 10/29 和田祥吾
+	 * @return File ローカルなファイル
 	 */
 	public static File filnameOfHTML()
 	{
@@ -44,9 +44,9 @@ public class Writer extends IO
 
 	/**
 	 * HTMLページを基にするテーブルを受け取って、インデックスファイル(index.html)に書き出す。
-	 * @param aTable
-	 * @return 
-	 * @author 10/29 和田祥吾
+	 * 10/29 和田祥吾
+	 * @param aTable テーブル
+	 * @return Table テーブル
 	 */
 	public Table table(Table aTable) 
 	{
@@ -65,8 +65,8 @@ public class Writer extends IO
 
 	/**
 	 * タプル群を応答する。
-	 * @return ArrayList<Tuple>
-	 * @author 10/29 和田祥吾
+	 * 10/29 和田祥吾
+	 * @return ArrayList<Tuple>  タプル群
 	 */
 	public ArrayList<Tuple> tuples() 
 	{
@@ -75,8 +75,8 @@ public class Writer extends IO
 
 	/**
 	 * 属性リストを書き出す。
+	 * 10/29 和田祥吾
 	 * @param outputWriter
-	 * @author 10/29 和田祥吾
 	 */
 	public void writeAttributesOn(BufferedWriter outputWriter) 
 	{
@@ -95,8 +95,8 @@ public class Writer extends IO
 
 	/**
 	 * フッタを書き出す。
+	 * 10/29 和田祥吾
 	 * @param outputWriter
-	 * @author 10/29 和田祥吾
 	 */
 	public void writeFooterOn(BufferedWriter outputWriter) 
 	{
@@ -123,8 +123,8 @@ public class Writer extends IO
 
 	/**
 	 * ヘッダを書き出す。
+	 * 10/29 和田祥吾
 	 * @param outputWriter
-	 * @author 10/29 和田祥吾
 	 */
 	public void writeHeaderOn(BufferedWriter outputWriter) 
 	{
@@ -137,8 +137,8 @@ public class Writer extends IO
 
 	/**
 	 * ボディを書き出す。
+	 *  10/29 和田祥吾
 	 * @param outputWriter
-	 * @author 10/29 和田祥吾
 	 */
 	public void writeTableBodyOn(BufferedWriter outputWriter) 
 	{
@@ -153,8 +153,8 @@ public class Writer extends IO
 
 	/**
 	 * タプル群を書き出す。
+	 * 10/29 和田祥吾
 	 * @param outputWriter
-	 * @author 10/29 和田祥吾
 	 */
 	public void writeTuplesOn(BufferedWriter outputWriter)
 	{

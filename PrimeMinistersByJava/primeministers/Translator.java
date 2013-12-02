@@ -11,26 +11,26 @@ import javax.swing.JOptionPane;
  * トランスレータ：総理大臣のCSVファイルをHTMLページへと変換するプログラム。
  *
  * スタブ作成
- * @author 10/23 橋坂侑汰
+ *  10/23 橋坂侑汰
  */
 public class Translator extends Object
 {
 
 	/**
 	 * CSVに由来するテーブルを記憶するフィールド。
-	 * @author 10/27 橋坂侑汰
+	 *  10/27 橋坂侑汰
 	 */
 	private Table inputTable;
 
 	/**
 	 * HTMLに由来するテーブルを記憶するフィールド。
-	 * @author 10/27 橋坂侑汰
+	 *  10/27 橋坂侑汰
 	 */
 	private Table outputTable;
 
 	/**
 	 * トランスレータのコンストラクタ。
-	 * @author 10/27 橋坂侑汰
+	 *  10/27 橋坂侑汰
 	 */
 	public Translator() 
 	{
@@ -40,11 +40,11 @@ public class Translator extends Object
 
 	/**
 	 * 在位日数を計算して、それを文字列にして応答する。
+	 * 10/27 橋坂侑汰
 	 * @param periodString
 	 * 在位期間の文字列、(1982年11月27日〜1987年11月6日)のような形
 	 * @return days
 	 * 在位日数、(3桁目にピリオドが入る)
-	 * @author 10/27 橋坂侑汰
 	 */
 	public String computeNumberOfDays(String periodString) 
 	{
@@ -95,8 +95,7 @@ public class Translator extends Object
 
 	/**
 	 * サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。
-	 * 全ての引数を使う実装が思い浮かばない...
-	 * ３種類の動作を実装する？だったらオーバーロードだし謎
+	 * 10/27 橋坂侑汰
 	 * @param aString
 	 * サムネイル画像と画像のString文字列で参照？
 	 * @param aTuple
@@ -106,7 +105,6 @@ public class Translator extends Object
 	 * @return imgTag
 	 * HTMLのタグとなる文字列、構文は下記(リサイズ等のオプションは省略)
 	 * <a href="images/***.jpg"><img src="thumbnails/***.jpg"></a></td>
-	 * @author 10/27 橋坂侑汰
 	 */
 	public String computeStringOfImage(String aString, Tuple aTuple, int no) 
 	{
@@ -119,7 +117,7 @@ public class Translator extends Object
 
 	/** 
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
-	 * @author 10/27 橋坂侑汰
+	 *  10/27 橋坂侑汰
 	 */
 	public void perform()
 	{
@@ -142,11 +140,11 @@ public class Translator extends Object
 
 	/**
 	 * 総理大臣のCSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換して、それを応答する。
-	 * @param aTable
+	 * 10/27 橋坂侑汰
+	 * @param csvTable
 	 * CSVファイルより作成されたテーブル
 	 * @return htmlTabel
 	 * HTMLファイル向けに作成されたテーブル
-	 * @author 10/27 橋坂侑汰
 	 */
 	public Table table(Table csvTable) 
 	{

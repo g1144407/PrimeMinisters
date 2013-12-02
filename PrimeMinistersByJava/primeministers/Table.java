@@ -36,6 +36,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 *　タプルを追加する。
+	 *	@param tuple タプル
 	 */
 	public void add(Tuple tuple)
 	{
@@ -44,6 +45,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * 属性リストを応答する。
+	 * @return attributes 属性リスト
 	 */
 	public Attributes attributes()
 	{
@@ -52,6 +54,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * 属性リストを設定する。
+	 * @param instanceOfAttributes 属性リスト
 	 */
 	public void attributes(Attributes instanceOfAttributes)
 	{
@@ -60,6 +63,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * 画像群を応答する。
+	 * @return 画像群
 	 */
 	public ArrayList<BufferedImage> images()
 	{
@@ -76,6 +80,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * サムネイル画像群を応答する。
+	 * @return thumbnails サムネイル群
 	 */
 	public ArrayList<BufferedImage> thumbnails()
 	{
@@ -83,7 +88,7 @@ public class Table extends Object
 	}
 	/**
 	 * 自分自身を文字列にして、それを応答する。
-	 * @author 11/12 和田祥吾
+	 *  11/12 和田祥吾
 	 */
 	public String toString() 
 	{
@@ -93,6 +98,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * タプル群を応答する。
+	 * @return tuples タプル群 
 	 */
 	public ArrayList<Tuple> tuples()
 	{

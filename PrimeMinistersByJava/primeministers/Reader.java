@@ -6,21 +6,21 @@ import java.util.Iterator;
  * リーダ：総理大臣の情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。
  *
  * スタブ作成
- * @author 10/23 橋坂侑汰
+ * 10/23 橋坂侑汰
  */
 public class Reader extends IO 
 {
 
 	/**
 	 * 総理大臣の情報を記したCSVファイルを記憶するフィールド
-	 * @author 10/26 橋坂侑汰
+	 *  10/26 橋坂侑汰
 	 */
 	private File filename;
 
 	/**
 	 * コンストラクタ
 	 * filenameを初期化する
-	 * @author 10/26 橋坂侑汰
+	 * 10/26 橋坂侑汰
 	 */
 	public Reader() 
 	{
@@ -31,9 +31,9 @@ public class Reader extends IO
 	/**
 	 * コンストラクタ
 	 * filenameを初期化する
+	 * 10/26 橋坂侑汰
 	 * @param csvfile
 	 * 与えられたcsvファイル
-	 * @author 10/26 橋坂侑汰
 	 */
 	public Reader(File csvfile) 
 	{
@@ -43,9 +43,9 @@ public class Reader extends IO
 
 	/**
 	 * ダウンロードしたCSVファイルのローカルなファイルを応答する
+	 * 10/26 橋坂侑汰
 	 * @return file
 	 * File型のローカルなCSVファイル
-	 * @author 10/26 橋坂侑汰
 	 */
 	public File filenameOfCSV() 
 	{
@@ -54,9 +54,9 @@ public class Reader extends IO
 
 	/**
 	 * ダウンロードしたCSVファイルを応答する
+	 * 10/26 橋坂侑汰
 	 * @return filename
 	 * File型のCSVファイル
-	 * @author 10/26 橋坂侑汰
 	 */
 	public File filename() 
 	{
@@ -65,9 +65,9 @@ public class Reader extends IO
 
 	/**
 	 * ダウンロードしたCSVファイルを読み込んでテーブルを応答する。
+	 *  10/26 橋坂侑汰
 	 * @return tempTable
 	 * CSVファイルをTupleへと変換した変換物群を格納したTable
-	 * @author 10/26 橋坂侑汰
 	 */
 	public Table table()
 	{

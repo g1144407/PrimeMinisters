@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * 入出力：リーダ・ダウンローダ・ライタを抽象する。
  * 
  * スタブ作成
- * @author 10/23 橋坂侑汰
+ *  10/23 橋坂侑汰
  */
 public abstract class IO extends Object
 {
@@ -31,14 +31,11 @@ public abstract class IO extends Object
 	/**
 	 * 入出力のコンストラクタ。
 	 */
-	public IO() 
-	{
-		this.table = null;
-	}
+	public IO(){}
 
 	/**
 	 * ファイルやディレクトリを削除するクラスメソッド。
-	 * @param aFile
+	 * @param aFile 削除するファイル
 	 */
 	public static void deleteFileOrDirectory(File aFile) 
 	{
@@ -47,7 +44,7 @@ public abstract class IO extends Object
 
 	/**
 	 * 総理大臣ページのためのディレクトリ（存在しなければ作成して）を応答するクラスメソッド。
-	 * @return file
+	 * @return file デスクトップ上に作成されたPrimiMinistersディレクトリ
 	 */
 	public static File directoryOfPages() 
 	{
@@ -68,8 +65,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * @param aFile
-	 * @return aCollection
+	 * @param aFile 指定されたファイル
+	 * @return aCollection 行リスト
 	 */
 	public static ArrayList<String> readTextFromFile(File aFile) 
 	{
@@ -97,8 +94,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定されたファイル文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * @param fileString
-	 * @return aCollection
+	 * @param fileString 指定されたファイル文字列
+	 * @return aCollection 行リスト
 	 */
 	public static ArrayList<String> readTextFromFile(String fileString) 
 	{
@@ -110,8 +107,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定されたURL文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * @param urlString
-	 * @return aCollection
+	 * @param urlString 指定されたURL文字列
+	 * @return aCollection 行リスト
 	 */
 	public static ArrayList<String> readTextFromURL(String urlString) 
 	{
@@ -125,8 +122,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定されたURLからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * @param aURL
-	 * @return aCollection
+	 * @param aURL 指定されたURL
+	 * @return aCollection 行リスト
 	 */
 	public static ArrayList<String> readTextFromURL(URL aURL) 
 	{
@@ -154,9 +151,9 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 文字列をセパレータで分割したトークン列を応答するクラスメソッド。
-	 * @param string
-	 * @param separators
-	 * @return result
+	 * @param string　文字列
+	 * @param separators セパレータ
+	 * @return result 文字列をセパレータで分割したトークン列
 	 */
 	public static ArrayList<String> splitString(String string, String separators) 
 	{
@@ -195,7 +192,7 @@ public abstract class IO extends Object
 
 	/**
 	 * テーブルを応答する。
-	 * @return
+	 * @return　テーブル
 	 */
 	public Table table() 
 	{
@@ -205,8 +202,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定された行リストを、指定されたファイルに書き出すクラスメソッド。
-	 * @param aCollection
-	 * @param aFile
+	 * @param aCollection 指定された行リスト
+	 * @param aFile 指定されたファイル
 	 */
 	public static void writeText(ArrayList<String> aCollection, File aFile) 
 	{
@@ -230,8 +227,8 @@ public abstract class IO extends Object
 	/**
 	 * 10月25日 和田祥吾
 	 * 指定された行リストを、指定されたファイル名のファイルに書き出すクラスメソッド。
-	 * @param aCollection
-	 * @param fileString
+	 * @param aCollection 指定された行リスト
+	 * @param fileString 指定されたファイル名
 	 */
 	public static void writeText(ArrayList<String> aCollection, String fileString)
 	{
