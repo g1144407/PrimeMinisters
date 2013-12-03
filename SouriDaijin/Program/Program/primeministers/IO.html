@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rev="made" href="http://www.cc.kyoto-su.ac.jp/~atsushi/">
+<link rel="index" href="index.html">
+<style type="text/css">
+<!--
+body {
+     background-color : #ffffff;
+     margin : 20px;
+     padding : 10px;
+     font-family : serif;
+     font-size : 10pt;
+}
+-->
+</style>
+<title>IO</title>
+</head>
+<body>
+<pre>
+<a name="line.1">  1</a>: package primeministers;
+<a name="line.2">  2</a>: 
+<a name="line.3">  3</a>: import java.io.BufferedReader;
+<a name="line.4">  4</a>: import java.io.BufferedWriter;
+<a name="line.5">  5</a>: import java.io.File;
+<a name="line.6">  6</a>: import java.io.FileInputStream;
+<a name="line.7">  7</a>: import java.io.FileNotFoundException;
+<a name="line.8">  8</a>: import java.io.FileOutputStream;
+<a name="line.9">  9</a>: import java.io.InputStream;
+<a name="line.10"> 10</a>: import java.io.InputStreamReader;
+<a name="line.11"> 11</a>: import java.io.IOException;
+<a name="line.12"> 12</a>: import java.io.OutputStreamWriter;
+<a name="line.13"> 13</a>: import java.io.UnsupportedEncodingException;
+<a name="line.14"> 14</a>: import java.net.MalformedURLException;
+<a name="line.15"> 15</a>: import java.net.URL;
+<a name="line.16"> 16</a>: import java.util.ArrayList;
+<a name="line.17"> 17</a>: /**
+<a name="line.18"> 18</a>:  * 入出力：リーダ・ダウンローダ・ライタを抽象する。
+<a name="line.19"> 19</a>:  * 
+<a name="line.20"> 20</a>:  * スタブ作成
+<a name="line.21"> 21</a>:  *  10/23 橋坂侑汰
+<a name="line.22"> 22</a>:  */
+<a name="line.23"> 23</a>: public abstract class IO extends Object
+<a name="line.24"> 24</a>: {
+<a name="line.25"> 25</a>: 
+<a name="line.26"> 26</a>:     /**
+<a name="line.27"> 27</a>:      * テーブル（表：スプレッドシート）を記憶するフィールド。
+<a name="line.28"> 28</a>:      */
+<a name="line.29"> 29</a>:     protected Table table;
+<a name="line.30"> 30</a>: 
+<a name="line.31"> 31</a>:     /**
+<a name="line.32"> 32</a>:      * 入出力のコンストラクタ。
+<a name="line.33"> 33</a>:      */
+<a name="line.34"> 34</a>:     public IO(){}
+<a name="line.35"> 35</a>: 
+<a name="line.36"> 36</a>:     /**
+<a name="line.37"> 37</a>:      * ファイルやディレクトリを削除するクラスメソッド。
+<a name="line.38"> 38</a>:      * @param aFile 削除するファイル
+<a name="line.39"> 39</a>:      */
+<a name="line.40"> 40</a>:     public static void deleteFileOrDirectory(File aFile) 
+<a name="line.41"> 41</a>:     {
+<a name="line.42"> 42</a>:         if(aFile.exists())aFile.delete();
+<a name="line.43"> 43</a>:     }
+<a name="line.44"> 44</a>: 
+<a name="line.45"> 45</a>:     /**
+<a name="line.46"> 46</a>:      * 総理大臣ページのためのディレクトリ（存在しなければ作成して）を応答するクラスメソッド。
+<a name="line.47"> 47</a>:      * @return file デスクトップ上に作成されたPrimiMinistersディレクトリ
+<a name="line.48"> 48</a>:      */
+<a name="line.49"> 49</a>:     public static File directoryOfPages() 
+<a name="line.50"> 50</a>:     {
+<a name="line.51"> 51</a>:         File file = new File(System.getProperty(&quot;user.home&quot;)+&quot;/Desktop&quot;,&quot;PrimeMinisters&quot;);
+<a name="line.52"> 52</a>:         if(file.exists());
+<a name="line.53"> 53</a>:         else file.mkdir();
+<a name="line.54"> 54</a>:         return file;
+<a name="line.55"> 55</a>:     }
+<a name="line.56"> 56</a>: 
+<a name="line.57"> 57</a>:     /**
+<a name="line.58"> 58</a>:      * 入出力する際の文字コードを応答するクラスメソッド。
+<a name="line.59"> 59</a>:      * @return 文字コード
+<a name="line.60"> 60</a>:      */
+<a name="line.61"> 61</a>:     public static String encodingSymbol() 
+<a name="line.62"> 62</a>:     {
+<a name="line.63"> 63</a>:         return &quot;UTF-8&quot;;
+<a name="line.64"> 64</a>:     }
+<a name="line.65"> 65</a>:     /**
+<a name="line.66"> 66</a>:      * 10月25日 和田祥吾
+<a name="line.67"> 67</a>:      * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
+<a name="line.68"> 68</a>:      * @param aFile 指定されたファイル
+<a name="line.69"> 69</a>:      * @return aCollection 行リスト
+<a name="line.70"> 70</a>:      */
+<a name="line.71"> 71</a>:     public static ArrayList&lt;String&gt; readTextFromFile(File aFile) 
+<a name="line.72"> 72</a>:     {
+<a name="line.73"> 73</a>:         ArrayList&lt;String&gt; aCollection = new ArrayList&lt;String&gt;();
+<a name="line.74"> 74</a>: 
+<a name="line.75"> 75</a>:         try
+<a name="line.76"> 76</a>:         {
+<a name="line.77"> 77</a>:             FileInputStream inputStream = new FileInputStream(aFile);
+<a name="line.78"> 78</a>:             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, IO.encodingSymbol());
+<a name="line.79"> 79</a>:             BufferedReader inputReader = new BufferedReader(inputStreamReader);
+<a name="line.80"> 80</a>: 
+<a name="line.81"> 81</a>:             String aString = null;
+<a name="line.82"> 82</a>:             while ((aString = inputReader.readLine()) != null)
+<a name="line.83"> 83</a>:             {
+<a name="line.84"> 84</a>:                 aCollection.add(aString);
+<a name="line.85"> 85</a>:             }
+<a name="line.86"> 86</a>: 
+<a name="line.87"> 87</a>:             inputReader.close();
+<a name="line.88"> 88</a>:         }
+<a name="line.89"> 89</a>:         catch (FileNotFoundException anException) { anException.printStackTrace(); }
+<a name="line.90"> 90</a>:         catch (UnsupportedEncodingException anException) { anException.printStackTrace(); }
+<a name="line.91"> 91</a>:         catch (IOException anException) { anException.printStackTrace(); }
+<a name="line.92"> 92</a>:         return aCollection;
+<a name="line.93"> 93</a>:     }
+<a name="line.94"> 94</a>:     /**
+<a name="line.95"> 95</a>:      * 10月25日 和田祥吾
+<a name="line.96"> 96</a>:      * 指定されたファイル文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
+<a name="line.97"> 97</a>:      * @param fileString 指定されたファイル文字列
+<a name="line.98"> 98</a>:      * @return aCollection 行リスト
+<a name="line.99"> 99</a>:      */
+<a name="line.100">100</a>:     public static ArrayList&lt;String&gt; readTextFromFile(String fileString) 
+<a name="line.101">101</a>:     {
+<a name="line.102">102</a>:         File aFile = new File(fileString);
+<a name="line.103">103</a>:         ArrayList&lt;String&gt; aCollection = IO.readTextFromFile(aFile);
+<a name="line.104">104</a>:         return aCollection;
+<a name="line.105">105</a>:     }
+<a name="line.106">106</a>: 
+<a name="line.107">107</a>:     /**
+<a name="line.108">108</a>:      * 10月25日 和田祥吾
+<a name="line.109">109</a>:      * 指定されたURL文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
+<a name="line.110">110</a>:      * @param urlString 指定されたURL文字列
+<a name="line.111">111</a>:      * @return aCollection 行リスト
+<a name="line.112">112</a>:      */
+<a name="line.113">113</a>:     public static ArrayList&lt;String&gt; readTextFromURL(String urlString) 
+<a name="line.114">114</a>:     {
+<a name="line.115">115</a>:         URL aURL = null;
+<a name="line.116">116</a>:         try { aURL = new URL(urlString); }
+<a name="line.117">117</a>:         catch (MalformedURLException anException) { anException.printStackTrace(); }
+<a name="line.118">118</a>:         ArrayList&lt;String&gt; aCollection = IO.readTextFromURL(aURL);
+<a name="line.119">119</a>:         return aCollection;
+<a name="line.120">120</a>:     }
+<a name="line.121">121</a>: 
+<a name="line.122">122</a>:     /**
+<a name="line.123">123</a>:      * 10月25日 和田祥吾
+<a name="line.124">124</a>:      * 指定されたURLからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
+<a name="line.125">125</a>:      * @param aURL 指定されたURL
+<a name="line.126">126</a>:      * @return aCollection 行リスト
+<a name="line.127">127</a>:      */
+<a name="line.128">128</a>:     public static ArrayList&lt;String&gt; readTextFromURL(URL aURL) 
+<a name="line.129">129</a>:     {
+<a name="line.130">130</a>:         ArrayList&lt;String&gt; aCollection = new ArrayList&lt;String&gt;();
+<a name="line.131">131</a>: 
+<a name="line.132">132</a>:         try
+<a name="line.133">133</a>:         {
+<a name="line.134">134</a>:             InputStream inputStream = aURL.openStream();
+<a name="line.135">135</a>:             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, IO.encodingSymbol());
+<a name="line.136">136</a>:             BufferedReader inputReader = new BufferedReader(inputStreamReader);
+<a name="line.137">137</a>: 
+<a name="line.138">138</a>:             String aString = null;
+<a name="line.139">139</a>:             while ((aString = inputReader.readLine()) != null)
+<a name="line.140">140</a>:             {
+<a name="line.141">141</a>:                 aCollection.add(aString);
+<a name="line.142">142</a>:             }
+<a name="line.143">143</a>: 
+<a name="line.144">144</a>:             inputReader.close();
+<a name="line.145">145</a>:         }
+<a name="line.146">146</a>:         catch (UnsupportedEncodingException anException) { anException.printStackTrace(); }
+<a name="line.147">147</a>:         catch (IOException anException) { anException.printStackTrace(); }
+<a name="line.148">148</a>:         return aCollection;
+<a name="line.149">149</a>:     }
+<a name="line.150">150</a>: 
+<a name="line.151">151</a>:     /**
+<a name="line.152">152</a>:      * 10月25日 和田祥吾
+<a name="line.153">153</a>:      * 文字列をセパレータで分割したトークン列を応答するクラスメソッド。
+<a name="line.154">154</a>:      * @param string　文字列
+<a name="line.155">155</a>:      * @param separators セパレータ
+<a name="line.156">156</a>:      * @return result 文字列をセパレータで分割したトークン列
+<a name="line.157">157</a>:      */
+<a name="line.158">158</a>:     public static ArrayList&lt;String&gt; splitString(String string, String separators) 
+<a name="line.159">159</a>:     {
+<a name="line.160">160</a>:         ArrayList&lt;Integer&gt; indexes;
+<a name="line.161">161</a>:         int stop;
+<a name="line.162">162</a>:         int index;
+<a name="line.163">163</a>:         ArrayList&lt;String&gt; result;
+<a name="line.164">164</a>: 
+<a name="line.165">165</a>:         indexes = new ArrayList&lt;Integer&gt;();
+<a name="line.166">166</a>:         indexes.add(-1);
+<a name="line.167">167</a>:         stop = string.length();
+<a name="line.168">168</a>:         for (index = 0; index &lt; stop; index++)
+<a name="line.169">169</a>:         {
+<a name="line.170">170</a>:             if ((separators.indexOf(string.charAt(index))) &gt;= 0)
+<a name="line.171">171</a>:             {
+<a name="line.172">172</a>:                 indexes.add(index);
+<a name="line.173">173</a>:             }
+<a name="line.174">174</a>:         }
+<a name="line.175">175</a>:         indexes.add(stop);
+<a name="line.176">176</a>:         stop = indexes.size() - 1;
+<a name="line.177">177</a>:         result = new ArrayList&lt;String&gt;();
+<a name="line.178">178</a>:         for (index = 0; index &lt; stop; index++)
+<a name="line.179">179</a>:         {
+<a name="line.180">180</a>:             int start;
+<a name="line.181">181</a>:             int end;
+<a name="line.182">182</a>: 
+<a name="line.183">183</a>:             start = indexes.get(index) + 1;
+<a name="line.184">184</a>:             end = indexes.get(index + 1) - 1;
+<a name="line.185">185</a>:             if (end &gt;= start)
+<a name="line.186">186</a>:             {
+<a name="line.187">187</a>:                 result.add(string.substring(start, end + 1));
+<a name="line.188">188</a>:             }
+<a name="line.189">189</a>:         }
+<a name="line.190">190</a>:         return result;
+<a name="line.191">191</a>:     }
+<a name="line.192">192</a>: 
+<a name="line.193">193</a>:     /**
+<a name="line.194">194</a>:      * テーブルを応答する。
+<a name="line.195">195</a>:      * @return　テーブル
+<a name="line.196">196</a>:      */
+<a name="line.197">197</a>:     public Table table() 
+<a name="line.198">198</a>:     {
+<a name="line.199">199</a>:         return this.table;
+<a name="line.200">200</a>:     }
+<a name="line.201">201</a>: 
+<a name="line.202">202</a>:     /**
+<a name="line.203">203</a>:      * 10月25日 和田祥吾
+<a name="line.204">204</a>:      * 指定された行リストを、指定されたファイルに書き出すクラスメソッド。
+<a name="line.205">205</a>:      * @param aCollection 指定された行リスト
+<a name="line.206">206</a>:      * @param aFile 指定されたファイル
+<a name="line.207">207</a>:      */
+<a name="line.208">208</a>:     public static void writeText(ArrayList&lt;String&gt; aCollection, File aFile) 
+<a name="line.209">209</a>:     {
+<a name="line.210">210</a>:         try
+<a name="line.211">211</a>:         {
+<a name="line.212">212</a>:             FileOutputStream outputStream = new FileOutputStream(aFile);
+<a name="line.213">213</a>:             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, IO.encodingSymbol());
+<a name="line.214">214</a>:             BufferedWriter outputWriter = new BufferedWriter(outputStreamWriter);
+<a name="line.215">215</a>: 
+<a name="line.216">216</a>:             for (String aString : aCollection)
+<a name="line.217">217</a>:             {
+<a name="line.218">218</a>:                 outputWriter.write(aString + &quot;\n&quot;);
+<a name="line.219">219</a>:             }
+<a name="line.220">220</a>: 
+<a name="line.221">221</a>:             outputWriter.close();
+<a name="line.222">222</a>:         }
+<a name="line.223">223</a>:         catch (IOException anException) { anException.printStackTrace(); }
+<a name="line.224">224</a>:         return;
+<a name="line.225">225</a>:     }
+<a name="line.226">226</a>: 
+<a name="line.227">227</a>:     /**
+<a name="line.228">228</a>:      * 10月25日 和田祥吾
+<a name="line.229">229</a>:      * 指定された行リストを、指定されたファイル名のファイルに書き出すクラスメソッド。
+<a name="line.230">230</a>:      * @param aCollection 指定された行リスト
+<a name="line.231">231</a>:      * @param fileString 指定されたファイル名
+<a name="line.232">232</a>:      */
+<a name="line.233">233</a>:     public static void writeText(ArrayList&lt;String&gt; aCollection, String fileString)
+<a name="line.234">234</a>:     {
+<a name="line.235">235</a>:         File aFile = new File(fileString);
+<a name="line.236">236</a>:         IO.writeText(aCollection, aFile);
+<a name="line.237">237</a>:         return;
+<a name="line.238">238</a>:     }
+<a name="line.239">239</a>: }
+</pre>
+<hr>
+<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
+</body>
+</html>

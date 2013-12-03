@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rev="made" href="http://www.cc.kyoto-su.ac.jp/~atsushi/">
+<link rel="index" href="index.html">
+<style type="text/css">
+<!--
+body {
+     background-color : #ffffff;
+     margin : 20px;
+     padding : 10px;
+     font-family : serif;
+     font-size : 10pt;
+}
+-->
+</style>
+<title>Translator</title>
+</head>
+<body>
+<pre>
+<a name="line.1">  1</a>: package primeministers;
+<a name="line.2">  2</a>: 
+<a name="line.3">  3</a>: import java.awt.Desktop;
+<a name="line.4">  4</a>: import java.io.IOException;
+<a name="line.5">  5</a>: import java.util.ArrayList;
+<a name="line.6">  6</a>: import java.util.Calendar;
+<a name="line.7">  7</a>: import java.util.Iterator;
+<a name="line.8">  8</a>: 
+<a name="line.9">  9</a>: import javax.swing.JOptionPane;
+<a name="line.10"> 10</a>: /**
+<a name="line.11"> 11</a>:  * トランスレータ：総理大臣のCSVファイルをHTMLページへと変換するプログラム。
+<a name="line.12"> 12</a>:  *
+<a name="line.13"> 13</a>:  * スタブ作成
+<a name="line.14"> 14</a>:  *  10/23 橋坂侑汰
+<a name="line.15"> 15</a>:  */
+<a name="line.16"> 16</a>: public class Translator extends Object
+<a name="line.17"> 17</a>: {
+<a name="line.18"> 18</a>: 
+<a name="line.19"> 19</a>:     /**
+<a name="line.20"> 20</a>:      * CSVに由来するテーブルを記憶するフィールド。
+<a name="line.21"> 21</a>:      *  10/27 橋坂侑汰
+<a name="line.22"> 22</a>:      */
+<a name="line.23"> 23</a>:     private Table inputTable;
+<a name="line.24"> 24</a>: 
+<a name="line.25"> 25</a>:     /**
+<a name="line.26"> 26</a>:      * HTMLに由来するテーブルを記憶するフィールド。
+<a name="line.27"> 27</a>:      *  10/27 橋坂侑汰
+<a name="line.28"> 28</a>:      */
+<a name="line.29"> 29</a>:     private Table outputTable;
+<a name="line.30"> 30</a>: 
+<a name="line.31"> 31</a>:     /**
+<a name="line.32"> 32</a>:      * トランスレータのコンストラクタ。
+<a name="line.33"> 33</a>:      *  10/27 橋坂侑汰
+<a name="line.34"> 34</a>:      */
+<a name="line.35"> 35</a>:     public Translator() 
+<a name="line.36"> 36</a>:     {
+<a name="line.37"> 37</a>:         super();
+<a name="line.38"> 38</a>:         return;
+<a name="line.39"> 39</a>:     }
+<a name="line.40"> 40</a>: 
+<a name="line.41"> 41</a>:     /**
+<a name="line.42"> 42</a>:      * 在位日数を計算して、それを文字列にして応答する。
+<a name="line.43"> 43</a>:      * 10/27 橋坂侑汰
+<a name="line.44"> 44</a>:      * @param periodString
+<a name="line.45"> 45</a>:      * 在位期間の文字列、(1982年11月27日〜1987年11月6日)のような形
+<a name="line.46"> 46</a>:      * @return days
+<a name="line.47"> 47</a>:      * 在位日数、(3桁目にピリオドが入る)
+<a name="line.48"> 48</a>:      */
+<a name="line.49"> 49</a>:     public String computeNumberOfDays(String periodString) 
+<a name="line.50"> 50</a>:     {
+<a name="line.51"> 51</a>:         String[] period = periodString.split(&quot;〜&quot;);
+<a name="line.52"> 52</a>:         int begin, end;
+<a name="line.53"> 53</a>:         begin = period[0].indexOf(&quot;年&quot;);
+<a name="line.54"> 54</a>:         int yearFrom = Integer.valueOf(period[0].substring(0,begin));
+<a name="line.55"> 55</a>:         end = period[0].indexOf(&quot;月&quot;);
+<a name="line.56"> 56</a>:         int monthFrom = Integer.valueOf(period[0].substring(begin+1, end));
+<a name="line.57"> 57</a>:         begin=end;
+<a name="line.58"> 58</a>:         end = period[0].indexOf(&quot;日&quot;);
+<a name="line.59"> 59</a>:         int dayFrom = Integer.valueOf(period[0].substring(begin+1, end));
+<a name="line.60"> 60</a>: 
+<a name="line.61"> 61</a>:         int yearTo=0,monthTo=0,dayTo=0;
+<a name="line.62"> 62</a>:         try
+<a name="line.63"> 63</a>:         {
+<a name="line.64"> 64</a>:             begin = period[1].indexOf(&quot;年&quot;);
+<a name="line.65"> 65</a>:             yearTo = Integer.valueOf(period[1].substring(0,begin));
+<a name="line.66"> 66</a>:             end = period[1].indexOf(&quot;月&quot;);
+<a name="line.67"> 67</a>:             monthTo = Integer.valueOf(period[1].substring(begin+1, end));
+<a name="line.68"> 68</a>:             begin=end;
+<a name="line.69"> 69</a>:             end = period[1].indexOf(&quot;日&quot;);
+<a name="line.70"> 70</a>:             dayTo = Integer.valueOf(period[1].substring(begin+1, end));
+<a name="line.71"> 71</a>:         } 
+<a name="line.72"> 72</a>:         catch (ArrayIndexOutOfBoundsException e)
+<a name="line.73"> 73</a>:         {
+<a name="line.74"> 74</a>:             //在位期間は2012年12月26日〜,となっている、現在の日時を補間
+<a name="line.75"> 75</a>:             Calendar now = Calendar.getInstance();  //(1)オブジェクトの生成
+<a name="line.76"> 76</a>:             yearTo = now.get(Calendar.YEAR);        //(2)現在の年を取得
+<a name="line.77"> 77</a>:             monthTo = now.get(Calendar.MONTH) + 1;  //(3)現在の月を取得
+<a name="line.78"> 78</a>:             dayTo = now.get(Calendar.DATE);         //(4)現在の日を取得
+<a name="line.79"> 79</a>:         }
+<a name="line.80"> 80</a>:         Calendar cal1 = Calendar.getInstance();
+<a name="line.81"> 81</a>:         Calendar cal2 = Calendar.getInstance();
+<a name="line.82"> 82</a>:         cal1.set(yearTo, monthTo-1, dayTo, 0, 0, 0);
+<a name="line.83"> 83</a>:         cal2.set(yearFrom, monthFrom-1, dayFrom, 0, 0, 0);
+<a name="line.84"> 84</a>:         String days = Long.toString(( cal1.getTimeInMillis() - cal2.getTimeInMillis() ) / (24 * 60 * 60 * 1000 ) + 1);
+<a name="line.85"> 85</a>: 
+<a name="line.86"> 86</a>:         int length;
+<a name="line.87"> 87</a>:         if((length=days.length()) &gt;3)
+<a name="line.88"> 88</a>:         {
+<a name="line.89"> 89</a>:             String before = days.substring(0, length-3);
+<a name="line.90"> 90</a>:             String after = days.substring(length-3);
+<a name="line.91"> 91</a>:             days = before+&quot;,&quot;+after;
+<a name="line.92"> 92</a>:         }
+<a name="line.93"> 93</a>:         return days;
+<a name="line.94"> 94</a>:     }
+<a name="line.95"> 95</a>: 
+<a name="line.96"> 96</a>:     /**
+<a name="line.97"> 97</a>:      * サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。
+<a name="line.98"> 98</a>:      * 10/27 橋坂侑汰
+<a name="line.99"> 99</a>:      * @param aString
+<a name="line.100">100</a>:      * サムネイル画像と画像のString文字列で参照？
+<a name="line.101">101</a>:      * @param aTuple
+<a name="line.102">102</a>:      * HTMLタグを作成するためのタプル
+<a name="line.103">103</a>:      * @param no
+<a name="line.104">104</a>:      * int型で何人目かで参照する？
+<a name="line.105">105</a>:      * @return imgTag
+<a name="line.106">106</a>:      * HTMLのタグとなる文字列、構文は下記(リサイズ等のオプションは省略)
+<a name="line.107">107</a>:      * &lt;a href=&quot;images/***.jpg&quot;&gt;&lt;img src=&quot;thumbnails/***.jpg&quot;&gt;&lt;/a&gt;&lt;/td&gt;
+<a name="line.108">108</a>:      */
+<a name="line.109">109</a>:     public String computeStringOfImage(String aString, Tuple aTuple, int no) 
+<a name="line.110">110</a>:     {
+<a name="line.111">111</a>:         String imgTag=null;
+<a name="line.112">112</a>:         if(aString!=null);
+<a name="line.113">113</a>:         else if(aTuple!=null)imgTag = &quot;&lt;a name=\&quot;&quot;+aTuple.values().get(aTuple.attributes().indexOfNo())+&quot;\&quot; href=\&quot;&quot;+aTuple.values().get(aTuple.attributes().indexImage())+&quot;\&quot;&gt;&lt;img class=\&quot;borderless\&quot; src=\&quot;&quot;+aTuple.values().get(aTuple.attributes().indexOfThumbnail())+&quot;\&quot; width=\&quot;25\&quot; height=\&quot;32\&quot; alt=\&quot;0&quot;+aTuple.values().get(aTuple.attributes().indexOfNo())+&quot;.jpg\&quot;&gt;&lt;/a&gt;&quot;;
+<a name="line.114">114</a>:         else imgTag = &quot;&lt;a name=\&quot;&quot;+no+&quot;\&quot; href=\&quot;images/0&quot;+no+&quot;.jpg\&quot;&gt;&lt;img class=\&quot;borderless\&quot; src=\&quot;thumbnails/0&quot;+no+&quot;.jpg\&quot; width=\&quot;25\&quot; height=\&quot;32\&quot; alt=\&quot;0&quot;+no+&quot;.jpg\&quot;&gt;&lt;/a&gt;&quot;;
+<a name="line.115">115</a>:         return imgTag;
+<a name="line.116">116</a>:     }
+<a name="line.117">117</a>: 
+<a name="line.118">118</a>:     /** 
+<a name="line.119">119</a>:      * 総理大臣のCSVファイルをHTMLページへ変換する
+<a name="line.120">120</a>:      *  10/27 橋坂侑汰
+<a name="line.121">121</a>:      */
+<a name="line.122">122</a>:     public void perform()
+<a name="line.123">123</a>:     {
+<a name="line.124">124</a>:         try
+<a name="line.125">125</a>:         {
+<a name="line.126">126</a>:             Downloader aDownloader = new Downloader();
+<a name="line.127">127</a>:             inputTable = aDownloader.table();
+<a name="line.128">128</a>:             outputTable = this.table(inputTable);
+<a name="line.129">129</a>:             Writer aWriter = new Writer();
+<a name="line.130">130</a>:             aWriter.table(outputTable);
+<a name="line.131">131</a>: 
+<a name="line.132">132</a>:             Desktop desktop = Desktop.getDesktop();
+<a name="line.133">133</a>:             desktop.open(Writer.filnameOfHTML());
+<a name="line.134">134</a>:         }
+<a name="line.135">135</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.136">136</a>:         String aString = &quot;総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n&quot;;
+<a name="line.137">137</a>:         JOptionPane.showMessageDialog(null, aString, &quot;報告&quot;, JOptionPane.PLAIN_MESSAGE);
+<a name="line.138">138</a>:         return;
+<a name="line.139">139</a>:     }
+<a name="line.140">140</a>: 
+<a name="line.141">141</a>:     /**
+<a name="line.142">142</a>:      * 総理大臣のCSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換して、それを応答する。
+<a name="line.143">143</a>:      * 10/27 橋坂侑汰
+<a name="line.144">144</a>:      * @param csvTable
+<a name="line.145">145</a>:      * CSVファイルより作成されたテーブル
+<a name="line.146">146</a>:      * @return htmlTabel
+<a name="line.147">147</a>:      * HTMLファイル向けに作成されたテーブル
+<a name="line.148">148</a>:      */
+<a name="line.149">149</a>:     public Table table(Table csvTable) 
+<a name="line.150">150</a>:     {
+<a name="line.151">151</a>:         Table htmlTable = new Table();
+<a name="line.152">152</a>:         Attributes htmlAttributes = new Attributes(&quot;人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像&quot;);
+<a name="line.153">153</a>:         htmlTable.attributes(htmlAttributes);
+<a name="line.154">154</a>:         Iterator&lt;Tuple&gt; ite = inputTable.tuples().iterator();
+<a name="line.155">155</a>:         while (ite.hasNext())
+<a name="line.156">156</a>:         {
+<a name="line.157">157</a>:             Tuple csvTuple = ite.next();
+<a name="line.158">158</a>:             ArrayList&lt;String&gt; values = new ArrayList&lt;String&gt;();
+<a name="line.159">159</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfNo()));//人目
+<a name="line.160">160</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfOrder()));//代
+<a name="line.161">161</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfName()));//氏名
+<a name="line.162">162</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfKana()));//ふりがな
+<a name="line.163">163</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfPeriod()));//在位期間
+<a name="line.164">164</a>:             values.add(this.computeNumberOfDays(csvTuple.values().get(csvTuple.attributes().indexOfPeriod())));//在位日数
+<a name="line.165">165</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfSchool()));//出身校
+<a name="line.166">166</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfParty()));//政党
+<a name="line.167">167</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexPlace()));//出身地
+<a name="line.168">168</a>:             values.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvTuple.values().get(csvTuple.attributes().indexOfNo()))));//画像
+<a name="line.169">169</a>:             Tuple tempTuple = new Tuple(htmlTable.attributes(), values);
+<a name="line.170">170</a>:             htmlTable.add(tempTuple);
+<a name="line.171">171</a>:         }
+<a name="line.172">172</a>:         return htmlTable;
+<a name="line.173">173</a>:     }
+<a name="line.174">174</a>: }
+</pre>
+<hr>
+<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
+</body>
+</html>
