@@ -1,6 +1,7 @@
 package primeministers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 /**
  * リーダ：総理大臣の情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。
@@ -72,19 +73,29 @@ public class Reader extends IO
 	public Table table()
 	{
 		boolean first = true;
+		String temp = null;
 		Table tempTable = new Table();
 		Iterator<String> ite = super.readTextFromFile(filename).iterator();
+		int elements = 0;
 		while (ite.hasNext())
 		{
 			if(first)
 			{
-				Attributes tempAttributes = new Attributes(ite.next());
+				String line = ite.next();
+				elements = super.splitString(line, ",").size();
+				Attributes tempAttributes = new Attributes(line);
 				tempTable.attributes(tempAttributes);
 				first=false;
 			}
 			else
 			{
-				Tuple tempTuple = new Tuple(tempTable.attributes(), super.splitString(ite.next(), ","));
+				String line=ite.next();
+				ArrayList<String> list = super.splitString(line, ",");
+				if(list.size() < elements){
+					line += " "+ite.next();
+				}
+				line = line.replaceAll("\"", "");
+				Tuple tempTuple = new Tuple(tempTable.attributes(), super.splitString(line, ","));
 				tempTable.add(tempTuple);
 			}
 		}
