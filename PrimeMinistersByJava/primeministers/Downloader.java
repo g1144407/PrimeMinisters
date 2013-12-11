@@ -1,5 +1,6 @@
 package primeministers;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+
 
 /**
  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
@@ -45,21 +46,20 @@ public class Downloader extends IO
 		{
 			url = Downloader.urlStringOfCSV();
 			URL aURL = new URL(url);
-
-			URLConnection conn = aURL.openConnection();
-			InputStream in = conn.getInputStream();
-
+			
+			InputStream inputStream = aURL.openStream();
+		
 			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
-			FileOutputStream out = new FileOutputStream(aFile,false);
+			FileOutputStream outputStream = new FileOutputStream(aFile,false);
 
 			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read(bytes)) != -1)
+			while((b = inputStream.read(bytes)) != -1)
 			{
-				out.write(bytes,0,b);
+				outputStream.write(bytes,0,b);
 			}
-			out.close();
-			in.close();
+			outputStream.close();
+			inputStream.close();
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();} 
 		catch (MalformedURLException e) {e.printStackTrace();} 
@@ -92,8 +92,7 @@ public class Downloader extends IO
 			File picturesDir = null;
 			URL aURL = new URL("http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/"+url+"0"+indexOfPicture+".jpg");
 
-			URLConnection conn = aURL.openConnection();
-			InputStream in = conn.getInputStream();
+			InputStream inputStream = aURL.openStream();
 
 			if(url == "images/")
 			{
@@ -108,16 +107,16 @@ public class Downloader extends IO
 				else picturesDir.mkdirs();
 			}
 			File aFile = new File(picturesDir,"0"+indexOfPicture+".jpg");
-			FileOutputStream out = new FileOutputStream(aFile,false);
+			FileOutputStream outputStream = new FileOutputStream(aFile,false);
 
 			byte[] bytes = new byte[512];
 			int b;
-			while((b = in.read(bytes)) != -1)
+			while((b = inputStream.read(bytes)) != -1)
 			{
-				out.write(bytes,0,b);
+				outputStream.write(bytes,0,b);
 			}
-			out.close();
-			in.close();
+			outputStream.close();
+			inputStream.close();
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();} 
 		catch (MalformedURLException e) {e.printStackTrace();}
@@ -180,6 +179,6 @@ public class Downloader extends IO
 	 */
 	public static String urlStringOfCSV() 
 	{
-		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
+		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters2.csv";
 	}
 }

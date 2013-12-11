@@ -2,8 +2,9 @@ package primeministers;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -53,7 +54,8 @@ public class Writer extends IO
 		super.table = aTable;
 		try 
 		{
-			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Writer.filnameOfHTML()));
+			OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
+			BufferedWriter outputWriter = new BufferedWriter(outputStream);
 			writeHeaderOn(outputWriter);
 			writeTableBodyOn(outputWriter);
 			writeFooterOn(outputWriter);
