@@ -119,6 +119,21 @@ public class Translator extends Object
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
 	 *  10/27 橋坂侑汰
 	 */
+	/*
+	 * IO3種(D/R/W)をスレッド化する
+	 * 現在は逐次処理に
+	 * １：ダウンローダーがリーダーを呼びtableを作成
+	 * ２：tableをこのクラスで処理しhtmltableを作成
+	 * ３：ライターがhtmltableを書き出し
+	 * となっている。
+	 * 平行同期制御をさせるとなると、モニタになるであろうtableの状態を持たせる？
+	 * たとえば『tableがnull』『Downloaderからのtable』とか
+	 * 新たにそれを制御する変数とsyncronizedなgetterを用意
+	 * Readerからtableを受け取りこのクラスで処理するなら下記サイトを参考
+	 * http://blogs.wankuma.com/nagise/archive/2007/08/21/91284.aspx
+	 * Writerは予めtable依存しない部分を出力させておく
+	 * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
+	 */
 	public void perform()
 	{
 		try
@@ -152,21 +167,25 @@ public class Translator extends Object
 		Attributes htmlAttributes = new Attributes("人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像");
 		htmlTable.attributes(htmlAttributes);
 		Iterator<Tuple> ite = inputTable.tuples().iterator();
+		Attributes csvAttributes = csvTable.attributes();
 		while (ite.hasNext())
 		{
 			Tuple csvTuple = ite.next();
-			ArrayList<String> values = new ArrayList<String>();
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfNo()));//人目
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfOrder()));//代
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfName()));//氏名
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfKana()));//ふりがな
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfPeriod()));//在位期間
-			values.add(this.computeNumberOfDays(csvTuple.values().get(csvTuple.attributes().indexOfPeriod())));//在位日数
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfSchool()));//出身校
-			values.add(csvTuple.values().get(csvTuple.attributes().indexOfParty()));//政党
-			values.add(csvTuple.values().get(csvTuple.attributes().indexPlace()));//出身地
-			values.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvTuple.values().get(csvTuple.attributes().indexOfNo()))));//画像
-			Tuple tempTuple = new Tuple(htmlTable.attributes(), values);
+			ArrayList<String> csvValues = csvTuple.values();
+			ArrayList<String> htmlValues = new ArrayList<String>();
+			
+			htmlValues.add(csvValues.get(csvAttributes.indexOfNo()));//人目
+			htmlValues.add(csvValues.get(csvAttributes.indexOfOrder()));//代
+			htmlValues.add(csvValues.get(csvAttributes.indexOfName()));//氏名
+			htmlValues.add(csvValues.get(csvAttributes.indexOfKana()));//ふりがな
+			htmlValues.add(csvValues.get(csvAttributes.indexOfPeriod()));//在位期間
+			htmlValues.add(this.computeNumberOfDays(csvValues.get(csvAttributes.indexOfPeriod())));//在位日数
+			htmlValues.add(csvValues.get(csvAttributes.indexOfSchool()));//出身校
+			htmlValues.add(csvValues.get(csvAttributes.indexOfParty()));//政党
+			htmlValues.add(csvValues.get(csvAttributes.indexPlace()));//出身地
+			htmlValues.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvValues.get(csvAttributes.indexOfNo()))));//画像
+			
+			Tuple tempTuple = new Tuple(htmlTable.attributes(), htmlValues);
 			htmlTable.add(tempTuple);
 		}
 		return htmlTable;
