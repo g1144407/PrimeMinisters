@@ -20,18 +20,32 @@ import java.util.ArrayList;
  * スタブ作成
  *  10/23 橋坂侑汰
  */
-public abstract class IO extends Object
+public abstract class IO extends Thread
 {
 
 	/**
-	 * テーブル（表：スプレッドシート）を記憶するフィールド。
+	 * テーブル（表：スプレッドシート）を記憶するフィールド
 	 */
 	protected Table table;
+	
+	/**
+	 * テーブルの状態を記憶するフィールド
+	 * 0:初期、null
+	 * 1:Downloader後
+	 * 2:Readerへcsvファイル設定後
+	 * 2:Reader後
+	 * 4:Translator後
+	 * 12/15追加
+	 * @author sueSama
+	 */
+	protected int tableStatus;
 
 	/**
 	 * 入出力のコンストラクタ。
 	 */
-	public IO(){}
+	public IO(){
+		tableStatus=0;
+	}
 
 	/**
 	 * ファイルやディレクトリを削除するクラスメソッド。
@@ -235,5 +249,27 @@ public abstract class IO extends Object
 		File aFile = new File(fileString);
 		IO.writeText(aCollection, aFile);
 		return;
+	}
+	
+	/**
+	 * 現在のtableの状態を返すメソッド
+	 * @return tableStatus 現在のtableの状態
+	 * 12/15追加
+	 * @author sueSama
+	 */
+	synchronized public int getTableStatus(){
+		return this.tableStatus;
+	}
+	
+	/**
+	 * 現在のtableの状態を更新するメソッド
+	 * @param table 更新するtable
+	 * @param status 更新するtableの状態
+	 * 12/15追加
+	 * @author sueSama
+	 */
+	synchronized void setTableStatus(Table table, int status){
+		this.table = table;
+		this.tableStatus=status;
 	}
 }

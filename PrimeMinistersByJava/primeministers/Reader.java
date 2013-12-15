@@ -12,6 +12,18 @@ import java.util.Iterator;
 public class Reader extends IO 
 {
 
+	/** 
+	 * 同期用オブジェクト
+	 * @author sueSama
+	 * 12/15
+	 */
+	private Object lock;
+	 /** 処理完了フラグ
+	  * @author sueSama
+	  * 12/15
+	  */
+	
+    private boolean flag;
 	/**
 	 * 総理大臣の情報を記したCSVファイルを記憶するフィールド
 	 *  10/26 橋坂侑汰
@@ -27,6 +39,7 @@ public class Reader extends IO
 	{
 		super();
 		filename = null;
+		lock = new Object();
 	}
 
 	/**
@@ -100,5 +113,48 @@ public class Reader extends IO
 			}
 		}
 		return tempTable;
+	}
+	
+	/**
+	 * csvファイルのこのクラスのfilenameへと保持させるメソッド
+	 * @param csvFile 保持させたいcsvファイル
+	 * @author sueSama
+	 * 12/15
+	 */
+	public void setFilename(File csvFile){
+		this.filename = csvFile;
+		super.setTableStatus(super.table, 2);
+	}
+	
+	/**
+	 * スレッド処理を行うメソッド
+	 * @author sueSama
+	 * 12/15
+	 */
+	public void run() {
+		while(true){
+			if(super.getTableStatus()==2)break;
+		}
+		super.setTableStatus(this.table(), 3);
+		synchronized(this.lock) {
+			this.flag = true;		// 終了フラグを立てる
+            this.lock.notifyAll();	// wait()しているスレッドを起こす
+        }
+	}
+	
+	/**
+	 * スレッド処理によりcsvファイルからのtableが作成され次第応答するメソッド
+	 * @return table csvファイルからのtable
+	 * @throws InterruptedException 同期処理失敗？
+	 * @author sueSama
+	 * 12/15
+	 */
+	public Table retrunTable() throws InterruptedException{
+		synchronized(this.lock) {
+			while (!this.flag) {
+				this.lock.wait();
+			}
+			return super.table;
+		}
 	}
 }

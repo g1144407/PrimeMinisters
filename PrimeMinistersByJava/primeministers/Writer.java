@@ -17,11 +17,25 @@ import java.util.Iterator;
 public class Writer extends IO 
 {
 
+	/** 
+	 * 同期用オブジェクト
+	 * @author sueSama
+	 * 12/15
+	 */
+	private Object lock;
+	 /** 処理完了フラグ
+	  * @author sueSama
+	  * 12/15
+	  */
+	private boolean flag;
+	
 	/**
 	 * ライタのコンストラクタ。
 	 *  10/29 和田祥吾
 	 */
-	public Writer() {}
+	public Writer() {
+		lock = new Object();
+	}
 
 	/**
 	 * 属性リストを応答する。
@@ -178,5 +192,54 @@ public class Writer extends IO
 			}
 		} 
 		catch (IOException e) {e.printStackTrace();}
+	}
+	
+	/**
+	 * スレッド処理を行うメソッド
+	 * @author sueSama
+	 * 12/15
+	 */
+	public void run() {
+		try 
+		{
+			OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
+			BufferedWriter outputWriter = new BufferedWriter(outputStream);
+			writeHeaderOn(outputWriter);
+			while(true){
+				if(super.getTableStatus() == 4)break;
+			}
+			writeTableBodyOn(outputWriter);
+			writeFooterOn(outputWriter);
+			outputWriter.close();
+		}
+		catch (IOException e) {e.printStackTrace();}
+		synchronized(this.lock) {
+			this.flag = true;		// 終了フラグを立てる
+            this.lock.notifyAll();	// wait()しているスレッドを起こす
+        }
+	}
+
+	/**
+	 * html用tableを設定するメソッド（スレッド用）
+	 * @param outputTable html用table
+	 * @author sueSama
+	 * 12/15
+	 */
+	public void setTable(Table outputTable) {
+		super.setTableStatus(outputTable, 4);
+	}
+
+	/**
+	 * 出力の完了を応答するメソッド（スレッド用）
+	 * @author sueSama
+	 * 12/15
+	 * @throws InterruptedException 同期処理失敗？
+	 */
+	public void completeWrite() throws InterruptedException {
+		synchronized(this.lock) {
+			while (!this.flag) {
+				this.lock.wait();
+			}
+		}
 	}
 }

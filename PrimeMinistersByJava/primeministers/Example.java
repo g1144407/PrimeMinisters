@@ -14,7 +14,9 @@ public class Example extends Object
 		Translator aTranslator = new Translator();
 
 		// トランスレータに総理大臣のCSVファイルをHTMLページへ変換するように依頼する。
-		aTranslator.perform();
+		//aTranslator.perform();
+		// トランスレータに総理大臣のCSVファイルをHTMLページへ（スレッドを用いて）変換するように依頼する。
+		aTranslator.threadPerform();
 
 		return;
 	}

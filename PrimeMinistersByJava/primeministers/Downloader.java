@@ -16,9 +16,21 @@ import java.net.URL;
  * スタブ作成
  * 10/23 橋坂侑汰
  */
-public class Downloader extends IO 
+public class Downloader extends IO
 {
 
+	/** 
+	 * 同期用オブジェクト
+	 * @author sueSama
+	 * 12/15
+	 */
+	private Object lock;
+	 /** 処理完了フラグ
+	  * @author sueSama
+	  * 12/15
+	  */
+    private boolean flag;
+	
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
 	 */
@@ -32,6 +44,7 @@ public class Downloader extends IO
 	{
 		super();
 		url = null;
+		lock = new Object();
 	}
 
 	/**
@@ -180,5 +193,35 @@ public class Downloader extends IO
 	public static String urlStringOfCSV() 
 	{
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters2.csv";
+	}
+
+	/**
+	 * スレッド処理を行うメソッド
+	 * @author sueSama
+	 * 12/15
+	 */
+	public void run() {
+		this.downloadCSV();
+		super.setTableStatus(new Table(), 1);
+		synchronized(this.lock) {
+			this.flag = true;		// 終了フラグを立てる
+            this.lock.notifyAll();	// wait()しているスレッドを起こす
+        }
+		this.downloadImages();
+		this.downloadThumbnails();
+	}
+	
+	/**
+	 * tableの作成完了後、ダウンロードしたCSVファイルを応答するスレッド用メソッド
+	 * @author sueSama
+	 * 12/15
+	 */
+	public File returnCSV() throws InterruptedException{
+		synchronized(this.lock) {
+			while (!this.flag) {
+				this.lock.wait();
+			}
+			return new File(Downloader.urlString());
+		}
 	}
 }

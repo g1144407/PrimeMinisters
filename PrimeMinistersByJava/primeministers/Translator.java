@@ -119,21 +119,6 @@ public class Translator extends Object
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
 	 *  10/27 橋坂侑汰
 	 */
-	/*
-	 * IO3種(D/R/W)をスレッド化する
-	 * 現在は逐次処理に
-	 * １：ダウンローダーがリーダーを呼びtableを作成
-	 * ２：tableをこのクラスで処理しhtmltableを作成
-	 * ３：ライターがhtmltableを書き出し
-	 * となっている。
-	 * 平行同期制御をさせるとなると、モニタになるであろうtableの状態を持たせる？
-	 * たとえば『tableがnull』『Downloaderからのtable』とか
-	 * 新たにそれを制御する変数とsyncronizedなgetterを用意
-	 * Readerからtableを受け取りこのクラスで処理するなら下記サイトを参考
-	 * http://blogs.wankuma.com/nagise/archive/2007/08/21/91284.aspx
-	 * Writerは予めtable依存しない部分を出力させておく
-	 * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
-	 */
 	public void perform()
 	{
 		try
@@ -148,6 +133,53 @@ public class Translator extends Object
 			desktop.open(Writer.filnameOfHTML());
 		}
 		catch (IOException e) {e.printStackTrace();}
+		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
+		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
+		return;
+	}
+	
+	/**
+	 * 総理大臣のCSVファイルをHTMLページへ変換する（IO周りのスレッド化）
+	 * 12/15
+	 * @author sueSama
+	 */
+	/*
+	 * IO3種(D/R/W)をスレッド化する
+	 * 現在は逐次処理に
+	 * １：ダウンローダーがリーダーを呼びtableを作成
+	 * ２：tableをこのクラスで処理しhtmltableを作成
+	 * ３：ライターがhtmltableを書き出し
+	 * となっている。
+	 * 平行同期制御をさせるとなると、モニタになるであろうtableの状態を持たせる？
+	 * たとえば『tableがnull』『Downloaderからのtable』とか
+	 * 新たにそれを制御する変数とsyncronizedなgetterを用意
+	 * Readerを予め作成しておき、downloaderがtableとcsvファイルのダウンローダーを完了次第それをこのクラスで受け取る
+	 * Readerからtableを受け取りこのクラスで処理するなら下記サイトを参考
+	 * http://blogs.wankuma.com/nagise/archive/2007/08/21/91284.aspx
+	 * Writerは予めtable依存しない部分を出力させておく
+	 * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
+	 */
+	public void threadPerform(){
+		try
+		{
+			Downloader aThreadDownloader = new Downloader();
+			Reader aThreadReader = new Reader();
+			Writer aThreadWriter = new Writer();
+			aThreadDownloader.start();
+			aThreadReader.start();
+			aThreadWriter.start();
+			
+			aThreadReader.setFilename(aThreadDownloader.returnCSV());
+			inputTable = aThreadReader.retrunTable();
+			outputTable = this.table(inputTable);
+			aThreadWriter.setTable(outputTable);
+			
+			aThreadWriter.completeWrite();
+			
+			Desktop desktop = Desktop.getDesktop();
+			desktop.open(Writer.filnameOfHTML());
+		}
+		catch (IOException | InterruptedException e) {e.printStackTrace();}
 		String aString = "総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n";
 		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
 		return;
