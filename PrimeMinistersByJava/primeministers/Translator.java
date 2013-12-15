@@ -118,12 +118,13 @@ public class Translator extends Object
 	/** 
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
 	 *  10/27 橋坂侑汰
+	 * @param level 
 	 */
-	public void perform()
+	public void perform(int level)
 	{
 		try
 		{
-			Downloader aDownloader = new Downloader();
+			Downloader aDownloader = new Downloader(level);
 			inputTable = aDownloader.table();
 			outputTable = this.table(inputTable);
 			Writer aWriter = new Writer();
@@ -159,10 +160,10 @@ public class Translator extends Object
 	 * Writerは予めtable依存しない部分を出力させておく
 	 * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
 	 */
-	public void threadPerform(){
+	public void threadPerform(int level){
 		try
 		{
-			Downloader aThreadDownloader = new Downloader();
+			Downloader aThreadDownloader = new Downloader(level);
 			Reader aThreadReader = new Reader();
 			Writer aThreadWriter = new Writer();
 			aThreadDownloader.start();
@@ -175,6 +176,7 @@ public class Translator extends Object
 			aThreadWriter.setTable(outputTable);
 			
 			aThreadWriter.completeWrite();
+			aThreadDownloader.completeDownload();
 			
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(Writer.filnameOfHTML());

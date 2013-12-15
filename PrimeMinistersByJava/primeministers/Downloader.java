@@ -45,6 +45,19 @@ public class Downloader extends IO
 		super();
 		url = null;
 		lock = new Object();
+		url = Downloader.urlStringOfCSV1();
+	}
+	/**
+	 * ダウンローダのコンストラクタ。レベルの切り替えに対応
+	 * 12/15 橋坂侑汰
+	 */
+	public Downloader(int level) 
+	{
+		super();
+		url = null;
+		lock = new Object();
+		if(level==2)url = Downloader.urlStringOfCSV2();
+		else url = Downloader.urlStringOfCSV1();
 	}
 
 	/**
@@ -57,7 +70,6 @@ public class Downloader extends IO
 
 		try
 		{
-			url = Downloader.urlStringOfCSV();
 			URL aURL = new URL(url);
 			
 			InputStream inputStream = aURL.openStream();
@@ -190,7 +202,17 @@ public class Downloader extends IO
 	 * 10/26 和田祥吾
 	 * @return url CSVのファイルの在処
 	 */
-	public static String urlStringOfCSV() 
+	public static String urlStringOfCSV1() 
+	{
+		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
+	}
+	
+	/**
+	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
+	 * 10/26 和田祥吾
+	 * @return url CSVのファイルの在処
+	 */
+	public static String urlStringOfCSV2() 
 	{
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters2.csv";
 	}
@@ -205,23 +227,43 @@ public class Downloader extends IO
 		super.setTableStatus(new Table(), 1);
 		synchronized(this.lock) {
 			this.flag = true;		// 終了フラグを立てる
-            this.lock.notifyAll();	// wait()しているスレッドを起こす
-        }
+			this.lock.notifyAll();	// wait()しているスレッドを起こす
+		}
 		this.downloadImages();
 		this.downloadThumbnails();
+		
+		synchronized(this.lock) {
+			this.flag = true;		// 終了フラグを立てる
+			this.lock.notifyAll();	// wait()しているスレッドを起こす
+		}
 	}
 	
 	/**
 	 * tableの作成完了後、ダウンロードしたCSVファイルを応答するスレッド用メソッド
 	 * @author sueSama
 	 * 12/15
+	 * @throws InterruptedException 同期制御失敗？
 	 */
 	public File returnCSV() throws InterruptedException{
 		synchronized(this.lock) {
 			while (!this.flag) {
 				this.lock.wait();
 			}
+			this.flag=false;//画像のダウンロード完了の応答のため再度ロックをかける
 			return new File(Downloader.urlString());
+		}
+	}
+	/**
+	 * 画像のダウンロードの完了を応答するスレッド用メソッド
+	 * @author sueSama
+	 * 12/15
+	 * @throws InterruptedException 同期制御失敗？
+	 */
+	public void completeDownload() throws InterruptedException{
+		synchronized(this.lock) {
+			while (!this.flag) {
+				this.lock.wait();
+			}
 		}
 	}
 }
