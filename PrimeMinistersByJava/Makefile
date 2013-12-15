@@ -17,3 +17,9 @@ doc:
 
 zip:
 	$(ANT) zip
+
+thread:
+	$(ANT) thread
+
+level2:
+	$(ANT) level2

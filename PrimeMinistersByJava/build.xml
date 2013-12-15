@@ -103,4 +103,18 @@
     <echo>on ${date} at ${time}</echo>
   </target>
 
+  <target name="thread" depends="all" description="thread mode">
+    <exec executable="java" spawn="false">
+      <arg line="-Xmx512m -Xss1024k -jar ${package}.jar thread"/>
+    </exec>
+    <echo>on ${date} at ${time}</echo>
+  </target>
+
+  <target name="level2" depends="all" description="level2 - csv2">
+    <exec executable="java" spawn="false">
+      <arg line="-Xmx512m -Xss1024k -jar ${package}.jar 2"/>
+    </exec>
+    <echo>on ${date} at ${time}</echo>
+  </target>
+
 </project>
