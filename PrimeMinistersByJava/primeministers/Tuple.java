@@ -36,7 +36,7 @@ public class Tuple extends Object
 	 * 12月2日 和田祥吾
 	 * 自分自身を文字列にして、それを応答する。
 	 */
-	public String toString() 
+	public String toString()
 	{
 		return "Tuple [attributes=" + attributes + ", value=" + value + "]";
 	}

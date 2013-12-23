@@ -50,7 +50,7 @@ public class Table extends Object
 	public Attributes attributes()
 	{
 		return attribures;
-	}	
+	}
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * 属性リストを設定する。
@@ -90,7 +90,7 @@ public class Table extends Object
 	 * 自分自身を文字列にして、それを応答する。
 	 *  11/12 和田祥吾
 	 */
-	public String toString() 
+	public String toString()
 	{
 		return "Table [attribures=" + attribures + ", images=" + images
 				+ ", thumbnails=" + thumbnails + ", tuples=" + tuples + "]";
@@ -98,7 +98,7 @@ public class Table extends Object
 	/**
 	 * スタブ作成　10月22日　北川裕基
 	 * タプル群を応答する。
-	 * @return tuples タプル群 
+	 * @return tuples タプル群
 	 */
 	public ArrayList<Tuple> tuples()
 	{

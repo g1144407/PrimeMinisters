@@ -19,7 +19,7 @@ import java.net.URL;
 public class Downloader extends IO
 {
 
-	/** 
+	/**
 	 * 同期用オブジェクト
 	 * @author sueSama
 	 * 12/15
@@ -29,8 +29,8 @@ public class Downloader extends IO
 	  * @author sueSama
 	  * 12/15
 	  */
-    private boolean flag;
-	
+	 private boolean flag;
+
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
 	 */
@@ -40,7 +40,7 @@ public class Downloader extends IO
 	 * ダウンローダのコンストラクタ。
 	 *  10/26 橋坂侑汰
 	 */
-	public Downloader() 
+	public Downloader()
 	{
 		super();
 		url = null;
@@ -51,7 +51,7 @@ public class Downloader extends IO
 	 * ダウンローダのコンストラクタ。レベルの切り替えに対応
 	 * 12/15 橋坂侑汰
 	 */
-	public Downloader(int level) 
+	public Downloader(int level)
 	{
 		super();
 		url = null;
@@ -63,7 +63,7 @@ public class Downloader extends IO
 	/**
 	 * 総理大臣の情報を記したCSVファイルをダウンロードする。
 	 *  10/26 和田祥吾
-	 * 
+	 *
 	 */
 	public void downloadCSV()
 	{
@@ -71,9 +71,9 @@ public class Downloader extends IO
 		try
 		{
 			URL aURL = new URL(url);
-			
+
 			InputStream inputStream = aURL.openStream();
-		
+
 			File aFile=new File(IO.directoryOfPages(),"PrimeMinisters.csv");
 			FileOutputStream outputStream = new FileOutputStream(aFile,false);
 
@@ -86,9 +86,9 @@ public class Downloader extends IO
 			outputStream.close();
 			inputStream.close();
 		}
-		catch (FileNotFoundException e) {e.printStackTrace();} 
-		catch (MalformedURLException e) {e.printStackTrace();} 
-		catch (IOException e) {e.printStackTrace();} 
+		catch (FileNotFoundException e) {e.printStackTrace();}
+		catch (MalformedURLException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();}
 		catch (Exception e) {e.printStackTrace();}
 	}
 
@@ -96,7 +96,7 @@ public class Downloader extends IO
 	 * 総理大臣の画像群をダウンロードする。
 	 *  10/30 和田祥吾
 	 */
-	public void downloadImages() 
+	public void downloadImages()
 	{
 		url = "images/";
 		for(int i=39;i<=62;i++)
@@ -110,7 +110,7 @@ public class Downloader extends IO
 	 * 10/30 和田祥吾
 	 * @param indexOfPicture　画像の番号
 	 */
-	private void downloadPictures(int indexOfPicture) 
+	private void downloadPictures(int indexOfPicture)
 	{
 		try
 		{
@@ -143,9 +143,9 @@ public class Downloader extends IO
 			outputStream.close();
 			inputStream.close();
 		}
-		catch (FileNotFoundException e) {e.printStackTrace();} 
+		catch (FileNotFoundException e) {e.printStackTrace();}
 		catch (MalformedURLException e) {e.printStackTrace();}
-		catch (IOException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();}
 		catch (Exception e) {e.printStackTrace();}
 	}
 
@@ -153,7 +153,7 @@ public class Downloader extends IO
 	 * 総理大臣のサムネイルをダウンロードする。
 	 *  10/30 和田祥吾
 	 */
-	public void downloadThumbnails() 
+	public void downloadThumbnails()
 	{
 		url = "thumbnails/";
 		for(int i=39;i<=62;i++)
@@ -167,7 +167,7 @@ public class Downloader extends IO
 	 *  10/30 和田祥吾
 	 * @return table 総理大臣の情報をダウンロードしたテーブル
 	 */
-	public Table table() 
+	public Table table()
 	{
 		this.downloadCSV();
 		Reader aReader = new Reader(new File(Downloader.urlString()));
@@ -182,7 +182,7 @@ public class Downloader extends IO
 	 * 10/26 和田祥吾
 	 * @return url CSVの在処
 	 */
-	public String url() 
+	public String url()
 	{
 		return url;
 	}
@@ -192,7 +192,7 @@ public class Downloader extends IO
 	 * 10/30 和田祥吾
 	 * @return url 総理大臣の情報の在処
 	 */
-	public static String urlString() 
+	public static String urlString()
 	{
 		return IO.directoryOfPages()+"/PrimeMinisters.csv";
 	}
@@ -202,17 +202,17 @@ public class Downloader extends IO
 	 * 10/26 和田祥吾
 	 * @return url CSVのファイルの在処
 	 */
-	public static String urlStringOfCSV1() 
+	public static String urlStringOfCSV1()
 	{
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv";
 	}
-	
+
 	/**
 	 * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
 	 * 10/26 和田祥吾
 	 * @return url CSVのファイルの在処
 	 */
-	public static String urlStringOfCSV2() 
+	public static String urlStringOfCSV2()
 	{
 		return "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters2.csv";
 	}
@@ -225,28 +225,33 @@ public class Downloader extends IO
 	public void run() {
 		this.downloadCSV();
 		super.setTableStatus(new Table(), 1);
-		synchronized(this.lock) {
+		synchronized(this.lock)
+		{
 			this.flag = true;		// 終了フラグを立てる
 			this.lock.notifyAll();	// wait()しているスレッドを起こす
 		}
 		this.downloadImages();
 		this.downloadThumbnails();
-		
-		synchronized(this.lock) {
+
+		synchronized(this.lock)
+		{
 			this.flag = true;		// 終了フラグを立てる
 			this.lock.notifyAll();	// wait()しているスレッドを起こす
 		}
 	}
-	
+
 	/**
 	 * tableの作成完了後、ダウンロードしたCSVファイルを応答するスレッド用メソッド
 	 * @author sueSama
 	 * 12/15
 	 * @throws InterruptedException 同期制御失敗？
 	 */
-	public File returnCSV() throws InterruptedException{
-		synchronized(this.lock) {
-			while (!this.flag) {
+	public File returnCSV() throws InterruptedException
+	{
+		synchronized(this.lock)
+		{
+			while (!this.flag)
+			{
 				this.lock.wait();
 			}
 			this.flag=false;//画像のダウンロード完了の応答のため再度ロックをかける
@@ -259,9 +264,12 @@ public class Downloader extends IO
 	 * 12/15
 	 * @throws InterruptedException 同期制御失敗？
 	 */
-	public void completeDownload() throws InterruptedException{
-		synchronized(this.lock) {
-			while (!this.flag) {
+	public void completeDownload() throws InterruptedException
+	{
+		synchronized(this.lock)
+		{
+			while (!this.flag)
+			{
 				this.lock.wait();
 			}
 		}

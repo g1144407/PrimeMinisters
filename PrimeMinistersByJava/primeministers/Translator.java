@@ -32,7 +32,7 @@ public class Translator extends Object
 	 * トランスレータのコンストラクタ。
 	 *  10/27 橋坂侑汰
 	 */
-	public Translator() 
+	public Translator()
 	{
 		super();
 		return;
@@ -46,7 +46,7 @@ public class Translator extends Object
 	 * @return days
 	 * 在位日数、(3桁目にピリオドが入る)
 	 */
-	public String computeNumberOfDays(String periodString) 
+	public String computeNumberOfDays(String periodString)
 	{
 		String[] period = periodString.split("〜");
 		int begin, end;
@@ -68,7 +68,7 @@ public class Translator extends Object
 			begin=end;
 			end = period[1].indexOf("日");
 			dayTo = Integer.valueOf(period[1].substring(begin+1, end));
-		} 
+		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
 			//在位期間は2012年12月26日〜,となっている、現在の日時を補間
@@ -106,7 +106,7 @@ public class Translator extends Object
 	 * HTMLのタグとなる文字列、構文は下記(リサイズ等のオプションは省略)
 	 * <a href="images/***.jpg"><img src="thumbnails/***.jpg"></a></td>
 	 */
-	public String computeStringOfImage(String aString, Tuple aTuple, int no) 
+	public String computeStringOfImage(String aString, Tuple aTuple, int no)
 	{
 		String imgTag=null;
 		if(aString!=null);
@@ -115,10 +115,10 @@ public class Translator extends Object
 		return imgTag;
 	}
 
-	/** 
+	/**
 	 * 総理大臣のCSVファイルをHTMLページへ変換する
 	 *  10/27 橋坂侑汰
-	 * @param level 
+	 * @param level
 	 */
 	public void perform(int level)
 	{
@@ -138,7 +138,7 @@ public class Translator extends Object
 		JOptionPane.showMessageDialog(null, aString, "報告", JOptionPane.PLAIN_MESSAGE);
 		return;
 	}
-	
+
 	/**
 	 * 総理大臣のCSVファイルをHTMLページへ変換する（IO周りのスレッド化）
 	 * 12/15
@@ -160,7 +160,8 @@ public class Translator extends Object
 	 * Writerは予めtable依存しない部分を出力させておく
 	 * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
 	 */
-	public void threadPerform(int level){
+	public void threadPerform(int level)
+	{
 		try
 		{
 			Downloader aThreadDownloader = new Downloader(level);
@@ -169,15 +170,15 @@ public class Translator extends Object
 			aThreadDownloader.start();
 			aThreadReader.start();
 			aThreadWriter.start();
-			
+
 			aThreadReader.setFilename(aThreadDownloader.returnCSV());
 			inputTable = aThreadReader.retrunTable();
 			outputTable = this.table(inputTable);
 			aThreadWriter.setTable(outputTable);
-			
+
 			aThreadWriter.completeWrite();
 			aThreadDownloader.completeDownload();
-			
+
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(Writer.filnameOfHTML());
 		}
@@ -195,7 +196,7 @@ public class Translator extends Object
 	 * @return htmlTabel
 	 * HTMLファイル向けに作成されたテーブル
 	 */
-	public Table table(Table csvTable) 
+	public Table table(Table csvTable)
 	{
 		Table htmlTable = new Table();
 		Attributes htmlAttributes = new Attributes("人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像");
@@ -207,7 +208,7 @@ public class Translator extends Object
 			Tuple csvTuple = ite.next();
 			ArrayList<String> csvValues = csvTuple.values();
 			ArrayList<String> htmlValues = new ArrayList<String>();
-			
+
 			htmlValues.add(csvValues.get(csvAttributes.indexOfNo()));//人目
 			htmlValues.add(csvValues.get(csvAttributes.indexOfOrder()));//代
 			htmlValues.add(csvValues.get(csvAttributes.indexOfName()));//氏名
@@ -218,7 +219,7 @@ public class Translator extends Object
 			htmlValues.add(csvValues.get(csvAttributes.indexOfParty()));//政党
 			htmlValues.add(csvValues.get(csvAttributes.indexPlace()));//出身地
 			htmlValues.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvValues.get(csvAttributes.indexOfNo()))));//画像
-			
+
 			Tuple tempTuple = new Tuple(htmlTable.attributes(), htmlValues);
 			htmlTable.add(tempTuple);
 		}

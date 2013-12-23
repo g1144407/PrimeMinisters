@@ -22,191 +22,283 @@ body {
 <pre>
 <a name="line.1">  1</a>: package primeministers;
 <a name="line.2">  2</a>: 
-<a name="line.3">  3</a>: import java.io.File;
-<a name="line.4">  4</a>: import java.io.FileNotFoundException;
-<a name="line.5">  5</a>: import java.io.FileOutputStream;
-<a name="line.6">  6</a>: import java.io.IOException;
-<a name="line.7">  7</a>: import java.io.InputStream;
-<a name="line.8">  8</a>: import java.net.MalformedURLException;
-<a name="line.9">  9</a>: import java.net.URL;
-<a name="line.10"> 10</a>: import java.net.URLConnection;
+<a name="line.3">  3</a>: 
+<a name="line.4">  4</a>: import java.io.File;
+<a name="line.5">  5</a>: import java.io.FileNotFoundException;
+<a name="line.6">  6</a>: import java.io.FileOutputStream;
+<a name="line.7">  7</a>: import java.io.IOException;
+<a name="line.8">  8</a>: import java.io.InputStream;
+<a name="line.9">  9</a>: import java.net.MalformedURLException;
+<a name="line.10"> 10</a>: import java.net.URL;
 <a name="line.11"> 11</a>: 
-<a name="line.12"> 12</a>: /**
-<a name="line.13"> 13</a>:  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
-<a name="line.14"> 14</a>:  *
-<a name="line.15"> 15</a>:  * スタブ作成
-<a name="line.16"> 16</a>:  * 10/23 橋坂侑汰
-<a name="line.17"> 17</a>:  */
-<a name="line.18"> 18</a>: public class Downloader extends IO 
-<a name="line.19"> 19</a>: {
-<a name="line.20"> 20</a>: 
-<a name="line.21"> 21</a>:     /**
-<a name="line.22"> 22</a>:      * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
-<a name="line.23"> 23</a>:      */
-<a name="line.24"> 24</a>:     private String url;
-<a name="line.25"> 25</a>: 
-<a name="line.26"> 26</a>:     /**
-<a name="line.27"> 27</a>:      * ダウンローダのコンストラクタ。
-<a name="line.28"> 28</a>:      *  10/26 橋坂侑汰
-<a name="line.29"> 29</a>:      */
-<a name="line.30"> 30</a>:     public Downloader() 
-<a name="line.31"> 31</a>:     {
-<a name="line.32"> 32</a>:         super();
-<a name="line.33"> 33</a>:         url = null;
-<a name="line.34"> 34</a>:     }
-<a name="line.35"> 35</a>: 
-<a name="line.36"> 36</a>:     /**
-<a name="line.37"> 37</a>:      * 総理大臣の情報を記したCSVファイルをダウンロードする。
-<a name="line.38"> 38</a>:      *  10/26 和田祥吾
-<a name="line.39"> 39</a>:      * 
-<a name="line.40"> 40</a>:      */
-<a name="line.41"> 41</a>:     public void downloadCSV()
-<a name="line.42"> 42</a>:     {
-<a name="line.43"> 43</a>: 
-<a name="line.44"> 44</a>:         try
-<a name="line.45"> 45</a>:         {
-<a name="line.46"> 46</a>:             url = Downloader.urlStringOfCSV();
-<a name="line.47"> 47</a>:             URL aURL = new URL(url);
-<a name="line.48"> 48</a>: 
-<a name="line.49"> 49</a>:             URLConnection conn = aURL.openConnection();
-<a name="line.50"> 50</a>:             InputStream in = conn.getInputStream();
-<a name="line.51"> 51</a>: 
-<a name="line.52"> 52</a>:             File aFile=new File(IO.directoryOfPages(),&quot;PrimeMinisters.csv&quot;);
-<a name="line.53"> 53</a>:             FileOutputStream out = new FileOutputStream(aFile,false);
-<a name="line.54"> 54</a>: 
-<a name="line.55"> 55</a>:             byte[] bytes = new byte[512];
-<a name="line.56"> 56</a>:             int b;
-<a name="line.57"> 57</a>:             while((b = in.read(bytes)) != -1)
-<a name="line.58"> 58</a>:             {
-<a name="line.59"> 59</a>:                 out.write(bytes,0,b);
-<a name="line.60"> 60</a>:             }
-<a name="line.61"> 61</a>:             out.close();
-<a name="line.62"> 62</a>:             in.close();
-<a name="line.63"> 63</a>:         }
-<a name="line.64"> 64</a>:         catch (FileNotFoundException e) {e.printStackTrace();} 
-<a name="line.65"> 65</a>:         catch (MalformedURLException e) {e.printStackTrace();} 
-<a name="line.66"> 66</a>:         catch (IOException e) {e.printStackTrace();} 
-<a name="line.67"> 67</a>:         catch (Exception e) {e.printStackTrace();}
-<a name="line.68"> 68</a>:     }
-<a name="line.69"> 69</a>: 
-<a name="line.70"> 70</a>:     /**
-<a name="line.71"> 71</a>:      * 総理大臣の画像群をダウンロードする。
-<a name="line.72"> 72</a>:      *  10/30 和田祥吾
-<a name="line.73"> 73</a>:      */
-<a name="line.74"> 74</a>:     public void downloadImages() 
-<a name="line.75"> 75</a>:     {
-<a name="line.76"> 76</a>:         url = &quot;images/&quot;;
-<a name="line.77"> 77</a>:         for(int i=39;i&lt;=62;i++)
-<a name="line.78"> 78</a>:         {
-<a name="line.79"> 79</a>:             this.downloadPictures(i);
-<a name="line.80"> 80</a>:         }
-<a name="line.81"> 81</a>:     }
-<a name="line.82"> 82</a>: 
-<a name="line.83"> 83</a>:     /**
-<a name="line.84"> 84</a>:      * 総理大臣の画像をダウンロードする。
-<a name="line.85"> 85</a>:      * 10/30 和田祥吾
-<a name="line.86"> 86</a>:      * @param indexOfPicture　画像の番号
-<a name="line.87"> 87</a>:      */
-<a name="line.88"> 88</a>:     private void downloadPictures(int indexOfPicture) 
-<a name="line.89"> 89</a>:     {
-<a name="line.90"> 90</a>:         try
-<a name="line.91"> 91</a>:         {
-<a name="line.92"> 92</a>:             File picturesDir = null;
-<a name="line.93"> 93</a>:             URL aURL = new URL(&quot;http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/&quot;+url+&quot;0&quot;+indexOfPicture+&quot;.jpg&quot;);
+<a name="line.12"> 12</a>: 
+<a name="line.13"> 13</a>: /**
+<a name="line.14"> 14</a>:  * ダウンローダ：総理大臣のCSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。
+<a name="line.15"> 15</a>:  *
+<a name="line.16"> 16</a>:  * スタブ作成
+<a name="line.17"> 17</a>:  * 10/23 橋坂侑汰
+<a name="line.18"> 18</a>:  */
+<a name="line.19"> 19</a>: public class Downloader extends IO
+<a name="line.20"> 20</a>: {
+<a name="line.21"> 21</a>: 
+<a name="line.22"> 22</a>:     /**
+<a name="line.23"> 23</a>:      * 同期用オブジェクト
+<a name="line.24"> 24</a>:      * @author sueSama
+<a name="line.25"> 25</a>:      * 12/15
+<a name="line.26"> 26</a>:      */
+<a name="line.27"> 27</a>:     private Object lock;
+<a name="line.28"> 28</a>:      /** 処理完了フラグ
+<a name="line.29"> 29</a>:       * @author sueSama
+<a name="line.30"> 30</a>:       * 12/15
+<a name="line.31"> 31</a>:       */
+<a name="line.32"> 32</a>:      private boolean flag;
+<a name="line.33"> 33</a>: 
+<a name="line.34"> 34</a>:     /**
+<a name="line.35"> 35</a>:      * 総理大臣の情報を記したCSVファイルの在処(URL)を記憶するフィールド。
+<a name="line.36"> 36</a>:      */
+<a name="line.37"> 37</a>:     private String url;
+<a name="line.38"> 38</a>: 
+<a name="line.39"> 39</a>:     /**
+<a name="line.40"> 40</a>:      * ダウンローダのコンストラクタ。
+<a name="line.41"> 41</a>:      *  10/26 橋坂侑汰
+<a name="line.42"> 42</a>:      */
+<a name="line.43"> 43</a>:     public Downloader()
+<a name="line.44"> 44</a>:     {
+<a name="line.45"> 45</a>:         super();
+<a name="line.46"> 46</a>:         url = null;
+<a name="line.47"> 47</a>:         lock = new Object();
+<a name="line.48"> 48</a>:         url = Downloader.urlStringOfCSV1();
+<a name="line.49"> 49</a>:     }
+<a name="line.50"> 50</a>:     /**
+<a name="line.51"> 51</a>:      * ダウンローダのコンストラクタ。レベルの切り替えに対応
+<a name="line.52"> 52</a>:      * 12/15 橋坂侑汰
+<a name="line.53"> 53</a>:      */
+<a name="line.54"> 54</a>:     public Downloader(int level)
+<a name="line.55"> 55</a>:     {
+<a name="line.56"> 56</a>:         super();
+<a name="line.57"> 57</a>:         url = null;
+<a name="line.58"> 58</a>:         lock = new Object();
+<a name="line.59"> 59</a>:         if(level==2)url = Downloader.urlStringOfCSV2();
+<a name="line.60"> 60</a>:         else url = Downloader.urlStringOfCSV1();
+<a name="line.61"> 61</a>:     }
+<a name="line.62"> 62</a>: 
+<a name="line.63"> 63</a>:     /**
+<a name="line.64"> 64</a>:      * 総理大臣の情報を記したCSVファイルをダウンロードする。
+<a name="line.65"> 65</a>:      *  10/26 和田祥吾
+<a name="line.66"> 66</a>:      *
+<a name="line.67"> 67</a>:      */
+<a name="line.68"> 68</a>:     public void downloadCSV()
+<a name="line.69"> 69</a>:     {
+<a name="line.70"> 70</a>: 
+<a name="line.71"> 71</a>:         try
+<a name="line.72"> 72</a>:         {
+<a name="line.73"> 73</a>:             URL aURL = new URL(url);
+<a name="line.74"> 74</a>: 
+<a name="line.75"> 75</a>:             InputStream inputStream = aURL.openStream();
+<a name="line.76"> 76</a>: 
+<a name="line.77"> 77</a>:             File aFile=new File(IO.directoryOfPages(),&quot;PrimeMinisters.csv&quot;);
+<a name="line.78"> 78</a>:             FileOutputStream outputStream = new FileOutputStream(aFile,false);
+<a name="line.79"> 79</a>: 
+<a name="line.80"> 80</a>:             byte[] bytes = new byte[512];
+<a name="line.81"> 81</a>:             int b;
+<a name="line.82"> 82</a>:             while((b = inputStream.read(bytes)) != -1)
+<a name="line.83"> 83</a>:             {
+<a name="line.84"> 84</a>:                 outputStream.write(bytes,0,b);
+<a name="line.85"> 85</a>:             }
+<a name="line.86"> 86</a>:             outputStream.close();
+<a name="line.87"> 87</a>:             inputStream.close();
+<a name="line.88"> 88</a>:         }
+<a name="line.89"> 89</a>:         catch (FileNotFoundException e) {e.printStackTrace();}
+<a name="line.90"> 90</a>:         catch (MalformedURLException e) {e.printStackTrace();}
+<a name="line.91"> 91</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.92"> 92</a>:         catch (Exception e) {e.printStackTrace();}
+<a name="line.93"> 93</a>:     }
 <a name="line.94"> 94</a>: 
-<a name="line.95"> 95</a>:             URLConnection conn = aURL.openConnection();
-<a name="line.96"> 96</a>:             InputStream in = conn.getInputStream();
-<a name="line.97"> 97</a>: 
-<a name="line.98"> 98</a>:             if(url == &quot;images/&quot;)
-<a name="line.99"> 99</a>:             {
-<a name="line.100">100</a>:                 picturesDir = new File(IO.directoryOfPages(),&quot;images&quot;);
-<a name="line.101">101</a>:                 if(picturesDir.exists());
-<a name="line.102">102</a>:                 else picturesDir.mkdirs();
-<a name="line.103">103</a>:             }
-<a name="line.104">104</a>:             else if(url == &quot;thumbnails/&quot;)
-<a name="line.105">105</a>:             {
-<a name="line.106">106</a>:                 picturesDir = new File(IO.directoryOfPages(),&quot;thumbnails&quot;);
-<a name="line.107">107</a>:                 if(picturesDir.exists());
-<a name="line.108">108</a>:                 else picturesDir.mkdirs();
-<a name="line.109">109</a>:             }
-<a name="line.110">110</a>:             File aFile = new File(picturesDir,&quot;0&quot;+indexOfPicture+&quot;.jpg&quot;);
-<a name="line.111">111</a>:             FileOutputStream out = new FileOutputStream(aFile,false);
-<a name="line.112">112</a>: 
-<a name="line.113">113</a>:             byte[] bytes = new byte[512];
-<a name="line.114">114</a>:             int b;
-<a name="line.115">115</a>:             while((b = in.read(bytes)) != -1)
-<a name="line.116">116</a>:             {
-<a name="line.117">117</a>:                 out.write(bytes,0,b);
-<a name="line.118">118</a>:             }
-<a name="line.119">119</a>:             out.close();
-<a name="line.120">120</a>:             in.close();
-<a name="line.121">121</a>:         }
-<a name="line.122">122</a>:         catch (FileNotFoundException e) {e.printStackTrace();} 
-<a name="line.123">123</a>:         catch (MalformedURLException e) {e.printStackTrace();}
-<a name="line.124">124</a>:         catch (IOException e) {e.printStackTrace();} 
-<a name="line.125">125</a>:         catch (Exception e) {e.printStackTrace();}
-<a name="line.126">126</a>:     }
-<a name="line.127">127</a>: 
-<a name="line.128">128</a>:     /**
-<a name="line.129">129</a>:      * 総理大臣のサムネイルをダウンロードする。
-<a name="line.130">130</a>:      *  10/30 和田祥吾
-<a name="line.131">131</a>:      */
-<a name="line.132">132</a>:     public void downloadThumbnails() 
-<a name="line.133">133</a>:     {
-<a name="line.134">134</a>:         url = &quot;thumbnails/&quot;;
-<a name="line.135">135</a>:         for(int i=39;i&lt;=62;i++)
-<a name="line.136">136</a>:         {
-<a name="line.137">137</a>:             this.downloadPictures(i);
-<a name="line.138">138</a>:         }
-<a name="line.139">139</a>:     }
-<a name="line.140">140</a>: 
-<a name="line.141">141</a>:     /**
-<a name="line.142">142</a>:      * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群をダウロードし、テーブルで応答する。
-<a name="line.143">143</a>:      *  10/30 和田祥吾
-<a name="line.144">144</a>:      * @return table 総理大臣の情報をダウンロードしたテーブル
-<a name="line.145">145</a>:      */
-<a name="line.146">146</a>:     public Table table() 
-<a name="line.147">147</a>:     {
-<a name="line.148">148</a>:         this.downloadCSV();
-<a name="line.149">149</a>:         Reader aReader = new Reader(new File(Downloader.urlString()));
-<a name="line.150">150</a>:         super.table = aReader.table();
-<a name="line.151">151</a>:         this.downloadImages();
-<a name="line.152">152</a>:         this.downloadThumbnails();
-<a name="line.153">153</a>:         return super.table;
-<a name="line.154">154</a>:     }
-<a name="line.155">155</a>: 
-<a name="line.156">156</a>:     /**
-<a name="line.157">157</a>:      * 総理大臣の情報を記したCSVファイルの在処(相対パス)を文字列で応答する。
-<a name="line.158">158</a>:      * 10/26 和田祥吾
-<a name="line.159">159</a>:      * @return url CSVの在処
-<a name="line.160">160</a>:      */
-<a name="line.161">161</a>:     public String url() 
-<a name="line.162">162</a>:     {
-<a name="line.163">163</a>:         return url;
-<a name="line.164">164</a>:     }
-<a name="line.165">165</a>: 
-<a name="line.166">166</a>:     /**
-<a name="line.167">167</a>:      * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
-<a name="line.168">168</a>:      * 10/30 和田祥吾
-<a name="line.169">169</a>:      * @return url 総理大臣の情報の在処
-<a name="line.170">170</a>:      */
-<a name="line.171">171</a>:     public static String urlString() 
-<a name="line.172">172</a>:     {
-<a name="line.173">173</a>:         return IO.directoryOfPages()+&quot;/PrimeMinisters.csv&quot;;
-<a name="line.174">174</a>:     }
-<a name="line.175">175</a>: 
-<a name="line.176">176</a>:     /**
-<a name="line.177">177</a>:      * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
-<a name="line.178">178</a>:      * 10/26 和田祥吾
-<a name="line.179">179</a>:      * @return url CSVのファイルの在処
-<a name="line.180">180</a>:      */
-<a name="line.181">181</a>:     public static String urlStringOfCSV() 
-<a name="line.182">182</a>:     {
-<a name="line.183">183</a>:         return &quot;http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv&quot;;
-<a name="line.184">184</a>:     }
-<a name="line.185">185</a>: }
+<a name="line.95"> 95</a>:     /**
+<a name="line.96"> 96</a>:      * 総理大臣の画像群をダウンロードする。
+<a name="line.97"> 97</a>:      *  10/30 和田祥吾
+<a name="line.98"> 98</a>:      */
+<a name="line.99"> 99</a>:     public void downloadImages()
+<a name="line.100">100</a>:     {
+<a name="line.101">101</a>:         url = &quot;images/&quot;;
+<a name="line.102">102</a>:         for(int i=39;i&lt;=62;i++)
+<a name="line.103">103</a>:         {
+<a name="line.104">104</a>:             this.downloadPictures(i);
+<a name="line.105">105</a>:         }
+<a name="line.106">106</a>:     }
+<a name="line.107">107</a>: 
+<a name="line.108">108</a>:     /**
+<a name="line.109">109</a>:      * 総理大臣の画像をダウンロードする。
+<a name="line.110">110</a>:      * 10/30 和田祥吾
+<a name="line.111">111</a>:      * @param indexOfPicture　画像の番号
+<a name="line.112">112</a>:      */
+<a name="line.113">113</a>:     private void downloadPictures(int indexOfPicture)
+<a name="line.114">114</a>:     {
+<a name="line.115">115</a>:         try
+<a name="line.116">116</a>:         {
+<a name="line.117">117</a>:             File picturesDir = null;
+<a name="line.118">118</a>:             URL aURL = new URL(&quot;http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/&quot;+url+&quot;0&quot;+indexOfPicture+&quot;.jpg&quot;);
+<a name="line.119">119</a>: 
+<a name="line.120">120</a>:             InputStream inputStream = aURL.openStream();
+<a name="line.121">121</a>: 
+<a name="line.122">122</a>:             if(url == &quot;images/&quot;)
+<a name="line.123">123</a>:             {
+<a name="line.124">124</a>:                 picturesDir = new File(IO.directoryOfPages(),&quot;images&quot;);
+<a name="line.125">125</a>:                 if(picturesDir.exists());
+<a name="line.126">126</a>:                 else picturesDir.mkdirs();
+<a name="line.127">127</a>:             }
+<a name="line.128">128</a>:             else if(url == &quot;thumbnails/&quot;)
+<a name="line.129">129</a>:             {
+<a name="line.130">130</a>:                 picturesDir = new File(IO.directoryOfPages(),&quot;thumbnails&quot;);
+<a name="line.131">131</a>:                 if(picturesDir.exists());
+<a name="line.132">132</a>:                 else picturesDir.mkdirs();
+<a name="line.133">133</a>:             }
+<a name="line.134">134</a>:             File aFile = new File(picturesDir,&quot;0&quot;+indexOfPicture+&quot;.jpg&quot;);
+<a name="line.135">135</a>:             FileOutputStream outputStream = new FileOutputStream(aFile,false);
+<a name="line.136">136</a>: 
+<a name="line.137">137</a>:             byte[] bytes = new byte[512];
+<a name="line.138">138</a>:             int b;
+<a name="line.139">139</a>:             while((b = inputStream.read(bytes)) != -1)
+<a name="line.140">140</a>:             {
+<a name="line.141">141</a>:                 outputStream.write(bytes,0,b);
+<a name="line.142">142</a>:             }
+<a name="line.143">143</a>:             outputStream.close();
+<a name="line.144">144</a>:             inputStream.close();
+<a name="line.145">145</a>:         }
+<a name="line.146">146</a>:         catch (FileNotFoundException e) {e.printStackTrace();}
+<a name="line.147">147</a>:         catch (MalformedURLException e) {e.printStackTrace();}
+<a name="line.148">148</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.149">149</a>:         catch (Exception e) {e.printStackTrace();}
+<a name="line.150">150</a>:     }
+<a name="line.151">151</a>: 
+<a name="line.152">152</a>:     /**
+<a name="line.153">153</a>:      * 総理大臣のサムネイルをダウンロードする。
+<a name="line.154">154</a>:      *  10/30 和田祥吾
+<a name="line.155">155</a>:      */
+<a name="line.156">156</a>:     public void downloadThumbnails()
+<a name="line.157">157</a>:     {
+<a name="line.158">158</a>:         url = &quot;thumbnails/&quot;;
+<a name="line.159">159</a>:         for(int i=39;i&lt;=62;i++)
+<a name="line.160">160</a>:         {
+<a name="line.161">161</a>:             this.downloadPictures(i);
+<a name="line.162">162</a>:         }
+<a name="line.163">163</a>:     }
+<a name="line.164">164</a>: 
+<a name="line.165">165</a>:     /**
+<a name="line.166">166</a>:      * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群をダウロードし、テーブルで応答する。
+<a name="line.167">167</a>:      *  10/30 和田祥吾
+<a name="line.168">168</a>:      * @return table 総理大臣の情報をダウンロードしたテーブル
+<a name="line.169">169</a>:      */
+<a name="line.170">170</a>:     public Table table()
+<a name="line.171">171</a>:     {
+<a name="line.172">172</a>:         this.downloadCSV();
+<a name="line.173">173</a>:         Reader aReader = new Reader(new File(Downloader.urlString()));
+<a name="line.174">174</a>:         super.table = aReader.table();
+<a name="line.175">175</a>:         this.downloadImages();
+<a name="line.176">176</a>:         this.downloadThumbnails();
+<a name="line.177">177</a>:         return super.table;
+<a name="line.178">178</a>:     }
+<a name="line.179">179</a>: 
+<a name="line.180">180</a>:     /**
+<a name="line.181">181</a>:      * 総理大臣の情報を記したCSVファイルの在処(相対パス)を文字列で応答する。
+<a name="line.182">182</a>:      * 10/26 和田祥吾
+<a name="line.183">183</a>:      * @return url CSVの在処
+<a name="line.184">184</a>:      */
+<a name="line.185">185</a>:     public String url()
+<a name="line.186">186</a>:     {
+<a name="line.187">187</a>:         return url;
+<a name="line.188">188</a>:     }
+<a name="line.189">189</a>: 
+<a name="line.190">190</a>:     /**
+<a name="line.191">191</a>:      * 総理大臣の情報の在処(URL)を文字列で応答するクラスメソッド。
+<a name="line.192">192</a>:      * 10/30 和田祥吾
+<a name="line.193">193</a>:      * @return url 総理大臣の情報の在処
+<a name="line.194">194</a>:      */
+<a name="line.195">195</a>:     public static String urlString()
+<a name="line.196">196</a>:     {
+<a name="line.197">197</a>:         return IO.directoryOfPages()+&quot;/PrimeMinisters.csv&quot;;
+<a name="line.198">198</a>:     }
+<a name="line.199">199</a>: 
+<a name="line.200">200</a>:     /**
+<a name="line.201">201</a>:      * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
+<a name="line.202">202</a>:      * 10/26 和田祥吾
+<a name="line.203">203</a>:      * @return url CSVのファイルの在処
+<a name="line.204">204</a>:      */
+<a name="line.205">205</a>:     public static String urlStringOfCSV1()
+<a name="line.206">206</a>:     {
+<a name="line.207">207</a>:         return &quot;http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters.csv&quot;;
+<a name="line.208">208</a>:     }
+<a name="line.209">209</a>: 
+<a name="line.210">210</a>:     /**
+<a name="line.211">211</a>:      * 総理大臣の情報を記したCSVファイルの在処(URL)を文字列で応答するクラスメソッド。
+<a name="line.212">212</a>:      * 10/26 和田祥吾
+<a name="line.213">213</a>:      * @return url CSVのファイルの在処
+<a name="line.214">214</a>:      */
+<a name="line.215">215</a>:     public static String urlStringOfCSV2()
+<a name="line.216">216</a>:     {
+<a name="line.217">217</a>:         return &quot;http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/CSV2HTML/PrimeMinisters/PrimeMinisters2.csv&quot;;
+<a name="line.218">218</a>:     }
+<a name="line.219">219</a>: 
+<a name="line.220">220</a>:     /**
+<a name="line.221">221</a>:      * スレッド処理を行うメソッド
+<a name="line.222">222</a>:      * @author sueSama
+<a name="line.223">223</a>:      * 12/15
+<a name="line.224">224</a>:      */
+<a name="line.225">225</a>:     public void run() {
+<a name="line.226">226</a>:         this.downloadCSV();
+<a name="line.227">227</a>:         super.setTableStatus(new Table(), 1);
+<a name="line.228">228</a>:         synchronized(this.lock)
+<a name="line.229">229</a>:         {
+<a name="line.230">230</a>:             this.flag = true;        // 終了フラグを立てる
+<a name="line.231">231</a>:             this.lock.notifyAll();    // wait()しているスレッドを起こす
+<a name="line.232">232</a>:         }
+<a name="line.233">233</a>:         this.downloadImages();
+<a name="line.234">234</a>:         this.downloadThumbnails();
+<a name="line.235">235</a>: 
+<a name="line.236">236</a>:         synchronized(this.lock)
+<a name="line.237">237</a>:         {
+<a name="line.238">238</a>:             this.flag = true;        // 終了フラグを立てる
+<a name="line.239">239</a>:             this.lock.notifyAll();    // wait()しているスレッドを起こす
+<a name="line.240">240</a>:         }
+<a name="line.241">241</a>:     }
+<a name="line.242">242</a>: 
+<a name="line.243">243</a>:     /**
+<a name="line.244">244</a>:      * tableの作成完了後、ダウンロードしたCSVファイルを応答するスレッド用メソッド
+<a name="line.245">245</a>:      * @author sueSama
+<a name="line.246">246</a>:      * 12/15
+<a name="line.247">247</a>:      * @throws InterruptedException 同期制御失敗？
+<a name="line.248">248</a>:      */
+<a name="line.249">249</a>:     public File returnCSV() throws InterruptedException
+<a name="line.250">250</a>:     {
+<a name="line.251">251</a>:         synchronized(this.lock)
+<a name="line.252">252</a>:         {
+<a name="line.253">253</a>:             while (!this.flag)
+<a name="line.254">254</a>:             {
+<a name="line.255">255</a>:                 this.lock.wait();
+<a name="line.256">256</a>:             }
+<a name="line.257">257</a>:             this.flag=false;//画像のダウンロード完了の応答のため再度ロックをかける
+<a name="line.258">258</a>:             return new File(Downloader.urlString());
+<a name="line.259">259</a>:         }
+<a name="line.260">260</a>:     }
+<a name="line.261">261</a>:     /**
+<a name="line.262">262</a>:      * 画像のダウンロードの完了を応答するスレッド用メソッド
+<a name="line.263">263</a>:      * @author sueSama
+<a name="line.264">264</a>:      * 12/15
+<a name="line.265">265</a>:      * @throws InterruptedException 同期制御失敗？
+<a name="line.266">266</a>:      */
+<a name="line.267">267</a>:     public void completeDownload() throws InterruptedException
+<a name="line.268">268</a>:     {
+<a name="line.269">269</a>:         synchronized(this.lock)
+<a name="line.270">270</a>:         {
+<a name="line.271">271</a>:             while (!this.flag)
+<a name="line.272">272</a>:             {
+<a name="line.273">273</a>:                 this.lock.wait();
+<a name="line.274">274</a>:             }
+<a name="line.275">275</a>:         }
+<a name="line.276">276</a>:     }
+<a name="line.277">277</a>: }
 </pre>
 <hr>
-<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
+<p>This document was generated by KSU.TextDoclet on 2013/12/23 at 16:57:18.</p>
 </body>
 </html>

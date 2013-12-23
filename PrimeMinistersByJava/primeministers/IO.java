@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 /**
  * 入出力：リーダ・ダウンローダ・ライタを抽象する。
- * 
+ *
  * スタブ作成
  *  10/23 橋坂侑汰
  */
@@ -27,7 +27,7 @@ public abstract class IO extends Thread
 	 * テーブル（表：スプレッドシート）を記憶するフィールド
 	 */
 	protected Table table;
-	
+
 	/**
 	 * テーブルの状態を記憶するフィールド
 	 * 0:初期、null
@@ -43,7 +43,8 @@ public abstract class IO extends Thread
 	/**
 	 * 入出力のコンストラクタ。
 	 */
-	public IO(){
+	public IO()
+	{
 		tableStatus=0;
 	}
 
@@ -51,7 +52,7 @@ public abstract class IO extends Thread
 	 * ファイルやディレクトリを削除するクラスメソッド。
 	 * @param aFile 削除するファイル
 	 */
-	public static void deleteFileOrDirectory(File aFile) 
+	public static void deleteFileOrDirectory(File aFile)
 	{
 		if(aFile.exists())aFile.delete();
 	}
@@ -60,7 +61,7 @@ public abstract class IO extends Thread
 	 * 総理大臣ページのためのディレクトリ（存在しなければ作成して）を応答するクラスメソッド。
 	 * @return file デスクトップ上に作成されたPrimiMinistersディレクトリ
 	 */
-	public static File directoryOfPages() 
+	public static File directoryOfPages()
 	{
 		File file = new File(System.getProperty("user.home")+"/Desktop","PrimeMinisters");
 		if(file.exists());
@@ -72,7 +73,7 @@ public abstract class IO extends Thread
 	 * 入出力する際の文字コードを応答するクラスメソッド。
 	 * @return 文字コード
 	 */
-	public static String encodingSymbol() 
+	public static String encodingSymbol()
 	{
 		return "UTF-8";
 	}
@@ -82,7 +83,7 @@ public abstract class IO extends Thread
 	 * @param aFile 指定されたファイル
 	 * @return aCollection 行リスト
 	 */
-	public static ArrayList<String> readTextFromFile(File aFile) 
+	public static ArrayList<String> readTextFromFile(File aFile)
 	{
 		ArrayList<String> aCollection = new ArrayList<String>();
 
@@ -111,7 +112,7 @@ public abstract class IO extends Thread
 	 * @param fileString 指定されたファイル文字列
 	 * @return aCollection 行リスト
 	 */
-	public static ArrayList<String> readTextFromFile(String fileString) 
+	public static ArrayList<String> readTextFromFile(String fileString)
 	{
 		File aFile = new File(fileString);
 		ArrayList<String> aCollection = IO.readTextFromFile(aFile);
@@ -124,7 +125,7 @@ public abstract class IO extends Thread
 	 * @param urlString 指定されたURL文字列
 	 * @return aCollection 行リスト
 	 */
-	public static ArrayList<String> readTextFromURL(String urlString) 
+	public static ArrayList<String> readTextFromURL(String urlString)
 	{
 		URL aURL = null;
 		try { aURL = new URL(urlString); }
@@ -139,7 +140,7 @@ public abstract class IO extends Thread
 	 * @param aURL 指定されたURL
 	 * @return aCollection 行リスト
 	 */
-	public static ArrayList<String> readTextFromURL(URL aURL) 
+	public static ArrayList<String> readTextFromURL(URL aURL)
 	{
 		ArrayList<String> aCollection = new ArrayList<String>();
 
@@ -169,7 +170,7 @@ public abstract class IO extends Thread
 	 * @param separators セパレータ
 	 * @return result 文字列をセパレータで分割したトークン列
 	 */
-	public static ArrayList<String> splitString(String string, String separators) 
+	public static ArrayList<String> splitString(String string, String separators)
 	{
 		ArrayList<Integer> indexes;
 		int stop;
@@ -208,7 +209,7 @@ public abstract class IO extends Thread
 	 * テーブルを応答する。
 	 * @return　テーブル
 	 */
-	public Table table() 
+	public Table table()
 	{
 		return this.table;
 	}
@@ -219,7 +220,7 @@ public abstract class IO extends Thread
 	 * @param aCollection 指定された行リスト
 	 * @param aFile 指定されたファイル
 	 */
-	public static void writeText(ArrayList<String> aCollection, File aFile) 
+	public static void writeText(ArrayList<String> aCollection, File aFile)
 	{
 		try
 		{
@@ -250,17 +251,18 @@ public abstract class IO extends Thread
 		IO.writeText(aCollection, aFile);
 		return;
 	}
-	
+
 	/**
 	 * 現在のtableの状態を返すメソッド
 	 * @return tableStatus 現在のtableの状態
 	 * 12/15追加
 	 * @author sueSama
 	 */
-	synchronized public int getTableStatus(){
+	synchronized public int getTableStatus()
+	{
 		return this.tableStatus;
 	}
-	
+
 	/**
 	 * 現在のtableの状態を更新するメソッド
 	 * @param table 更新するtable
@@ -268,7 +270,8 @@ public abstract class IO extends Thread
 	 * 12/15追加
 	 * @author sueSama
 	 */
-	synchronized void setTableStatus(Table table, int status){
+	synchronized void setTableStatus(Table table, int status)
+	{
 		this.table = table;
 		this.tableStatus=status;
 	}

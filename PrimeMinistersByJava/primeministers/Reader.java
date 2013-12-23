@@ -9,10 +9,10 @@ import java.util.Iterator;
  * スタブ作成
  * 10/23 橋坂侑汰
  */
-public class Reader extends IO 
+public class Reader extends IO
 {
 
-	/** 
+	/**
 	 * 同期用オブジェクト
 	 * @author sueSama
 	 * 12/15
@@ -22,7 +22,7 @@ public class Reader extends IO
 	  * @author sueSama
 	  * 12/15
 	  */
-	
+
     private boolean flag;
 	/**
 	 * 総理大臣の情報を記したCSVファイルを記憶するフィールド
@@ -35,7 +35,7 @@ public class Reader extends IO
 	 * filenameを初期化する
 	 * 10/26 橋坂侑汰
 	 */
-	public Reader() 
+	public Reader()
 	{
 		super();
 		filename = null;
@@ -49,7 +49,7 @@ public class Reader extends IO
 	 * @param csvfile
 	 * 与えられたcsvファイル
 	 */
-	public Reader(File csvfile) 
+	public Reader(File csvfile)
 	{
 		super();
 		filename = csvfile;
@@ -61,7 +61,7 @@ public class Reader extends IO
 	 * @return file
 	 * File型のローカルなCSVファイル
 	 */
-	public File filenameOfCSV() 
+	public File filenameOfCSV()
 	{
 		return filename.getAbsoluteFile();
 	}
@@ -72,7 +72,7 @@ public class Reader extends IO
 	 * @return filename
 	 * File型のCSVファイル
 	 */
-	public File filename() 
+	public File filename()
 	{
 		return filename;
 	}
@@ -104,7 +104,8 @@ public class Reader extends IO
 			{
 				String line=ite.next();
 				ArrayList<String> list = super.splitString(line, ",");
-				if(list.size() < elements){
+				if(list.size() < elements)
+				{
 					line += " "+ite.next();
 				}
 				line = line.replaceAll("\"", "");
@@ -114,34 +115,38 @@ public class Reader extends IO
 		}
 		return tempTable;
 	}
-	
+
 	/**
 	 * csvファイルのこのクラスのfilenameへと保持させるメソッド
 	 * @param csvFile 保持させたいcsvファイル
 	 * @author sueSama
 	 * 12/15
 	 */
-	public void setFilename(File csvFile){
+	public void setFilename(File csvFile)
+	{
 		this.filename = csvFile;
 		super.setTableStatus(super.table, 2);
 	}
-	
+
 	/**
 	 * スレッド処理を行うメソッド
 	 * @author sueSama
 	 * 12/15
 	 */
-	public void run() {
-		while(true){
+	public void run()
+	{
+		while(true)
+		{
 			if(super.getTableStatus()==2)break;
 		}
 		super.setTableStatus(this.table(), 3);
-		synchronized(this.lock) {
+		synchronized(this.lock)
+		{
 			this.flag = true;		// 終了フラグを立てる
             this.lock.notifyAll();	// wait()しているスレッドを起こす
         }
 	}
-	
+
 	/**
 	 * スレッド処理によりcsvファイルからのtableが作成され次第応答するメソッド
 	 * @return table csvファイルからのtable
@@ -149,9 +154,12 @@ public class Reader extends IO
 	 * @author sueSama
 	 * 12/15
 	 */
-	public Table retrunTable() throws InterruptedException{
-		synchronized(this.lock) {
-			while (!this.flag) {
+	public Table retrunTable() throws InterruptedException
+	{
+		synchronized(this.lock)
+		{
+			while (!this.flag)
+			{
 				this.lock.wait();
 			}
 			return super.table;

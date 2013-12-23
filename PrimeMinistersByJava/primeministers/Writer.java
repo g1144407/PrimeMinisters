@@ -14,10 +14,10 @@ import java.util.Iterator;
  * スタブ作成
  *  10/23 橋坂侑汰
  */
-public class Writer extends IO 
+public class Writer extends IO
 {
 
-	/** 
+	/**
 	 * 同期用オブジェクト
 	 * @author sueSama
 	 * 12/15
@@ -28,12 +28,13 @@ public class Writer extends IO
 	  * 12/15
 	  */
 	private boolean flag;
-	
+
 	/**
 	 * ライタのコンストラクタ。
 	 *  10/29 和田祥吾
 	 */
-	public Writer() {
+	public Writer()
+	{
 		lock = new Object();
 	}
 
@@ -42,7 +43,7 @@ public class Writer extends IO
 	 *  10/29 和田祥吾
 	 * @return Attributes 属性リスト
 	 */
-	public Attributes attributes() 
+	public Attributes attributes()
 	{
 		return super.table.attributes();
 	}
@@ -63,10 +64,10 @@ public class Writer extends IO
 	 * @param aTable テーブル
 	 * @return Table テーブル
 	 */
-	public Table table(Table aTable) 
+	public Table table(Table aTable)
 	{
 		super.table = aTable;
-		try 
+		try
 		{
 			OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
 			BufferedWriter outputWriter = new BufferedWriter(outputStream);
@@ -84,7 +85,7 @@ public class Writer extends IO
 	 * 10/29 和田祥吾
 	 * @return ArrayList<Tuple>  タプル群
 	 */
-	public ArrayList<Tuple> tuples() 
+	public ArrayList<Tuple> tuples()
 	{
 		return super.table.tuples();
 	}
@@ -94,9 +95,9 @@ public class Writer extends IO
 	 * 10/29 和田祥吾
 	 * @param outputWriter
 	 */
-	public void writeAttributesOn(BufferedWriter outputWriter) 
+	public void writeAttributesOn(BufferedWriter outputWriter)
 	{
-		try 
+		try
 		{
 			outputWriter.write("\t\t\t\t\t\t<tr>\n");
 			Iterator<String> ite = this.attributes().names().iterator();
@@ -105,7 +106,7 @@ public class Writer extends IO
 				outputWriter.write("\t\t\t\t\t\t\t<td class=\"center-pink\"><strong>"+ite.next()+"</strong></td>\n");
 			}
 			outputWriter.write("\t\t\t\t\t\t</tr>\n");
-		} 
+		}
 		catch (IOException e) {e.printStackTrace();}
 	}
 
@@ -114,9 +115,9 @@ public class Writer extends IO
 	 * 10/29 和田祥吾
 	 * @param outputWriter
 	 */
-	public void writeFooterOn(BufferedWriter outputWriter) 
+	public void writeFooterOn(BufferedWriter outputWriter)
 	{
-		try 
+		try
 		{
 			outputWriter.write("\t\t\t\t\t</tbody>\n\t\t\t\t</table>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n<hr>\n<div class=\"right-small\">Created by Prime Ministers (PrimeMinisters written by Java) ");
 			Calendar now = Calendar.getInstance();  //(1)オブジェクトの生成
@@ -142,12 +143,12 @@ public class Writer extends IO
 	 * 10/29 和田祥吾
 	 * @param outputWriter
 	 */
-	public void writeHeaderOn(BufferedWriter outputWriter) 
+	public void writeHeaderOn(BufferedWriter outputWriter)
 	{
-		try 
+		try
 		{
 			outputWriter.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html lang=\"ja\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">\n<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">\n<meta name=\"keywords\" content=\"Java,Oriented,Programming\">\n<meta name=\"description\" content=\"Prime Ministers\">\n<meta name=\"author\" content=\"PrimeMinisters\">\n<link rev=\"made\" href=\"http://www.cc.kyoto-su.ac.jp/\">\n<link rel=\"index\" href=\"index.html\">\n<style type=\"text/css\">\n<!--\nbody {\n\tbackground-color : #ffffff;\n\tmargin : 20px;\n\tpadding : 10px;\n\tfont-family : serif;\n\tfont-size : 10pt;\n}\na {\n\ttext-decoration : underline;\n\tcolor : #000000;\n}\na:link {\n\tbackground-color : #ffddbb;\n}\na:visited {\n\tbackground-color : #ccffcc;\n}\na:hover {\n\tbackground-color : #dddddd;\n}\na:active {\n\tbackground-color : #dddddd;\n}\ndiv.belt {\n\tbackground-color : #eeeeee;\n\tpadding : 0px 4px;\n}\ndiv.right-small {\n\ttext-align : right;\n\tfont-size : 8pt;\n}\nimg.borderless {\n\tborder-width : 0px;\n\tvertical-align : middle;\n}\ntable.belt {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tbackground-color : #ffffff;\n\tpadding : 0px 0px;\n\twidth : 100%;\n}\ntable.content {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tpadding : 2px 2px;\n}\ntd.center-blue {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ddeeff;\n}\ntd.center-pink {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffddee;\n}\ntd.center-yellow {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffffcc;\n}\n-->\n</style>\n<title>Prime Ministers</title>\n</head>\n");
-		} 
+		}
 		catch (IOException e) {e.printStackTrace();}
 	}
 
@@ -156,9 +157,9 @@ public class Writer extends IO
 	 *  10/29 和田祥吾
 	 * @param outputWriter
 	 */
-	public void writeTableBodyOn(BufferedWriter outputWriter) 
+	public void writeTableBodyOn(BufferedWriter outputWriter)
 	{
-		try 
+		try
 		{
 			outputWriter.write("<body>\n<div class=\"belt\">\n<h2>Prime Ministers</h2>\n</div>\n<table class=\"belt\" summary=\"table\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<table class=\"content\" summary=\"table\">\n\t\t\t\t\t<tbody>\n");
 		}
@@ -175,7 +176,7 @@ public class Writer extends IO
 	public void writeTuplesOn(BufferedWriter outputWriter)
 	{
 		int count=0;
-		try 
+		try
 		{
 			Iterator<Tuple> ite = this.tuples().iterator();
 			while(ite.hasNext())
@@ -190,22 +191,24 @@ public class Writer extends IO
 				outputWriter.write("\t\t\t\t\t\t</tr>\n");
 				count++;
 			}
-		} 
+		}
 		catch (IOException e) {e.printStackTrace();}
 	}
-	
+
 	/**
 	 * スレッド処理を行うメソッド
 	 * @author sueSama
 	 * 12/15
 	 */
-	public void run() {
-		try 
+	public void run()
+	{
+		try
 		{
 			OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
 			BufferedWriter outputWriter = new BufferedWriter(outputStream);
 			writeHeaderOn(outputWriter);
-			while(true){
+			while(true)
+			{
 				if(super.getTableStatus() == 4)break;
 			}
 			writeTableBodyOn(outputWriter);
@@ -213,7 +216,8 @@ public class Writer extends IO
 			outputWriter.close();
 		}
 		catch (IOException e) {e.printStackTrace();}
-		synchronized(this.lock) {
+		synchronized(this.lock)
+		{
 			this.flag = true;		// 終了フラグを立てる
             this.lock.notifyAll();	// wait()しているスレッドを起こす
         }
@@ -225,7 +229,8 @@ public class Writer extends IO
 	 * @author sueSama
 	 * 12/15
 	 */
-	public void setTable(Table outputTable) {
+	public void setTable(Table outputTable)
+	{
 		super.setTableStatus(outputTable, 4);
 	}
 
@@ -235,9 +240,12 @@ public class Writer extends IO
 	 * 12/15
 	 * @throws InterruptedException 同期処理失敗？
 	 */
-	public void completeWrite() throws InterruptedException {
-		synchronized(this.lock) {
-			while (!this.flag) {
+	public void completeWrite() throws InterruptedException
+	{
+		synchronized(this.lock)
+		{
+			while (!this.flag)
+			{
 				this.lock.wait();
 			}
 		}
