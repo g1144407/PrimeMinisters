@@ -54,7 +54,7 @@ body {
 <a name="line.32"> 32</a>:      * トランスレータのコンストラクタ。
 <a name="line.33"> 33</a>:      *  10/27 橋坂侑汰
 <a name="line.34"> 34</a>:      */
-<a name="line.35"> 35</a>:     public Translator()
+<a name="line.35"> 35</a>:     public Translator() 
 <a name="line.36"> 36</a>:     {
 <a name="line.37"> 37</a>:         super();
 <a name="line.38"> 38</a>:         return;
@@ -68,7 +68,7 @@ body {
 <a name="line.46"> 46</a>:      * @return days
 <a name="line.47"> 47</a>:      * 在位日数、(3桁目にピリオドが入る)
 <a name="line.48"> 48</a>:      */
-<a name="line.49"> 49</a>:     public String computeNumberOfDays(String periodString)
+<a name="line.49"> 49</a>:     public String computeNumberOfDays(String periodString) 
 <a name="line.50"> 50</a>:     {
 <a name="line.51"> 51</a>:         String[] period = periodString.split(&quot;〜&quot;);
 <a name="line.52"> 52</a>:         int begin, end;
@@ -90,7 +90,7 @@ body {
 <a name="line.68"> 68</a>:             begin=end;
 <a name="line.69"> 69</a>:             end = period[1].indexOf(&quot;日&quot;);
 <a name="line.70"> 70</a>:             dayTo = Integer.valueOf(period[1].substring(begin+1, end));
-<a name="line.71"> 71</a>:         }
+<a name="line.71"> 71</a>:         } 
 <a name="line.72"> 72</a>:         catch (ArrayIndexOutOfBoundsException e)
 <a name="line.73"> 73</a>:         {
 <a name="line.74"> 74</a>:             //在位期間は2012年12月26日〜,となっている、現在の日時を補間
@@ -128,7 +128,7 @@ body {
 <a name="line.106">106</a>:      * HTMLのタグとなる文字列、構文は下記(リサイズ等のオプションは省略)
 <a name="line.107">107</a>:      * &lt;a href=&quot;images/***.jpg&quot;&gt;&lt;img src=&quot;thumbnails/***.jpg&quot;&gt;&lt;/a&gt;&lt;/td&gt;
 <a name="line.108">108</a>:      */
-<a name="line.109">109</a>:     public String computeStringOfImage(String aString, Tuple aTuple, int no)
+<a name="line.109">109</a>:     public String computeStringOfImage(String aString, Tuple aTuple, int no) 
 <a name="line.110">110</a>:     {
 <a name="line.111">111</a>:         String imgTag=null;
 <a name="line.112">112</a>:         if(aString!=null);
@@ -137,119 +137,65 @@ body {
 <a name="line.115">115</a>:         return imgTag;
 <a name="line.116">116</a>:     }
 <a name="line.117">117</a>: 
-<a name="line.118">118</a>:     /**
+<a name="line.118">118</a>:     /** 
 <a name="line.119">119</a>:      * 総理大臣のCSVファイルをHTMLページへ変換する
 <a name="line.120">120</a>:      *  10/27 橋坂侑汰
-<a name="line.121">121</a>:      * @param level
-<a name="line.122">122</a>:      */
-<a name="line.123">123</a>:     public void perform(int level)
-<a name="line.124">124</a>:     {
-<a name="line.125">125</a>:         try
-<a name="line.126">126</a>:         {
-<a name="line.127">127</a>:             Downloader aDownloader = new Downloader(level);
-<a name="line.128">128</a>:             inputTable = aDownloader.table();
-<a name="line.129">129</a>:             outputTable = this.table(inputTable);
-<a name="line.130">130</a>:             Writer aWriter = new Writer();
-<a name="line.131">131</a>:             aWriter.table(outputTable);
-<a name="line.132">132</a>: 
-<a name="line.133">133</a>:             Desktop desktop = Desktop.getDesktop();
-<a name="line.134">134</a>:             desktop.open(Writer.filnameOfHTML());
-<a name="line.135">135</a>:         }
-<a name="line.136">136</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.137">137</a>:         String aString = &quot;総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n&quot;;
-<a name="line.138">138</a>:         JOptionPane.showMessageDialog(null, aString, &quot;報告&quot;, JOptionPane.PLAIN_MESSAGE);
-<a name="line.139">139</a>:         return;
-<a name="line.140">140</a>:     }
-<a name="line.141">141</a>: 
-<a name="line.142">142</a>:     /**
-<a name="line.143">143</a>:      * 総理大臣のCSVファイルをHTMLページへ変換する（IO周りのスレッド化）
-<a name="line.144">144</a>:      * 12/15
-<a name="line.145">145</a>:      * @author sueSama
-<a name="line.146">146</a>:      */
-<a name="line.147">147</a>:     /*
-<a name="line.148">148</a>:      * IO3種(D/R/W)をスレッド化する
-<a name="line.149">149</a>:      * 現在は逐次処理に
-<a name="line.150">150</a>:      * １：ダウンローダーがリーダーを呼びtableを作成
-<a name="line.151">151</a>:      * ２：tableをこのクラスで処理しhtmltableを作成
-<a name="line.152">152</a>:      * ３：ライターがhtmltableを書き出し
-<a name="line.153">153</a>:      * となっている。
-<a name="line.154">154</a>:      * 平行同期制御をさせるとなると、モニタになるであろうtableの状態を持たせる？
-<a name="line.155">155</a>:      * たとえば『tableがnull』『Downloaderからのtable』とか
-<a name="line.156">156</a>:      * 新たにそれを制御する変数とsyncronizedなgetterを用意
-<a name="line.157">157</a>:      * Readerを予め作成しておき、downloaderがtableとcsvファイルのダウンローダーを完了次第それをこのクラスで受け取る
-<a name="line.158">158</a>:      * Readerからtableを受け取りこのクラスで処理するなら下記サイトを参考
-<a name="line.159">159</a>:      * http://blogs.wankuma.com/nagise/archive/2007/08/21/91284.aspx
-<a name="line.160">160</a>:      * Writerは予めtable依存しない部分を出力させておく
-<a name="line.161">161</a>:      * Writerインスタンスへとhtml用tableを投げ、受け取り次第出力させる
-<a name="line.162">162</a>:      */
-<a name="line.163">163</a>:     public void threadPerform(int level)
-<a name="line.164">164</a>:     {
-<a name="line.165">165</a>:         try
-<a name="line.166">166</a>:         {
-<a name="line.167">167</a>:             Downloader aThreadDownloader = new Downloader(level);
-<a name="line.168">168</a>:             Reader aThreadReader = new Reader();
-<a name="line.169">169</a>:             Writer aThreadWriter = new Writer();
-<a name="line.170">170</a>:             aThreadDownloader.start();
-<a name="line.171">171</a>:             aThreadReader.start();
-<a name="line.172">172</a>:             aThreadWriter.start();
-<a name="line.173">173</a>: 
-<a name="line.174">174</a>:             aThreadReader.setFilename(aThreadDownloader.returnCSV());
-<a name="line.175">175</a>:             inputTable = aThreadReader.retrunTable();
-<a name="line.176">176</a>:             outputTable = this.table(inputTable);
-<a name="line.177">177</a>:             aThreadWriter.setTable(outputTable);
-<a name="line.178">178</a>: 
-<a name="line.179">179</a>:             aThreadWriter.completeWrite();
-<a name="line.180">180</a>:             aThreadDownloader.completeDownload();
-<a name="line.181">181</a>: 
-<a name="line.182">182</a>:             Desktop desktop = Desktop.getDesktop();
-<a name="line.183">183</a>:             desktop.open(Writer.filnameOfHTML());
-<a name="line.184">184</a>:         }
-<a name="line.185">185</a>:         catch (IOException | InterruptedException e) {e.printStackTrace();}
-<a name="line.186">186</a>:         String aString = &quot;総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n&quot;;
-<a name="line.187">187</a>:         JOptionPane.showMessageDialog(null, aString, &quot;報告&quot;, JOptionPane.PLAIN_MESSAGE);
-<a name="line.188">188</a>:         return;
-<a name="line.189">189</a>:     }
-<a name="line.190">190</a>: 
-<a name="line.191">191</a>:     /**
-<a name="line.192">192</a>:      * 総理大臣のCSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換して、それを応答する。
-<a name="line.193">193</a>:      * 10/27 橋坂侑汰
-<a name="line.194">194</a>:      * @param csvTable
-<a name="line.195">195</a>:      * CSVファイルより作成されたテーブル
-<a name="line.196">196</a>:      * @return htmlTabel
-<a name="line.197">197</a>:      * HTMLファイル向けに作成されたテーブル
-<a name="line.198">198</a>:      */
-<a name="line.199">199</a>:     public Table table(Table csvTable)
-<a name="line.200">200</a>:     {
-<a name="line.201">201</a>:         Table htmlTable = new Table();
-<a name="line.202">202</a>:         Attributes htmlAttributes = new Attributes(&quot;人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像&quot;);
-<a name="line.203">203</a>:         htmlTable.attributes(htmlAttributes);
-<a name="line.204">204</a>:         Iterator&lt;Tuple&gt; ite = inputTable.tuples().iterator();
-<a name="line.205">205</a>:         Attributes csvAttributes = csvTable.attributes();
-<a name="line.206">206</a>:         while (ite.hasNext())
-<a name="line.207">207</a>:         {
-<a name="line.208">208</a>:             Tuple csvTuple = ite.next();
-<a name="line.209">209</a>:             ArrayList&lt;String&gt; csvValues = csvTuple.values();
-<a name="line.210">210</a>:             ArrayList&lt;String&gt; htmlValues = new ArrayList&lt;String&gt;();
-<a name="line.211">211</a>: 
-<a name="line.212">212</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfNo()));//人目
-<a name="line.213">213</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfOrder()));//代
-<a name="line.214">214</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfName()));//氏名
-<a name="line.215">215</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfKana()));//ふりがな
-<a name="line.216">216</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfPeriod()));//在位期間
-<a name="line.217">217</a>:             htmlValues.add(this.computeNumberOfDays(csvValues.get(csvAttributes.indexOfPeriod())));//在位日数
-<a name="line.218">218</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfSchool()));//出身校
-<a name="line.219">219</a>:             htmlValues.add(csvValues.get(csvAttributes.indexOfParty()));//政党
-<a name="line.220">220</a>:             htmlValues.add(csvValues.get(csvAttributes.indexPlace()));//出身地
-<a name="line.221">221</a>:             htmlValues.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvValues.get(csvAttributes.indexOfNo()))));//画像
-<a name="line.222">222</a>: 
-<a name="line.223">223</a>:             Tuple tempTuple = new Tuple(htmlTable.attributes(), htmlValues);
-<a name="line.224">224</a>:             htmlTable.add(tempTuple);
-<a name="line.225">225</a>:         }
-<a name="line.226">226</a>:         return htmlTable;
-<a name="line.227">227</a>:     }
-<a name="line.228">228</a>: }
+<a name="line.121">121</a>:      */
+<a name="line.122">122</a>:     public void perform()
+<a name="line.123">123</a>:     {
+<a name="line.124">124</a>:         try
+<a name="line.125">125</a>:         {
+<a name="line.126">126</a>:             Downloader aDownloader = new Downloader();
+<a name="line.127">127</a>:             inputTable = aDownloader.table();
+<a name="line.128">128</a>:             outputTable = this.table(inputTable);
+<a name="line.129">129</a>:             Writer aWriter = new Writer();
+<a name="line.130">130</a>:             aWriter.table(outputTable);
+<a name="line.131">131</a>: 
+<a name="line.132">132</a>:             Desktop desktop = Desktop.getDesktop();
+<a name="line.133">133</a>:             desktop.open(Writer.filnameOfHTML());
+<a name="line.134">134</a>:         }
+<a name="line.135">135</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.136">136</a>:         String aString = &quot;総理大臣のCSVファイルからHTMLページへの変換を無事に完了しました。\n&quot;;
+<a name="line.137">137</a>:         JOptionPane.showMessageDialog(null, aString, &quot;報告&quot;, JOptionPane.PLAIN_MESSAGE);
+<a name="line.138">138</a>:         return;
+<a name="line.139">139</a>:     }
+<a name="line.140">140</a>: 
+<a name="line.141">141</a>:     /**
+<a name="line.142">142</a>:      * 総理大臣のCSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換して、それを応答する。
+<a name="line.143">143</a>:      * 10/27 橋坂侑汰
+<a name="line.144">144</a>:      * @param csvTable
+<a name="line.145">145</a>:      * CSVファイルより作成されたテーブル
+<a name="line.146">146</a>:      * @return htmlTabel
+<a name="line.147">147</a>:      * HTMLファイル向けに作成されたテーブル
+<a name="line.148">148</a>:      */
+<a name="line.149">149</a>:     public Table table(Table csvTable) 
+<a name="line.150">150</a>:     {
+<a name="line.151">151</a>:         Table htmlTable = new Table();
+<a name="line.152">152</a>:         Attributes htmlAttributes = new Attributes(&quot;人目,代,氏名,ふりがな,在位期間,在位日数,出身校,政党,出身地,画像&quot;);
+<a name="line.153">153</a>:         htmlTable.attributes(htmlAttributes);
+<a name="line.154">154</a>:         Iterator&lt;Tuple&gt; ite = inputTable.tuples().iterator();
+<a name="line.155">155</a>:         while (ite.hasNext())
+<a name="line.156">156</a>:         {
+<a name="line.157">157</a>:             Tuple csvTuple = ite.next();
+<a name="line.158">158</a>:             ArrayList&lt;String&gt; values = new ArrayList&lt;String&gt;();
+<a name="line.159">159</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfNo()));//人目
+<a name="line.160">160</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfOrder()));//代
+<a name="line.161">161</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfName()));//氏名
+<a name="line.162">162</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfKana()));//ふりがな
+<a name="line.163">163</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfPeriod()));//在位期間
+<a name="line.164">164</a>:             values.add(this.computeNumberOfDays(csvTuple.values().get(csvTuple.attributes().indexOfPeriod())));//在位日数
+<a name="line.165">165</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfSchool()));//出身校
+<a name="line.166">166</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexOfParty()));//政党
+<a name="line.167">167</a>:             values.add(csvTuple.values().get(csvTuple.attributes().indexPlace()));//出身地
+<a name="line.168">168</a>:             values.add(this.computeStringOfImage(null, csvTuple, Integer.valueOf(csvTuple.values().get(csvTuple.attributes().indexOfNo()))));//画像
+<a name="line.169">169</a>:             Tuple tempTuple = new Tuple(htmlTable.attributes(), values);
+<a name="line.170">170</a>:             htmlTable.add(tempTuple);
+<a name="line.171">171</a>:         }
+<a name="line.172">172</a>:         return htmlTable;
+<a name="line.173">173</a>:     }
+<a name="line.174">174</a>: }
 </pre>
 <hr>
-<p>This document was generated by KSU.TextDoclet on 2013/12/23 at 16:57:18.</p>
+<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
 </body>
 </html>

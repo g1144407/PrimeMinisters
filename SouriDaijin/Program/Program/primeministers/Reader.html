@@ -20,175 +20,101 @@ body {
 </head>
 <body>
 <pre>
-<a name="line.1">  1</a>: package primeministers;
-<a name="line.2">  2</a>: 
-<a name="line.3">  3</a>: import java.io.File;
-<a name="line.4">  4</a>: import java.util.ArrayList;
-<a name="line.5">  5</a>: import java.util.Iterator;
-<a name="line.6">  6</a>: /**
-<a name="line.7">  7</a>:  * リーダ：総理大臣の情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。
-<a name="line.8">  8</a>:  *
-<a name="line.9">  9</a>:  * スタブ作成
-<a name="line.10"> 10</a>:  * 10/23 橋坂侑汰
-<a name="line.11"> 11</a>:  */
-<a name="line.12"> 12</a>: public class Reader extends IO
-<a name="line.13"> 13</a>: {
-<a name="line.14"> 14</a>: 
-<a name="line.15"> 15</a>:     /**
-<a name="line.16"> 16</a>:      * 同期用オブジェクト
-<a name="line.17"> 17</a>:      * @author sueSama
-<a name="line.18"> 18</a>:      * 12/15
-<a name="line.19"> 19</a>:      */
-<a name="line.20"> 20</a>:     private Object lock;
-<a name="line.21"> 21</a>:      /** 処理完了フラグ
-<a name="line.22"> 22</a>:       * @author sueSama
-<a name="line.23"> 23</a>:       * 12/15
-<a name="line.24"> 24</a>:       */
-<a name="line.25"> 25</a>: 
-<a name="line.26"> 26</a>:     private boolean flag;
-<a name="line.27"> 27</a>:     /**
-<a name="line.28"> 28</a>:      * 総理大臣の情報を記したCSVファイルを記憶するフィールド
-<a name="line.29"> 29</a>:      *  10/26 橋坂侑汰
-<a name="line.30"> 30</a>:      */
-<a name="line.31"> 31</a>:     private File filename;
-<a name="line.32"> 32</a>: 
-<a name="line.33"> 33</a>:     /**
-<a name="line.34"> 34</a>:      * コンストラクタ
-<a name="line.35"> 35</a>:      * filenameを初期化する
-<a name="line.36"> 36</a>:      * 10/26 橋坂侑汰
-<a name="line.37"> 37</a>:      */
-<a name="line.38"> 38</a>:     public Reader()
-<a name="line.39"> 39</a>:     {
-<a name="line.40"> 40</a>:         super();
-<a name="line.41"> 41</a>:         filename = null;
-<a name="line.42"> 42</a>:         lock = new Object();
-<a name="line.43"> 43</a>:     }
-<a name="line.44"> 44</a>: 
-<a name="line.45"> 45</a>:     /**
-<a name="line.46"> 46</a>:      * コンストラクタ
-<a name="line.47"> 47</a>:      * filenameを初期化する
-<a name="line.48"> 48</a>:      * 10/26 橋坂侑汰
-<a name="line.49"> 49</a>:      * @param csvfile
-<a name="line.50"> 50</a>:      * 与えられたcsvファイル
-<a name="line.51"> 51</a>:      */
-<a name="line.52"> 52</a>:     public Reader(File csvfile)
-<a name="line.53"> 53</a>:     {
-<a name="line.54"> 54</a>:         super();
-<a name="line.55"> 55</a>:         filename = csvfile;
-<a name="line.56"> 56</a>:     }
-<a name="line.57"> 57</a>: 
-<a name="line.58"> 58</a>:     /**
-<a name="line.59"> 59</a>:      * ダウンロードしたCSVファイルのローカルなファイルを応答する
-<a name="line.60"> 60</a>:      * 10/26 橋坂侑汰
-<a name="line.61"> 61</a>:      * @return file
-<a name="line.62"> 62</a>:      * File型のローカルなCSVファイル
-<a name="line.63"> 63</a>:      */
-<a name="line.64"> 64</a>:     public File filenameOfCSV()
-<a name="line.65"> 65</a>:     {
-<a name="line.66"> 66</a>:         return filename.getAbsoluteFile();
-<a name="line.67"> 67</a>:     }
-<a name="line.68"> 68</a>: 
-<a name="line.69"> 69</a>:     /**
-<a name="line.70"> 70</a>:      * ダウンロードしたCSVファイルを応答する
-<a name="line.71"> 71</a>:      * 10/26 橋坂侑汰
-<a name="line.72"> 72</a>:      * @return filename
-<a name="line.73"> 73</a>:      * File型のCSVファイル
-<a name="line.74"> 74</a>:      */
-<a name="line.75"> 75</a>:     public File filename()
-<a name="line.76"> 76</a>:     {
-<a name="line.77"> 77</a>:         return filename;
-<a name="line.78"> 78</a>:     }
-<a name="line.79"> 79</a>: 
-<a name="line.80"> 80</a>:     /**
-<a name="line.81"> 81</a>:      * ダウンロードしたCSVファイルを読み込んでテーブルを応答する。
-<a name="line.82"> 82</a>:      *  10/26 橋坂侑汰
-<a name="line.83"> 83</a>:      * @return tempTable
-<a name="line.84"> 84</a>:      * CSVファイルをTupleへと変換した変換物群を格納したTable
-<a name="line.85"> 85</a>:      */
-<a name="line.86"> 86</a>:     public Table table()
-<a name="line.87"> 87</a>:     {
-<a name="line.88"> 88</a>:         boolean first = true;
-<a name="line.89"> 89</a>:         String temp = null;
-<a name="line.90"> 90</a>:         Table tempTable = new Table();
-<a name="line.91"> 91</a>:         Iterator&lt;String&gt; ite = super.readTextFromFile(filename).iterator();
-<a name="line.92"> 92</a>:         int elements = 0;
-<a name="line.93"> 93</a>:         while (ite.hasNext())
-<a name="line.94"> 94</a>:         {
-<a name="line.95"> 95</a>:             if(first)
-<a name="line.96"> 96</a>:             {
-<a name="line.97"> 97</a>:                 String line = ite.next();
-<a name="line.98"> 98</a>:                 elements = super.splitString(line, &quot;,&quot;).size();
-<a name="line.99"> 99</a>:                 Attributes tempAttributes = new Attributes(line);
-<a name="line.100">100</a>:                 tempTable.attributes(tempAttributes);
-<a name="line.101">101</a>:                 first=false;
-<a name="line.102">102</a>:             }
-<a name="line.103">103</a>:             else
-<a name="line.104">104</a>:             {
-<a name="line.105">105</a>:                 String line=ite.next();
-<a name="line.106">106</a>:                 ArrayList&lt;String&gt; list = super.splitString(line, &quot;,&quot;);
-<a name="line.107">107</a>:                 if(list.size() &lt; elements)
-<a name="line.108">108</a>:                 {
-<a name="line.109">109</a>:                     line += &quot; &quot;+ite.next();
-<a name="line.110">110</a>:                 }
-<a name="line.111">111</a>:                 line = line.replaceAll(&quot;\&quot;&quot;, &quot;&quot;);
-<a name="line.112">112</a>:                 Tuple tempTuple = new Tuple(tempTable.attributes(), super.splitString(line, &quot;,&quot;));
-<a name="line.113">113</a>:                 tempTable.add(tempTuple);
-<a name="line.114">114</a>:             }
-<a name="line.115">115</a>:         }
-<a name="line.116">116</a>:         return tempTable;
-<a name="line.117">117</a>:     }
-<a name="line.118">118</a>: 
-<a name="line.119">119</a>:     /**
-<a name="line.120">120</a>:      * csvファイルのこのクラスのfilenameへと保持させるメソッド
-<a name="line.121">121</a>:      * @param csvFile 保持させたいcsvファイル
-<a name="line.122">122</a>:      * @author sueSama
-<a name="line.123">123</a>:      * 12/15
-<a name="line.124">124</a>:      */
-<a name="line.125">125</a>:     public void setFilename(File csvFile)
-<a name="line.126">126</a>:     {
-<a name="line.127">127</a>:         this.filename = csvFile;
-<a name="line.128">128</a>:         super.setTableStatus(super.table, 2);
-<a name="line.129">129</a>:     }
-<a name="line.130">130</a>: 
-<a name="line.131">131</a>:     /**
-<a name="line.132">132</a>:      * スレッド処理を行うメソッド
-<a name="line.133">133</a>:      * @author sueSama
-<a name="line.134">134</a>:      * 12/15
-<a name="line.135">135</a>:      */
-<a name="line.136">136</a>:     public void run()
-<a name="line.137">137</a>:     {
-<a name="line.138">138</a>:         while(true)
-<a name="line.139">139</a>:         {
-<a name="line.140">140</a>:             if(super.getTableStatus()==2)break;
-<a name="line.141">141</a>:         }
-<a name="line.142">142</a>:         super.setTableStatus(this.table(), 3);
-<a name="line.143">143</a>:         synchronized(this.lock)
-<a name="line.144">144</a>:         {
-<a name="line.145">145</a>:             this.flag = true;        // 終了フラグを立てる
-<a name="line.146">146</a>:             this.lock.notifyAll();    // wait()しているスレッドを起こす
-<a name="line.147">147</a>:         }
-<a name="line.148">148</a>:     }
-<a name="line.149">149</a>: 
-<a name="line.150">150</a>:     /**
-<a name="line.151">151</a>:      * スレッド処理によりcsvファイルからのtableが作成され次第応答するメソッド
-<a name="line.152">152</a>:      * @return table csvファイルからのtable
-<a name="line.153">153</a>:      * @throws InterruptedException 同期処理失敗？
-<a name="line.154">154</a>:      * @author sueSama
-<a name="line.155">155</a>:      * 12/15
-<a name="line.156">156</a>:      */
-<a name="line.157">157</a>:     public Table retrunTable() throws InterruptedException
-<a name="line.158">158</a>:     {
-<a name="line.159">159</a>:         synchronized(this.lock)
-<a name="line.160">160</a>:         {
-<a name="line.161">161</a>:             while (!this.flag)
-<a name="line.162">162</a>:             {
-<a name="line.163">163</a>:                 this.lock.wait();
-<a name="line.164">164</a>:             }
-<a name="line.165">165</a>:             return super.table;
-<a name="line.166">166</a>:         }
-<a name="line.167">167</a>:     }
-<a name="line.168">168</a>: }</pre>
+<a name="line.1"> 1</a>: package primeministers;
+<a name="line.2"> 2</a>: 
+<a name="line.3"> 3</a>: import java.io.File;
+<a name="line.4"> 4</a>: import java.util.Iterator;
+<a name="line.5"> 5</a>: /**
+<a name="line.6"> 6</a>:  * リーダ：総理大臣の情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。
+<a name="line.7"> 7</a>:  *
+<a name="line.8"> 8</a>:  * スタブ作成
+<a name="line.9"> 9</a>:  * 10/23 橋坂侑汰
+<a name="line.10">10</a>:  */
+<a name="line.11">11</a>: public class Reader extends IO 
+<a name="line.12">12</a>: {
+<a name="line.13">13</a>: 
+<a name="line.14">14</a>:     /**
+<a name="line.15">15</a>:      * 総理大臣の情報を記したCSVファイルを記憶するフィールド
+<a name="line.16">16</a>:      *  10/26 橋坂侑汰
+<a name="line.17">17</a>:      */
+<a name="line.18">18</a>:     private File filename;
+<a name="line.19">19</a>: 
+<a name="line.20">20</a>:     /**
+<a name="line.21">21</a>:      * コンストラクタ
+<a name="line.22">22</a>:      * filenameを初期化する
+<a name="line.23">23</a>:      * 10/26 橋坂侑汰
+<a name="line.24">24</a>:      */
+<a name="line.25">25</a>:     public Reader() 
+<a name="line.26">26</a>:     {
+<a name="line.27">27</a>:         super();
+<a name="line.28">28</a>:         filename = null;
+<a name="line.29">29</a>:     }
+<a name="line.30">30</a>: 
+<a name="line.31">31</a>:     /**
+<a name="line.32">32</a>:      * コンストラクタ
+<a name="line.33">33</a>:      * filenameを初期化する
+<a name="line.34">34</a>:      * 10/26 橋坂侑汰
+<a name="line.35">35</a>:      * @param csvfile
+<a name="line.36">36</a>:      * 与えられたcsvファイル
+<a name="line.37">37</a>:      */
+<a name="line.38">38</a>:     public Reader(File csvfile) 
+<a name="line.39">39</a>:     {
+<a name="line.40">40</a>:         super();
+<a name="line.41">41</a>:         filename = csvfile;
+<a name="line.42">42</a>:     }
+<a name="line.43">43</a>: 
+<a name="line.44">44</a>:     /**
+<a name="line.45">45</a>:      * ダウンロードしたCSVファイルのローカルなファイルを応答する
+<a name="line.46">46</a>:      * 10/26 橋坂侑汰
+<a name="line.47">47</a>:      * @return file
+<a name="line.48">48</a>:      * File型のローカルなCSVファイル
+<a name="line.49">49</a>:      */
+<a name="line.50">50</a>:     public File filenameOfCSV() 
+<a name="line.51">51</a>:     {
+<a name="line.52">52</a>:         return filename.getAbsoluteFile();
+<a name="line.53">53</a>:     }
+<a name="line.54">54</a>: 
+<a name="line.55">55</a>:     /**
+<a name="line.56">56</a>:      * ダウンロードしたCSVファイルを応答する
+<a name="line.57">57</a>:      * 10/26 橋坂侑汰
+<a name="line.58">58</a>:      * @return filename
+<a name="line.59">59</a>:      * File型のCSVファイル
+<a name="line.60">60</a>:      */
+<a name="line.61">61</a>:     public File filename() 
+<a name="line.62">62</a>:     {
+<a name="line.63">63</a>:         return filename;
+<a name="line.64">64</a>:     }
+<a name="line.65">65</a>: 
+<a name="line.66">66</a>:     /**
+<a name="line.67">67</a>:      * ダウンロードしたCSVファイルを読み込んでテーブルを応答する。
+<a name="line.68">68</a>:      *  10/26 橋坂侑汰
+<a name="line.69">69</a>:      * @return tempTable
+<a name="line.70">70</a>:      * CSVファイルをTupleへと変換した変換物群を格納したTable
+<a name="line.71">71</a>:      */
+<a name="line.72">72</a>:     public Table table()
+<a name="line.73">73</a>:     {
+<a name="line.74">74</a>:         boolean first = true;
+<a name="line.75">75</a>:         Table tempTable = new Table();
+<a name="line.76">76</a>:         Iterator&lt;String&gt; ite = super.readTextFromFile(filename).iterator();
+<a name="line.77">77</a>:         while (ite.hasNext())
+<a name="line.78">78</a>:         {
+<a name="line.79">79</a>:             if(first)
+<a name="line.80">80</a>:             {
+<a name="line.81">81</a>:                 Attributes tempAttributes = new Attributes(ite.next());
+<a name="line.82">82</a>:                 tempTable.attributes(tempAttributes);
+<a name="line.83">83</a>:                 first=false;
+<a name="line.84">84</a>:             }
+<a name="line.85">85</a>:             else
+<a name="line.86">86</a>:             {
+<a name="line.87">87</a>:                 Tuple tempTuple = new Tuple(tempTable.attributes(), super.splitString(ite.next(), &quot;,&quot;));
+<a name="line.88">88</a>:                 tempTable.add(tempTuple);
+<a name="line.89">89</a>:             }
+<a name="line.90">90</a>:         }
+<a name="line.91">91</a>:         return tempTable;
+<a name="line.92">92</a>:     }
+<a name="line.93">93</a>: }
+</pre>
 <hr>
-<p>This document was generated by KSU.TextDoclet on 2013/12/23 at 16:57:18.</p>
+<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
 </body>
 </html>
