@@ -24,184 +24,257 @@ body {
 <a name="line.2">  2</a>: 
 <a name="line.3">  3</a>: import java.io.BufferedWriter;
 <a name="line.4">  4</a>: import java.io.File;
-<a name="line.5">  5</a>: import java.io.FileWriter;
+<a name="line.5">  5</a>: import java.io.FileOutputStream;
 <a name="line.6">  6</a>: import java.io.IOException;
-<a name="line.7">  7</a>: import java.util.ArrayList;
-<a name="line.8">  8</a>: import java.util.Calendar;
-<a name="line.9">  9</a>: import java.util.Iterator;
-<a name="line.10"> 10</a>: /**
-<a name="line.11"> 11</a>:  * ライタ：総理大臣の情報のテーブルをHTMLページとして書き出す。
-<a name="line.12"> 12</a>:  *
-<a name="line.13"> 13</a>:  * スタブ作成
-<a name="line.14"> 14</a>:  *  10/23 橋坂侑汰
-<a name="line.15"> 15</a>:  */
-<a name="line.16"> 16</a>: public class Writer extends IO 
-<a name="line.17"> 17</a>: {
-<a name="line.18"> 18</a>: 
-<a name="line.19"> 19</a>:     /**
-<a name="line.20"> 20</a>:      * ライタのコンストラクタ。
-<a name="line.21"> 21</a>:      *  10/29 和田祥吾
-<a name="line.22"> 22</a>:      */
-<a name="line.23"> 23</a>:     public Writer() {}
-<a name="line.24"> 24</a>: 
-<a name="line.25"> 25</a>:     /**
-<a name="line.26"> 26</a>:      * 属性リストを応答する。
-<a name="line.27"> 27</a>:      *  10/29 和田祥吾
-<a name="line.28"> 28</a>:      * @return Attributes 属性リスト
-<a name="line.29"> 29</a>:      */
-<a name="line.30"> 30</a>:     public Attributes attributes() 
-<a name="line.31"> 31</a>:     {
-<a name="line.32"> 32</a>:         return super.table.attributes();
-<a name="line.33"> 33</a>:     }
-<a name="line.34"> 34</a>: 
-<a name="line.35"> 35</a>:     /**
-<a name="line.36"> 36</a>:      * ローカルなHTMLのインデックスファイル(index.html)を応答するクラスメソッド。
-<a name="line.37"> 37</a>:      * 10/29 和田祥吾
-<a name="line.38"> 38</a>:      * @return File ローカルなファイル
-<a name="line.39"> 39</a>:      */
-<a name="line.40"> 40</a>:     public static File filnameOfHTML()
-<a name="line.41"> 41</a>:     {
-<a name="line.42"> 42</a>:         return new File(directoryOfPages().toString()+&quot;/index.html&quot;);
-<a name="line.43"> 43</a>:     }
-<a name="line.44"> 44</a>: 
-<a name="line.45"> 45</a>:     /**
-<a name="line.46"> 46</a>:      * HTMLページを基にするテーブルを受け取って、インデックスファイル(index.html)に書き出す。
-<a name="line.47"> 47</a>:      * 10/29 和田祥吾
-<a name="line.48"> 48</a>:      * @param aTable テーブル
-<a name="line.49"> 49</a>:      * @return Table テーブル
-<a name="line.50"> 50</a>:      */
-<a name="line.51"> 51</a>:     public Table table(Table aTable) 
-<a name="line.52"> 52</a>:     {
-<a name="line.53"> 53</a>:         super.table = aTable;
-<a name="line.54"> 54</a>:         try 
-<a name="line.55"> 55</a>:         {
-<a name="line.56"> 56</a>:             BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Writer.filnameOfHTML()));
-<a name="line.57"> 57</a>:             writeHeaderOn(outputWriter);
-<a name="line.58"> 58</a>:             writeTableBodyOn(outputWriter);
-<a name="line.59"> 59</a>:             writeFooterOn(outputWriter);
-<a name="line.60"> 60</a>:             outputWriter.close();
-<a name="line.61"> 61</a>:         }
-<a name="line.62"> 62</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.63"> 63</a>:         return super.table;
-<a name="line.64"> 64</a>:     }
-<a name="line.65"> 65</a>: 
-<a name="line.66"> 66</a>:     /**
-<a name="line.67"> 67</a>:      * タプル群を応答する。
-<a name="line.68"> 68</a>:      * 10/29 和田祥吾
-<a name="line.69"> 69</a>:      * @return ArrayList&lt;Tuple&gt;  タプル群
-<a name="line.70"> 70</a>:      */
-<a name="line.71"> 71</a>:     public ArrayList&lt;Tuple&gt; tuples() 
-<a name="line.72"> 72</a>:     {
-<a name="line.73"> 73</a>:         return super.table.tuples();
-<a name="line.74"> 74</a>:     }
-<a name="line.75"> 75</a>: 
-<a name="line.76"> 76</a>:     /**
-<a name="line.77"> 77</a>:      * 属性リストを書き出す。
-<a name="line.78"> 78</a>:      * 10/29 和田祥吾
-<a name="line.79"> 79</a>:      * @param outputWriter
-<a name="line.80"> 80</a>:      */
-<a name="line.81"> 81</a>:     public void writeAttributesOn(BufferedWriter outputWriter) 
-<a name="line.82"> 82</a>:     {
-<a name="line.83"> 83</a>:         try 
-<a name="line.84"> 84</a>:         {
-<a name="line.85"> 85</a>:             outputWriter.write(&quot;\t\t\t\t\t\t&lt;tr&gt;\n&quot;);
-<a name="line.86"> 86</a>:             Iterator&lt;String&gt; ite = this.attributes().names().iterator();
-<a name="line.87"> 87</a>:             while(ite.hasNext())
-<a name="line.88"> 88</a>:             {
-<a name="line.89"> 89</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-pink\&quot;&gt;&lt;strong&gt;&quot;+ite.next()+&quot;&lt;/strong&gt;&lt;/td&gt;\n&quot;);
-<a name="line.90"> 90</a>:             }
-<a name="line.91"> 91</a>:             outputWriter.write(&quot;\t\t\t\t\t\t&lt;/tr&gt;\n&quot;);
-<a name="line.92"> 92</a>:         } 
-<a name="line.93"> 93</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.94"> 94</a>:     }
-<a name="line.95"> 95</a>: 
-<a name="line.96"> 96</a>:     /**
-<a name="line.97"> 97</a>:      * フッタを書き出す。
-<a name="line.98"> 98</a>:      * 10/29 和田祥吾
-<a name="line.99"> 99</a>:      * @param outputWriter
-<a name="line.100">100</a>:      */
-<a name="line.101">101</a>:     public void writeFooterOn(BufferedWriter outputWriter) 
-<a name="line.102">102</a>:     {
-<a name="line.103">103</a>:         try 
-<a name="line.104">104</a>:         {
-<a name="line.105">105</a>:             outputWriter.write(&quot;\t\t\t\t\t&lt;/tbody&gt;\n\t\t\t\t&lt;/table&gt;\n\t\t\t&lt;/td&gt;\n\t\t&lt;/tr&gt;\n\t&lt;/tbody&gt;\n&lt;/table&gt;\n&lt;hr&gt;\n&lt;div class=\&quot;right-small\&quot;&gt;Created by Prime Ministers (PrimeMinisters written by Java) &quot;);
-<a name="line.106">106</a>:             Calendar now = Calendar.getInstance();  //(1)オブジェクトの生成
-<a name="line.107">107</a>:             String year = Integer.toString(now.get(Calendar.YEAR));        //(2)現在の年を取得
-<a name="line.108">108</a>:             String month = Integer.toString(now.get(Calendar.MONTH) + 1);  //(3)現在の月を取得
-<a name="line.109">109</a>:             String day = Integer.toString(now.get(Calendar.DATE));         //(4)現在の日を取得
-<a name="line.110">110</a>:             String hour = Integer.toString(now.get(Calendar.HOUR_OF_DAY)); //(5)現在の時を取得
-<a name="line.111">111</a>:             String minute = Integer.toString(now.get(Calendar.MINUTE));    //(6)現在の分を取得
-<a name="line.112">112</a>:             String second = Integer.toString(now.get(Calendar.SECOND));    //(7)現在の秒を取得
-<a name="line.113">113</a>:             if(month.length()==1)month=&quot;0&quot;+month;
-<a name="line.114">114</a>:             if(day.length()==1)day=&quot;0&quot;+day;
-<a name="line.115">115</a>:             if(hour.length()==1)hour=&quot;0&quot;+hour;
-<a name="line.116">116</a>:             if(minute.length()==1)minute=&quot;0&quot;+minute;
-<a name="line.117">117</a>:             if(second.length()==1)second=&quot;0&quot;+second;
-<a name="line.118">118</a>:             outputWriter.write(year+&quot;/&quot;+month+&quot;/&quot;+day+&quot; &quot;+hour+&quot;:&quot;+minute+&quot;:&quot;+second);
-<a name="line.119">119</a>:             outputWriter.write(&quot;&lt;/div&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;);
-<a name="line.120">120</a>:         }
-<a name="line.121">121</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.122">122</a>:     }
-<a name="line.123">123</a>: 
-<a name="line.124">124</a>:     /**
-<a name="line.125">125</a>:      * ヘッダを書き出す。
-<a name="line.126">126</a>:      * 10/29 和田祥吾
-<a name="line.127">127</a>:      * @param outputWriter
-<a name="line.128">128</a>:      */
-<a name="line.129">129</a>:     public void writeHeaderOn(BufferedWriter outputWriter) 
-<a name="line.130">130</a>:     {
-<a name="line.131">131</a>:         try 
-<a name="line.132">132</a>:         {
-<a name="line.133">133</a>:             outputWriter.write(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot; \&quot;http://www.w3.org/TR/html4/loose.dtd\&quot;&gt;\n&lt;html lang=\&quot;ja\&quot;&gt;\n&lt;head&gt;\n&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=UTF-8\&quot;&gt;\n&lt;meta http-equiv=\&quot;Content-Style-Type\&quot; content=\&quot;text/css\&quot;&gt;\n&lt;meta http-equiv=\&quot;Content-Script-Type\&quot; content=\&quot;text/javascript\&quot;&gt;\n&lt;meta name=\&quot;keywords\&quot; content=\&quot;Java,Oriented,Programming\&quot;&gt;\n&lt;meta name=\&quot;description\&quot; content=\&quot;Prime Ministers\&quot;&gt;\n&lt;meta name=\&quot;author\&quot; content=\&quot;PrimeMinisters\&quot;&gt;\n&lt;link rev=\&quot;made\&quot; href=\&quot;http://www.cc.kyoto-su.ac.jp/\&quot;&gt;\n&lt;link rel=\&quot;index\&quot; href=\&quot;index.html\&quot;&gt;\n&lt;style type=\&quot;text/css\&quot;&gt;\n&lt;!--\nbody {\n\tbackground-color : #ffffff;\n\tmargin : 20px;\n\tpadding : 10px;\n\tfont-family : serif;\n\tfont-size : 10pt;\n}\na {\n\ttext-decoration : underline;\n\tcolor : #000000;\n}\na:link {\n\tbackground-color : #ffddbb;\n}\na:visited {\n\tbackground-color : #ccffcc;\n}\na:hover {\n\tbackground-color : #dddddd;\n}\na:active {\n\tbackground-color : #dddddd;\n}\ndiv.belt {\n\tbackground-color : #eeeeee;\n\tpadding : 0px 4px;\n}\ndiv.right-small {\n\ttext-align : right;\n\tfont-size : 8pt;\n}\nimg.borderless {\n\tborder-width : 0px;\n\tvertical-align : middle;\n}\ntable.belt {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tbackground-color : #ffffff;\n\tpadding : 0px 0px;\n\twidth : 100%;\n}\ntable.content {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tpadding : 2px 2px;\n}\ntd.center-blue {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ddeeff;\n}\ntd.center-pink {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffddee;\n}\ntd.center-yellow {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffffcc;\n}\n--&gt;\n&lt;/style&gt;\n&lt;title&gt;Prime Ministers&lt;/title&gt;\n&lt;/head&gt;\n&quot;);
-<a name="line.134">134</a>:         } 
-<a name="line.135">135</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.136">136</a>:     }
-<a name="line.137">137</a>: 
-<a name="line.138">138</a>:     /**
-<a name="line.139">139</a>:      * ボディを書き出す。
-<a name="line.140">140</a>:      *  10/29 和田祥吾
-<a name="line.141">141</a>:      * @param outputWriter
-<a name="line.142">142</a>:      */
-<a name="line.143">143</a>:     public void writeTableBodyOn(BufferedWriter outputWriter) 
-<a name="line.144">144</a>:     {
-<a name="line.145">145</a>:         try 
-<a name="line.146">146</a>:         {
-<a name="line.147">147</a>:             outputWriter.write(&quot;&lt;body&gt;\n&lt;div class=\&quot;belt\&quot;&gt;\n&lt;h2&gt;Prime Ministers&lt;/h2&gt;\n&lt;/div&gt;\n&lt;table class=\&quot;belt\&quot; summary=\&quot;table\&quot;&gt;\n\t&lt;tbody&gt;\n\t\t&lt;tr&gt;\n\t\t\t&lt;td&gt;\n\t\t\t\t&lt;table class=\&quot;content\&quot; summary=\&quot;table\&quot;&gt;\n\t\t\t\t\t&lt;tbody&gt;\n&quot;);
-<a name="line.148">148</a>:         }
-<a name="line.149">149</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.150">150</a>:         writeAttributesOn(outputWriter);
-<a name="line.151">151</a>:         writeTuplesOn(outputWriter);
-<a name="line.152">152</a>:     }
-<a name="line.153">153</a>: 
-<a name="line.154">154</a>:     /**
-<a name="line.155">155</a>:      * タプル群を書き出す。
-<a name="line.156">156</a>:      * 10/29 和田祥吾
-<a name="line.157">157</a>:      * @param outputWriter
-<a name="line.158">158</a>:      */
-<a name="line.159">159</a>:     public void writeTuplesOn(BufferedWriter outputWriter)
-<a name="line.160">160</a>:     {
-<a name="line.161">161</a>:         int count=0;
-<a name="line.162">162</a>:         try 
+<a name="line.7">  7</a>: import java.io.OutputStreamWriter;
+<a name="line.8">  8</a>: import java.util.ArrayList;
+<a name="line.9">  9</a>: import java.util.Calendar;
+<a name="line.10"> 10</a>: import java.util.Iterator;
+<a name="line.11"> 11</a>: /**
+<a name="line.12"> 12</a>:  * ライタ：総理大臣の情報のテーブルをHTMLページとして書き出す。
+<a name="line.13"> 13</a>:  *
+<a name="line.14"> 14</a>:  * スタブ作成
+<a name="line.15"> 15</a>:  *  10/23 橋坂侑汰
+<a name="line.16"> 16</a>:  */
+<a name="line.17"> 17</a>: public class Writer extends IO
+<a name="line.18"> 18</a>: {
+<a name="line.19"> 19</a>: 
+<a name="line.20"> 20</a>:     /**
+<a name="line.21"> 21</a>:      * 同期用オブジェクト
+<a name="line.22"> 22</a>:      * @author sueSama
+<a name="line.23"> 23</a>:      * 12/15
+<a name="line.24"> 24</a>:      */
+<a name="line.25"> 25</a>:     private Object lock;
+<a name="line.26"> 26</a>:      /** 処理完了フラグ
+<a name="line.27"> 27</a>:       * @author sueSama
+<a name="line.28"> 28</a>:       * 12/15
+<a name="line.29"> 29</a>:       */
+<a name="line.30"> 30</a>:     private boolean flag;
+<a name="line.31"> 31</a>: 
+<a name="line.32"> 32</a>:     /**
+<a name="line.33"> 33</a>:      * ライタのコンストラクタ。
+<a name="line.34"> 34</a>:      *  10/29 和田祥吾
+<a name="line.35"> 35</a>:      */
+<a name="line.36"> 36</a>:     public Writer()
+<a name="line.37"> 37</a>:     {
+<a name="line.38"> 38</a>:         lock = new Object();
+<a name="line.39"> 39</a>:     }
+<a name="line.40"> 40</a>: 
+<a name="line.41"> 41</a>:     /**
+<a name="line.42"> 42</a>:      * 属性リストを応答する。
+<a name="line.43"> 43</a>:      *  10/29 和田祥吾
+<a name="line.44"> 44</a>:      * @return Attributes 属性リスト
+<a name="line.45"> 45</a>:      */
+<a name="line.46"> 46</a>:     public Attributes attributes()
+<a name="line.47"> 47</a>:     {
+<a name="line.48"> 48</a>:         return super.table.attributes();
+<a name="line.49"> 49</a>:     }
+<a name="line.50"> 50</a>: 
+<a name="line.51"> 51</a>:     /**
+<a name="line.52"> 52</a>:      * ローカルなHTMLのインデックスファイル(index.html)を応答するクラスメソッド。
+<a name="line.53"> 53</a>:      * 10/29 和田祥吾
+<a name="line.54"> 54</a>:      * @return File ローカルなファイル
+<a name="line.55"> 55</a>:      */
+<a name="line.56"> 56</a>:     public static File filnameOfHTML()
+<a name="line.57"> 57</a>:     {
+<a name="line.58"> 58</a>:         return new File(directoryOfPages().toString()+&quot;/index.html&quot;);
+<a name="line.59"> 59</a>:     }
+<a name="line.60"> 60</a>: 
+<a name="line.61"> 61</a>:     /**
+<a name="line.62"> 62</a>:      * HTMLページを基にするテーブルを受け取って、インデックスファイル(index.html)に書き出す。
+<a name="line.63"> 63</a>:      * 10/29 和田祥吾
+<a name="line.64"> 64</a>:      * @param aTable テーブル
+<a name="line.65"> 65</a>:      * @return Table テーブル
+<a name="line.66"> 66</a>:      */
+<a name="line.67"> 67</a>:     public Table table(Table aTable)
+<a name="line.68"> 68</a>:     {
+<a name="line.69"> 69</a>:         super.table = aTable;
+<a name="line.70"> 70</a>:         try
+<a name="line.71"> 71</a>:         {
+<a name="line.72"> 72</a>:             OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
+<a name="line.73"> 73</a>:             BufferedWriter outputWriter = new BufferedWriter(outputStream);
+<a name="line.74"> 74</a>:             writeHeaderOn(outputWriter);
+<a name="line.75"> 75</a>:             writeTableBodyOn(outputWriter);
+<a name="line.76"> 76</a>:             writeFooterOn(outputWriter);
+<a name="line.77"> 77</a>:             outputWriter.close();
+<a name="line.78"> 78</a>:         }
+<a name="line.79"> 79</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.80"> 80</a>:         return super.table;
+<a name="line.81"> 81</a>:     }
+<a name="line.82"> 82</a>: 
+<a name="line.83"> 83</a>:     /**
+<a name="line.84"> 84</a>:      * タプル群を応答する。
+<a name="line.85"> 85</a>:      * 10/29 和田祥吾
+<a name="line.86"> 86</a>:      * @return ArrayList&lt;Tuple&gt;  タプル群
+<a name="line.87"> 87</a>:      */
+<a name="line.88"> 88</a>:     public ArrayList&lt;Tuple&gt; tuples()
+<a name="line.89"> 89</a>:     {
+<a name="line.90"> 90</a>:         return super.table.tuples();
+<a name="line.91"> 91</a>:     }
+<a name="line.92"> 92</a>: 
+<a name="line.93"> 93</a>:     /**
+<a name="line.94"> 94</a>:      * 属性リストを書き出す。
+<a name="line.95"> 95</a>:      * 10/29 和田祥吾
+<a name="line.96"> 96</a>:      * @param outputWriter
+<a name="line.97"> 97</a>:      */
+<a name="line.98"> 98</a>:     public void writeAttributesOn(BufferedWriter outputWriter)
+<a name="line.99"> 99</a>:     {
+<a name="line.100">100</a>:         try
+<a name="line.101">101</a>:         {
+<a name="line.102">102</a>:             outputWriter.write(&quot;\t\t\t\t\t\t&lt;tr&gt;\n&quot;);
+<a name="line.103">103</a>:             Iterator&lt;String&gt; ite = this.attributes().names().iterator();
+<a name="line.104">104</a>:             while(ite.hasNext())
+<a name="line.105">105</a>:             {
+<a name="line.106">106</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-pink\&quot;&gt;&lt;strong&gt;&quot;+ite.next()+&quot;&lt;/strong&gt;&lt;/td&gt;\n&quot;);
+<a name="line.107">107</a>:             }
+<a name="line.108">108</a>:             outputWriter.write(&quot;\t\t\t\t\t\t&lt;/tr&gt;\n&quot;);
+<a name="line.109">109</a>:         }
+<a name="line.110">110</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.111">111</a>:     }
+<a name="line.112">112</a>: 
+<a name="line.113">113</a>:     /**
+<a name="line.114">114</a>:      * フッタを書き出す。
+<a name="line.115">115</a>:      * 10/29 和田祥吾
+<a name="line.116">116</a>:      * @param outputWriter
+<a name="line.117">117</a>:      */
+<a name="line.118">118</a>:     public void writeFooterOn(BufferedWriter outputWriter)
+<a name="line.119">119</a>:     {
+<a name="line.120">120</a>:         try
+<a name="line.121">121</a>:         {
+<a name="line.122">122</a>:             outputWriter.write(&quot;\t\t\t\t\t&lt;/tbody&gt;\n\t\t\t\t&lt;/table&gt;\n\t\t\t&lt;/td&gt;\n\t\t&lt;/tr&gt;\n\t&lt;/tbody&gt;\n&lt;/table&gt;\n&lt;hr&gt;\n&lt;div class=\&quot;right-small\&quot;&gt;Created by Prime Ministers (PrimeMinisters written by Java) &quot;);
+<a name="line.123">123</a>:             Calendar now = Calendar.getInstance();  //(1)オブジェクトの生成
+<a name="line.124">124</a>:             String year = Integer.toString(now.get(Calendar.YEAR));        //(2)現在の年を取得
+<a name="line.125">125</a>:             String month = Integer.toString(now.get(Calendar.MONTH) + 1);  //(3)現在の月を取得
+<a name="line.126">126</a>:             String day = Integer.toString(now.get(Calendar.DATE));         //(4)現在の日を取得
+<a name="line.127">127</a>:             String hour = Integer.toString(now.get(Calendar.HOUR_OF_DAY)); //(5)現在の時を取得
+<a name="line.128">128</a>:             String minute = Integer.toString(now.get(Calendar.MINUTE));    //(6)現在の分を取得
+<a name="line.129">129</a>:             String second = Integer.toString(now.get(Calendar.SECOND));    //(7)現在の秒を取得
+<a name="line.130">130</a>:             if(month.length()==1)month=&quot;0&quot;+month;
+<a name="line.131">131</a>:             if(day.length()==1)day=&quot;0&quot;+day;
+<a name="line.132">132</a>:             if(hour.length()==1)hour=&quot;0&quot;+hour;
+<a name="line.133">133</a>:             if(minute.length()==1)minute=&quot;0&quot;+minute;
+<a name="line.134">134</a>:             if(second.length()==1)second=&quot;0&quot;+second;
+<a name="line.135">135</a>:             outputWriter.write(year+&quot;/&quot;+month+&quot;/&quot;+day+&quot; &quot;+hour+&quot;:&quot;+minute+&quot;:&quot;+second);
+<a name="line.136">136</a>:             outputWriter.write(&quot;&lt;/div&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;);
+<a name="line.137">137</a>:         }
+<a name="line.138">138</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.139">139</a>:     }
+<a name="line.140">140</a>: 
+<a name="line.141">141</a>:     /**
+<a name="line.142">142</a>:      * ヘッダを書き出す。
+<a name="line.143">143</a>:      * 10/29 和田祥吾
+<a name="line.144">144</a>:      * @param outputWriter
+<a name="line.145">145</a>:      */
+<a name="line.146">146</a>:     public void writeHeaderOn(BufferedWriter outputWriter)
+<a name="line.147">147</a>:     {
+<a name="line.148">148</a>:         try
+<a name="line.149">149</a>:         {
+<a name="line.150">150</a>:             outputWriter.write(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot; \&quot;http://www.w3.org/TR/html4/loose.dtd\&quot;&gt;\n&lt;html lang=\&quot;ja\&quot;&gt;\n&lt;head&gt;\n&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=UTF-8\&quot;&gt;\n&lt;meta http-equiv=\&quot;Content-Style-Type\&quot; content=\&quot;text/css\&quot;&gt;\n&lt;meta http-equiv=\&quot;Content-Script-Type\&quot; content=\&quot;text/javascript\&quot;&gt;\n&lt;meta name=\&quot;keywords\&quot; content=\&quot;Java,Oriented,Programming\&quot;&gt;\n&lt;meta name=\&quot;description\&quot; content=\&quot;Prime Ministers\&quot;&gt;\n&lt;meta name=\&quot;author\&quot; content=\&quot;PrimeMinisters\&quot;&gt;\n&lt;link rev=\&quot;made\&quot; href=\&quot;http://www.cc.kyoto-su.ac.jp/\&quot;&gt;\n&lt;link rel=\&quot;index\&quot; href=\&quot;index.html\&quot;&gt;\n&lt;style type=\&quot;text/css\&quot;&gt;\n&lt;!--\nbody {\n\tbackground-color : #ffffff;\n\tmargin : 20px;\n\tpadding : 10px;\n\tfont-family : serif;\n\tfont-size : 10pt;\n}\na {\n\ttext-decoration : underline;\n\tcolor : #000000;\n}\na:link {\n\tbackground-color : #ffddbb;\n}\na:visited {\n\tbackground-color : #ccffcc;\n}\na:hover {\n\tbackground-color : #dddddd;\n}\na:active {\n\tbackground-color : #dddddd;\n}\ndiv.belt {\n\tbackground-color : #eeeeee;\n\tpadding : 0px 4px;\n}\ndiv.right-small {\n\ttext-align : right;\n\tfont-size : 8pt;\n}\nimg.borderless {\n\tborder-width : 0px;\n\tvertical-align : middle;\n}\ntable.belt {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tbackground-color : #ffffff;\n\tpadding : 0px 0px;\n\twidth : 100%;\n}\ntable.content {\n\tborder-style : solid;\n\tborder-width : 0px;\n\tborder-color : #000000;\n\tpadding : 2px 2px;\n}\ntd.center-blue {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ddeeff;\n}\ntd.center-pink {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffddee;\n}\ntd.center-yellow {\n\tpadding : 2px 2px;\n\ttext-align : center;\n\tbackground-color : #ffffcc;\n}\n--&gt;\n&lt;/style&gt;\n&lt;title&gt;Prime Ministers&lt;/title&gt;\n&lt;/head&gt;\n&quot;);
+<a name="line.151">151</a>:         }
+<a name="line.152">152</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.153">153</a>:     }
+<a name="line.154">154</a>: 
+<a name="line.155">155</a>:     /**
+<a name="line.156">156</a>:      * ボディを書き出す。
+<a name="line.157">157</a>:      *  10/29 和田祥吾
+<a name="line.158">158</a>:      * @param outputWriter
+<a name="line.159">159</a>:      */
+<a name="line.160">160</a>:     public void writeTableBodyOn(BufferedWriter outputWriter)
+<a name="line.161">161</a>:     {
+<a name="line.162">162</a>:         try
 <a name="line.163">163</a>:         {
-<a name="line.164">164</a>:             Iterator&lt;Tuple&gt; ite = this.tuples().iterator();
-<a name="line.165">165</a>:             while(ite.hasNext())
-<a name="line.166">166</a>:             {
-<a name="line.167">167</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t&lt;tr&gt;\n&quot;);
-<a name="line.168">168</a>:                 Iterator&lt;String&gt; ite2 = ite.next().values().iterator();
-<a name="line.169">169</a>:                 while(ite2.hasNext())
-<a name="line.170">170</a>:                 {
-<a name="line.171">171</a>:                     if(count%2==0)outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-blue\&quot;&gt;&quot;+ite2.next()+&quot;&lt;/td&gt;\n&quot;);
-<a name="line.172">172</a>:                     else outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-yellow\&quot;&gt;&quot;+ite2.next()+&quot;&lt;/td&gt;\n&quot;);
-<a name="line.173">173</a>:                 }
-<a name="line.174">174</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t&lt;/tr&gt;\n&quot;);
-<a name="line.175">175</a>:                 count++;
-<a name="line.176">176</a>:             }
-<a name="line.177">177</a>:         } 
-<a name="line.178">178</a>:         catch (IOException e) {e.printStackTrace();}
-<a name="line.179">179</a>:     }
-<a name="line.180">180</a>: }
+<a name="line.164">164</a>:             outputWriter.write(&quot;&lt;body&gt;\n&lt;div class=\&quot;belt\&quot;&gt;\n&lt;h2&gt;Prime Ministers&lt;/h2&gt;\n&lt;/div&gt;\n&lt;table class=\&quot;belt\&quot; summary=\&quot;table\&quot;&gt;\n\t&lt;tbody&gt;\n\t\t&lt;tr&gt;\n\t\t\t&lt;td&gt;\n\t\t\t\t&lt;table class=\&quot;content\&quot; summary=\&quot;table\&quot;&gt;\n\t\t\t\t\t&lt;tbody&gt;\n&quot;);
+<a name="line.165">165</a>:         }
+<a name="line.166">166</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.167">167</a>:         writeAttributesOn(outputWriter);
+<a name="line.168">168</a>:         writeTuplesOn(outputWriter);
+<a name="line.169">169</a>:     }
+<a name="line.170">170</a>: 
+<a name="line.171">171</a>:     /**
+<a name="line.172">172</a>:      * タプル群を書き出す。
+<a name="line.173">173</a>:      * 10/29 和田祥吾
+<a name="line.174">174</a>:      * @param outputWriter
+<a name="line.175">175</a>:      */
+<a name="line.176">176</a>:     public void writeTuplesOn(BufferedWriter outputWriter)
+<a name="line.177">177</a>:     {
+<a name="line.178">178</a>:         int count=0;
+<a name="line.179">179</a>:         try
+<a name="line.180">180</a>:         {
+<a name="line.181">181</a>:             Iterator&lt;Tuple&gt; ite = this.tuples().iterator();
+<a name="line.182">182</a>:             while(ite.hasNext())
+<a name="line.183">183</a>:             {
+<a name="line.184">184</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t&lt;tr&gt;\n&quot;);
+<a name="line.185">185</a>:                 Iterator&lt;String&gt; ite2 = ite.next().values().iterator();
+<a name="line.186">186</a>:                 while(ite2.hasNext())
+<a name="line.187">187</a>:                 {
+<a name="line.188">188</a>:                     if(count%2==0)outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-blue\&quot;&gt;&quot;+ite2.next()+&quot;&lt;/td&gt;\n&quot;);
+<a name="line.189">189</a>:                     else outputWriter.write(&quot;\t\t\t\t\t\t\t&lt;td class=\&quot;center-yellow\&quot;&gt;&quot;+ite2.next()+&quot;&lt;/td&gt;\n&quot;);
+<a name="line.190">190</a>:                 }
+<a name="line.191">191</a>:                 outputWriter.write(&quot;\t\t\t\t\t\t&lt;/tr&gt;\n&quot;);
+<a name="line.192">192</a>:                 count++;
+<a name="line.193">193</a>:             }
+<a name="line.194">194</a>:         }
+<a name="line.195">195</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.196">196</a>:     }
+<a name="line.197">197</a>: 
+<a name="line.198">198</a>:     /**
+<a name="line.199">199</a>:      * スレッド処理を行うメソッド
+<a name="line.200">200</a>:      * @author sueSama
+<a name="line.201">201</a>:      * 12/15
+<a name="line.202">202</a>:      */
+<a name="line.203">203</a>:     public void run()
+<a name="line.204">204</a>:     {
+<a name="line.205">205</a>:         try
+<a name="line.206">206</a>:         {
+<a name="line.207">207</a>:             OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(Writer.filnameOfHTML()),IO.encodingSymbol());
+<a name="line.208">208</a>:             BufferedWriter outputWriter = new BufferedWriter(outputStream);
+<a name="line.209">209</a>:             writeHeaderOn(outputWriter);
+<a name="line.210">210</a>:             while(true)
+<a name="line.211">211</a>:             {
+<a name="line.212">212</a>:                 if(super.getTableStatus() == 4)break;
+<a name="line.213">213</a>:             }
+<a name="line.214">214</a>:             writeTableBodyOn(outputWriter);
+<a name="line.215">215</a>:             writeFooterOn(outputWriter);
+<a name="line.216">216</a>:             outputWriter.close();
+<a name="line.217">217</a>:         }
+<a name="line.218">218</a>:         catch (IOException e) {e.printStackTrace();}
+<a name="line.219">219</a>:         synchronized(this.lock)
+<a name="line.220">220</a>:         {
+<a name="line.221">221</a>:             this.flag = true;        // 終了フラグを立てる
+<a name="line.222">222</a>:             this.lock.notifyAll();    // wait()しているスレッドを起こす
+<a name="line.223">223</a>:         }
+<a name="line.224">224</a>:     }
+<a name="line.225">225</a>: 
+<a name="line.226">226</a>:     /**
+<a name="line.227">227</a>:      * html用tableを設定するメソッド（スレッド用）
+<a name="line.228">228</a>:      * @param outputTable html用table
+<a name="line.229">229</a>:      * @author sueSama
+<a name="line.230">230</a>:      * 12/15
+<a name="line.231">231</a>:      */
+<a name="line.232">232</a>:     public void setTable(Table outputTable)
+<a name="line.233">233</a>:     {
+<a name="line.234">234</a>:         super.setTableStatus(outputTable, 4);
+<a name="line.235">235</a>:     }
+<a name="line.236">236</a>: 
+<a name="line.237">237</a>:     /**
+<a name="line.238">238</a>:      * 出力の完了を応答するメソッド（スレッド用）
+<a name="line.239">239</a>:      * @author sueSama
+<a name="line.240">240</a>:      * 12/15
+<a name="line.241">241</a>:      * @throws InterruptedException 同期処理失敗？
+<a name="line.242">242</a>:      */
+<a name="line.243">243</a>:     public void completeWrite() throws InterruptedException
+<a name="line.244">244</a>:     {
+<a name="line.245">245</a>:         synchronized(this.lock)
+<a name="line.246">246</a>:         {
+<a name="line.247">247</a>:             while (!this.flag)
+<a name="line.248">248</a>:             {
+<a name="line.249">249</a>:                 this.lock.wait();
+<a name="line.250">250</a>:             }
+<a name="line.251">251</a>:         }
+<a name="line.252">252</a>:     }
+<a name="line.253">253</a>: }
 </pre>
 <hr>
-<p>This document was generated by KSU.TextDoclet on 2013/12/03 at 09:38:47.</p>
+<p>This document was generated by KSU.TextDoclet on 2013/12/23 at 16:57:19.</p>
 </body>
 </html>
